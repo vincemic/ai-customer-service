@@ -85,6 +85,10 @@
             },
             "development": {
               "buildTarget": "ai-customer-service:build:development"
+            },
+            "test": {
+              "buildTarget": "ai-customer-service:build:development",
+              "port": 4201
             }
           },
           "defaultConfiguration": "development"
