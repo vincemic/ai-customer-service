@@ -5,9 +5,27 @@
     {
       "type": "npm",
       "script": "start",
+      "label": "npm: start",
       "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
       "problemMatcher": {
         "owner": "typescript",
+        "source": "ts",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}"
+        ],
         "pattern": "$tsc",
         "background": {
           "activeOnStart": true,
@@ -15,15 +33,36 @@
             "regexp": "(.*?)"
           },
           "endsPattern": {
-            "regexp": "bundle generation complete"
+            "regexp": ".*Local:\\s+(https?://\\S+)"
           }
         }
       }
     },
     {
       "type": "npm",
+      "script": "build",
+      "label": "npm: build",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "type": "npm",
       "script": "test",
+      "label": "npm: test",
       "isBackground": true,
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
       "problemMatcher": {
         "owner": "typescript",
         "pattern": "$tsc",
@@ -33,9 +72,46 @@
             "regexp": "(.*?)"
           },
           "endsPattern": {
-            "regexp": "bundle generation complete"
+            "regexp": ".*Executed.*"
           }
         }
+      }
+    },
+    {
+      "type": "npm",
+      "script": "e2e",
+      "label": "npm: e2e",
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "type": "shell",
+      "label": "Kill ng serve",
+      "command": "taskkill",
+      "args": ["/F", "/IM", "node.exe", "/T"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      },
+      "windows": {
+        "command": "taskkill",
+        "args": ["/F", "/IM", "node.exe", "/T"]
+      },
+      "linux": {
+        "command": "pkill",
+        "args": ["-f", "ng serve"]
+      },
+      "osx": {
+        "command": "pkill",
+        "args": ["-f", "ng serve"]
       }
     }
   ]
