@@ -28,7 +28,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'ng serve --configuration=test',
+    command: 'npm run start',
     url: 'http://localhost:4201',
     reuseExistingServer: !process.env.CI,
   },

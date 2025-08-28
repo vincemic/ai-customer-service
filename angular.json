@@ -84,7 +84,8 @@
               "buildTarget": "ai-customer-service:build:production"
             },
             "development": {
-              "buildTarget": "ai-customer-service:build:development"
+              "buildTarget": "ai-customer-service:build:development",
+              "port": 4201
             },
             "test": {
               "buildTarget": "ai-customer-service:build:development",
