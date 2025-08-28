@@ -1,0 +1,386 @@
+<div class="member-data-container">
+  <div class="data-header">
+    <h2>Member Data & History</h2>
+    <div class="summary-cards">
+      <div class="summary-card">
+        <div class="card-value">{{ totalClaimsAmount() | currency }}</div>
+        <div class="card-label">Total Claims</div>
+      </div>
+      <div class="summary-card">
+        <div class="card-value">{{ totalPaidAmount() | currency }}</div>
+        <div class="card-label">Total Paid</div>
+      </div>
+      <div class="summary-card">
+        <div class="card-value">{{ pendingClaims().length }}</div>
+        <div class="card-label">Pending Claims</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button 
+      [class.active]="selectedTab() === 'claims'"
+      (click)="setSelectedTab('claims')">
+      Claims ({{ claims().length }})
+    </button>
+    <button 
+      [class.active]="selectedTab() === 'benefits'"
+      (click)="setSelectedTab('benefits')">
+      Benefits
+    </button>
+    <button 
+      [class.active]="selectedTab() === 'accumulators'"
+      (click)="setSelectedTab('accumulators')">
+      Accumulators
+    </button>
+    <button 
+      [class.active]="selectedTab() === 'authorizations'"
+      (click)="setSelectedTab('authorizations')">
+      Prior Authorizations
+    </button>
+    <button 
+      [class.active]="selectedTab() === 'history'"
+      (click)="setSelectedTab('history')">
+      History
+    </button>
+  </div>
+
+  <div class="data-content">
+    @if (loading()) {
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading member data...</p>
+      </div>
+    }
+
+    @if (selectedTab() === 'claims') {
+      <div class="claims-section">
+        @if (recentClaims().length > 0) {
+          <div class="section-header">
+            <h3>Recent Claims</h3>
+            <div class="filters">
+              <!-- Future: Add filters for date range, status, etc. -->
+            </div>
+          </div>
+          
+          <div class="claims-table">
+            <div class="table-header">
+              <div class="col-claim-number">Claim Number</div>
+              <div class="col-date">Service Date</div>
+              <div class="col-provider">Provider</div>
+              <div class="col-diagnosis">Diagnosis</div>
+              <div class="col-amount">Amount</div>
+              <div class="col-status">Status</div>
+            </div>
+            
+            @for (claim of recentClaims(); track claim.id) {
+              <div class="table-row">
+                <div class="col-claim-number">{{ claim.claimNumber }}</div>
+                <div class="col-date">{{ formatDate(claim.dateOfService) }}</div>
+                <div class="col-provider">{{ claim.provider }}</div>
+                <div class="col-diagnosis">{{ claim.diagnosis }}</div>
+                <div class="col-amount">{{ formatCurrency(claim.amount) }}</div>
+                <div class="col-status">
+                  <span [class]="getStatusClass(claim.status)">{{ claim.status | titlecase }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-data">
+            <p>No claims found for this member</p>
+          </div>
+        }
+      </div>
+    }
+
+    @if (selectedTab() === 'benefits') {
+      <div class="benefits-section">
+        @if (benefits().length > 0) {
+          <div class="section-header">
+            <h3>Current Benefits</h3>
+          </div>
+          
+          <div class="benefits-grid">
+            @for (benefit of benefits(); track benefit.id) {
+              <div class="benefit-card">
+                <div class="benefit-header">
+                  <h4>{{ benefit.benefitType }}</h4>
+                  <span class="plan-year">{{ benefit.planYear }}</span>
+                </div>
+                
+                <div class="benefit-details">
+                  <div class="benefit-description">{{ benefit.description }}</div>
+                  
+                  <div class="benefit-amounts">
+                    <div class="amount-item">
+                      <label>Coverage:</label>
+                      <span>{{ formatCurrency(benefit.coverageAmount) }}</span>
+                    </div>
+                    <div class="amount-item">
+                      <label>Deductible:</label>
+                      <span>{{ formatCurrency(benefit.deductible) }}</span>
+                    </div>
+                    <div class="amount-item">
+                      <label>Copay:</label>
+                      <span>{{ formatCurrency(benefit.copay) }}</span>
+                    </div>
+                    <div class="amount-item">
+                      <label>Coinsurance:</label>
+                      <span>{{ formatPercent(benefit.coinsurance) }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-data">
+            <p>No benefits information available</p>
+          </div>
+        }
+      </div>
+    }
+
+    @if (selectedTab() === 'accumulators') {
+      <div class="accumulators-section">
+        @if (currentYearAccumulators().length > 0) {
+          <div class="section-header">
+            <h3>Current Year Accumulators</h3>
+          </div>
+          
+          <div class="accumulators-grid">
+            @for (accumulator of currentYearAccumulators(); track accumulator.id) {
+              <div class="accumulator-card">
+                <div class="accumulator-header">
+                  <h4>{{ accumulator.type | titlecase }} - {{ accumulator.category | titlecase }}</h4>
+                  <span class="plan-year">{{ accumulator.planYear }}</span>
+                </div>
+                
+                <div class="accumulator-progress">
+                  <div class="progress-section">
+                    <div class="progress-label">Individual</div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" 
+                           [style.width.%]="calculateProgress(accumulator.individualMet, accumulator.individualLimit)">
+                      </div>
+                    </div>
+                    <div class="progress-text">
+                      {{ formatCurrency(accumulator.individualMet) }} of {{ formatCurrency(accumulator.individualLimit) }}
+                    </div>
+                  </div>
+                  
+                  @if (accumulator.familyLimit) {
+                    <div class="progress-section">
+                      <div class="progress-label">Family</div>
+                      <div class="progress-bar">
+                        <div class="progress-fill" 
+                             [style.width.%]="calculateProgress(accumulator.familyMet || 0, accumulator.familyLimit)">
+                        </div>
+                      </div>
+                      <div class="progress-text">
+                        {{ formatCurrency(accumulator.familyMet || 0) }} of {{ formatCurrency(accumulator.familyLimit) }}
+                      </div>
+                    </div>
+                  }
+                </div>
+                
+                <div class="accumulator-footer">
+                  <small>Last updated: {{ formatDate(accumulator.lastUpdated) }}</small>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-data">
+            <p>No accumulator data available for the current year</p>
+          </div>
+        }
+      </div>
+    }
+
+    @if (selectedTab() === 'authorizations') {
+      <div class="authorizations-section">
+        @if (activeAuthorizations().length > 0) {
+          <div class="section-header">
+            <h3>Active Prior Authorizations</h3>
+          </div>
+          
+          <div class="authorizations-grid">
+            @for (auth of activeAuthorizations(); track auth.id) {
+              <div class="authorization-card active">
+                <div class="auth-header">
+                  <h4>{{ auth.serviceType }}</h4>
+                  <span [class]="getStatusClass(auth.status)">{{ auth.status | titlecase }}</span>
+                </div>
+                
+                <div class="auth-details">
+                  <div class="detail-item">
+                    <label>Auth Number:</label>
+                    <span>{{ auth.authNumber }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <label>Provider:</label>
+                    <span>{{ auth.provider }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <label>Request Date:</label>
+                    <span>{{ formatDate(auth.requestDate) }}</span>
+                  </div>
+                  @if (auth.approvedDate) {
+                    <div class="detail-item">
+                      <label>Approved Date:</label>
+                      <span>{{ formatDate(auth.approvedDate) }}</span>
+                    </div>
+                  }
+                  @if (auth.expirationDate) {
+                    <div class="detail-item">
+                      <label>Expires:</label>
+                      <span>{{ formatDate(auth.expirationDate) }}</span>
+                    </div>
+                  }
+                  @if (auth.notes) {
+                    <div class="detail-item full-width">
+                      <label>Notes:</label>
+                      <span>{{ auth.notes }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+        
+        @if (expiredAuthorizations().length > 0) {
+          <div class="section-header">
+            <h3>Expired Authorizations</h3>
+          </div>
+          
+          <div class="authorizations-grid">
+            @for (auth of expiredAuthorizations(); track auth.id) {
+              <div class="authorization-card expired">
+                <div class="auth-header">
+                  <h4>{{ auth.serviceType }}</h4>
+                  <span class="status-expired">Expired</span>
+                </div>
+                
+                <div class="auth-details">
+                  <div class="detail-item">
+                    <label>Auth Number:</label>
+                    <span>{{ auth.authNumber }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <label>Provider:</label>
+                    <span>{{ auth.provider }}</span>
+                  </div>
+                  <div class="detail-item">
+                    <label>Expired:</label>
+                    <span>{{ formatDate(auth.expirationDate!) }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+        
+        @if (activeAuthorizations().length === 0 && expiredAuthorizations().length === 0) {
+          <div class="no-data">
+            <p>No prior authorization data available</p>
+          </div>
+        }
+      </div>
+    }
+
+    @if (selectedTab() === 'history') {
+      <div class="history-section">
+        <div class="history-tabs">
+          <div class="history-grid">
+            <!-- Claim History -->
+            <div class="history-card">
+              <h4>Claim History</h4>
+              @if (claimHistory().length > 0) {
+                @for (history of claimHistory(); track history.id) {
+                  <div class="history-item">
+                    <div class="history-year">{{ history.year }}</div>
+                    <div class="history-stats">
+                      <div class="stat">
+                        <label>Total Claims:</label>
+                        <span>{{ history.totalClaims }}</span>
+                      </div>
+                      <div class="stat">
+                        <label>Total Amount:</label>
+                        <span>{{ formatCurrency(history.totalAmount) }}</span>
+                      </div>
+                      <div class="stat">
+                        <label>Total Paid:</label>
+                        <span>{{ formatCurrency(history.totalPaid) }}</span>
+                      </div>
+                      <div class="stat">
+                        <label>Average Claim:</label>
+                        <span>{{ formatCurrency(history.averageClaimAmount) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                }
+              } @else {
+                <p class="no-history">No claim history available</p>
+              }
+            </div>
+
+            <!-- Call History -->
+            <div class="history-card">
+              <h4>Call History</h4>
+              @if (callHistory().length > 0) {
+                @for (call of callHistory(); track call.id) {
+                  <div class="history-item">
+                    <div class="call-header">
+                      <div class="call-date">{{ formatDate(call.callDate) }}</div>
+                      <span [class]="getStatusClass(call.resolution)">{{ call.resolution | titlecase }}</span>
+                    </div>
+                    <div class="call-details">
+                      <div class="detail">Agent: {{ call.agent }}</div>
+                      <div class="detail">Duration: {{ call.duration }} minutes</div>
+                      <div class="detail">Type: {{ call.callType | titlecase }}</div>
+                      @if (call.notes) {
+                        <div class="call-notes">{{ call.notes }}</div>
+                      }
+                    </div>
+                  </div>
+                }
+              } @else {
+                <p class="no-history">No call history available</p>
+              }
+            </div>
+
+            <!-- Authorization History -->
+            <div class="history-card">
+              <h4>Authorization History</h4>
+              @if (authorizationHistory().length > 0) {
+                @for (authHist of authorizationHistory(); track authHist.id) {
+                  <div class="history-item">
+                    <div class="auth-hist-header">
+                      <div class="service-type">{{ authHist.serviceType }}</div>
+                      <span [class]="getStatusClass(authHist.status)">{{ authHist.status | titlecase }}</span>
+                    </div>
+                    <div class="auth-hist-details">
+                      <div class="detail">Provider: {{ authHist.provider }}</div>
+                      <div class="detail">Request Date: {{ formatDate(authHist.requestDate) }}</div>
+                      @if (authHist.reviewer) {
+                        <div class="detail">Reviewer: {{ authHist.reviewer }}</div>
+                      }
+                      @if (authHist.denialReason) {
+                        <div class="denial-reason">Denial Reason: {{ authHist.denialReason }}</div>
+                      }
+                    </div>
+                  </div>
+                }
+              } @else {
+                <p class="no-history">No authorization history available</p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

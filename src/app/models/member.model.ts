@@ -13,6 +13,20 @@ export interface Member {
     zipCode: string;
   };
   familyMembers: FamilyMember[];
+  enrollmentDate?: Date;
+  planCode?: string;
+  planName?: string;
+  groupNumber?: string;
+  employerName?: string;
+  primaryCarePhysician?: string;
+  emergencyContact?: EmergencyContact;
+}
+
+export interface EmergencyContact {
+  name: string;
+  relationship: string;
+  phone: string;
+  email?: string;
 }
 
 export interface FamilyMember {
@@ -22,6 +36,9 @@ export interface FamilyMember {
   dateOfBirth: Date;
   relationship: string;
   memberId: string;
+  isSubscriber?: boolean;
+  enrollmentDate?: Date;
+  status?: 'active' | 'inactive' | 'terminated';
 }
 
 export interface Claim {
@@ -30,10 +47,76 @@ export interface Claim {
   claimNumber: string;
   dateOfService: Date;
   provider: string;
+  providerNPI?: string;
   diagnosis: string;
+  diagnosisCode?: string;
+  procedureCode?: string;
   amount: number;
-  status: 'pending' | 'approved' | 'denied' | 'processing';
+  allowedAmount?: number;
+  paidAmount?: number;
+  memberResponsibility?: number;
+  status: 'pending' | 'approved' | 'denied' | 'processing' | 'paid';
   dateSubmitted: Date;
+  dateProcessed?: Date;
+  placeOfService?: string;
+  serviceCategory?: 'medical' | 'dental' | 'vision' | 'pharmacy' | 'mental_health';
+  denialReason?: string;
+}
+
+export interface Accumulator {
+  id: string;
+  memberId: string;
+  planYear: number;
+  type: 'deductible' | 'out_of_pocket' | 'coinsurance' | 'copay' | 'benefit_max';
+  category: 'medical' | 'dental' | 'vision' | 'pharmacy' | 'mental_health' | 'all';
+  individualLimit: number;
+  familyLimit?: number;
+  individualMet: number;
+  familyMet?: number;
+  individualRemaining: number;
+  familyRemaining?: number;
+  lastUpdated: Date;
+}
+
+export interface ClaimHistory {
+  id: string;
+  memberId: string;
+  year: number;
+  totalClaims: number;
+  totalAmount: number;
+  totalPaid: number;
+  totalDenied: number;
+  averageClaimAmount: number;
+  mostFrequentProvider?: string;
+  mostCommonDiagnosis?: string;
+}
+
+export interface CallHistory {
+  id: string;
+  memberId: string;
+  callDate: Date;
+  agent: string;
+  duration: number; // in minutes
+  callType: 'inquiry' | 'claim' | 'benefit' | 'authorization' | 'complaint' | 'other';
+  resolution: 'resolved' | 'pending' | 'escalated' | 'transferred';
+  notes: string;
+  followUpRequired: boolean;
+  followUpDate?: Date;
+}
+
+export interface AuthorizationHistory {
+  id: string;
+  memberId: string;
+  requestDate: Date;
+  serviceType: string;
+  provider: string;
+  status: 'approved' | 'denied' | 'pending' | 'expired' | 'cancelled';
+  approvedUnits?: number;
+  usedUnits?: number;
+  expirationDate?: Date;
+  denialReason?: string;
+  reviewDate?: Date;
+  reviewer?: string;
 }
 
 export interface Benefit {

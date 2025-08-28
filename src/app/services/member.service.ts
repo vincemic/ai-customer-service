@@ -1,6 +1,6 @@
-import { Injectable, signal } from '@angular/core';
-import { Observable, of, delay } from 'rxjs';
-import { Member, Claim, Benefit, Deductible, PriorAuthorization } from '../models/member.model';
+import { Injectable } from '@angular/core';
+import { delay, Observable, of } from 'rxjs';
+import { Benefit, Claim, Deductible, Member, PriorAuthorization, Accumulator, ClaimHistory, CallHistory, AuthorizationHistory } from '../models/member.model';
 
 @Injectable({
   providedIn: 'root'
@@ -169,5 +169,167 @@ export class MemberService {
     ];
 
     return of(mockAuths).pipe(delay(400));
+  }
+
+  getMemberAccumulators(memberId: string): Observable<Accumulator[]> {
+    const mockAccumulators: Accumulator[] = [
+      {
+        id: '1',
+        memberId,
+        planYear: 2024,
+        type: 'deductible',
+        category: 'medical',
+        individualLimit: 1500,
+        familyLimit: 3000,
+        individualMet: 450,
+        familyMet: 450,
+        individualRemaining: 1050,
+        familyRemaining: 2550,
+        lastUpdated: new Date('2024-02-15')
+      },
+      {
+        id: '2',
+        memberId,
+        planYear: 2024,
+        type: 'out_of_pocket',
+        category: 'medical',
+        individualLimit: 6000,
+        familyLimit: 12000,
+        individualMet: 800,
+        familyMet: 800,
+        individualRemaining: 5200,
+        familyRemaining: 11200,
+        lastUpdated: new Date('2024-02-15')
+      },
+      {
+        id: '3',
+        memberId,
+        planYear: 2024,
+        type: 'deductible',
+        category: 'dental',
+        individualLimit: 50,
+        individualMet: 0,
+        individualRemaining: 50,
+        lastUpdated: new Date('2024-01-01')
+      }
+    ];
+
+    return of(mockAccumulators).pipe(delay(350));
+  }
+
+  getClaimHistory(memberId: string): Observable<ClaimHistory[]> {
+    const mockClaimHistory: ClaimHistory[] = [
+      {
+        id: '1',
+        memberId,
+        year: 2024,
+        totalClaims: 8,
+        totalAmount: 2840.50,
+        totalPaid: 2420.30,
+        totalDenied: 0,
+        averageClaimAmount: 355.06,
+        mostFrequentProvider: 'City General Hospital',
+        mostCommonDiagnosis: 'Preventive Care'
+      },
+      {
+        id: '2',
+        memberId,
+        year: 2023,
+        totalClaims: 12,
+        totalAmount: 4200.75,
+        totalPaid: 3800.50,
+        totalDenied: 400.25,
+        averageClaimAmount: 350.06,
+        mostFrequentProvider: 'Dr. Smith Family Practice',
+        mostCommonDiagnosis: 'General Checkup'
+      }
+    ];
+
+    return of(mockClaimHistory).pipe(delay(400));
+  }
+
+  getCallHistory(memberId: string): Observable<CallHistory[]> {
+    const mockCallHistory: CallHistory[] = [
+      {
+        id: '1',
+        memberId,
+        callDate: new Date('2024-02-20'),
+        agent: 'Sarah Johnson',
+        duration: 12,
+        callType: 'benefit',
+        resolution: 'resolved',
+        notes: 'Member inquired about dental coverage limits. Provided benefit summary.',
+        followUpRequired: false
+      },
+      {
+        id: '2',
+        memberId,
+        callDate: new Date('2024-01-15'),
+        agent: 'Mike Rodriguez',
+        duration: 8,
+        callType: 'claim',
+        resolution: 'resolved',
+        notes: 'Assisted member with claim status inquiry for recent hospital visit.',
+        followUpRequired: false
+      },
+      {
+        id: '3',
+        memberId,
+        callDate: new Date('2023-12-10'),
+        agent: 'Jennifer Lee',
+        duration: 25,
+        callType: 'authorization',
+        resolution: 'escalated',
+        notes: 'Member needs prior authorization for MRI. Escalated to medical review team.',
+        followUpRequired: true,
+        followUpDate: new Date('2023-12-12')
+      }
+    ];
+
+    return of(mockCallHistory).pipe(delay(450));
+  }
+
+  getAuthorizationHistory(memberId: string): Observable<AuthorizationHistory[]> {
+    const mockAuthHistory: AuthorizationHistory[] = [
+      {
+        id: '1',
+        memberId,
+        requestDate: new Date('2024-01-05'),
+        serviceType: 'MRI - Lower Back',
+        provider: 'City Imaging Center',
+        status: 'approved',
+        approvedUnits: 1,
+        usedUnits: 1,
+        expirationDate: new Date('2024-07-05'),
+        reviewDate: new Date('2024-01-07'),
+        reviewer: 'Dr. Patricia Wilson'
+      },
+      {
+        id: '2',
+        memberId,
+        requestDate: new Date('2023-11-20'),
+        serviceType: 'Physical Therapy',
+        provider: 'Wellness Rehabilitation Center',
+        status: 'approved',
+        approvedUnits: 12,
+        usedUnits: 8,
+        expirationDate: new Date('2024-02-20'),
+        reviewDate: new Date('2023-11-22'),
+        reviewer: 'Dr. Mark Thompson'
+      },
+      {
+        id: '3',
+        memberId,
+        requestDate: new Date('2023-08-15'),
+        serviceType: 'Specialist Consultation',
+        provider: 'Cardiology Associates',
+        status: 'denied',
+        denialReason: 'Not medically necessary based on current symptoms',
+        reviewDate: new Date('2023-08-17'),
+        reviewer: 'Dr. Lisa Chen'
+      }
+    ];
+
+    return of(mockAuthHistory).pipe(delay(400));
   }
 }

@@ -1,9 +1,9 @@
-import { Component, signal, computed, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MemberLookupComponent } from './components/member-lookup.component';
-import { MemberDetailsComponent } from './components/member-details.component';
+import { Component, computed, inject, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { CallSessionComponent } from './components/call-session.component';
+import { MemberDetailsComponent } from './components/member-details.component';
+import { MemberLookupComponent } from './components/member-lookup.component';
 import { CallSessionService } from './services/call-session.service';
 
 @Component({

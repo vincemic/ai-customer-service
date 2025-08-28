@@ -14,47 +14,27 @@
         [attr.aria-selected]="activeTab() === 'demographics'"
         type="button"
       >
-        Demographics
+        Demographics & Family
       </button>
       <button 
         class="tab-button"
-        [class.active]="activeTab() === 'claims'"
-        (click)="setActiveTab('claims')"
+        [class.active]="activeTab() === 'data'"
+        (click)="setActiveTab('data')"
         role="tab"
-        [attr.aria-selected]="activeTab() === 'claims'"
+        [attr.aria-selected]="activeTab() === 'data'"
         type="button"
       >
-        Claims ({{ claims().length }})
+        Claims, Benefits & History
       </button>
       <button 
         class="tab-button"
-        [class.active]="activeTab() === 'benefits'"
-        (click)="setActiveTab('benefits')"
+        [class.active]="activeTab() === 'legacy'"
+        (click)="setActiveTab('legacy')"
         role="tab"
-        [attr.aria-selected]="activeTab() === 'benefits'"
+        [attr.aria-selected]="activeTab() === 'legacy'"
         type="button"
       >
-        Benefits
-      </button>
-      <button 
-        class="tab-button"
-        [class.active]="activeTab() === 'deductibles'"
-        (click)="setActiveTab('deductibles')"
-        role="tab"
-        [attr.aria-selected]="activeTab() === 'deductibles'"
-        type="button"
-      >
-        Deductibles
-      </button>
-      <button 
-        class="tab-button"
-        [class.active]="activeTab() === 'authorizations'"
-        (click)="setActiveTab('authorizations')"
-        role="tab"
-        [attr.aria-selected]="activeTab() === 'authorizations'"
-        type="button"
-      >
-        Prior Authorizations
+        Legacy View
       </button>
     </nav>
 
@@ -62,7 +42,19 @@
       @switch (activeTab()) {
         @case ('demographics') {
           <div class="demographics-panel" role="tabpanel">
-            <h3>Personal Information</h3>
+            <app-member-demographics [member]="member()"></app-member-demographics>
+          </div>
+        }
+
+        @case ('data') {
+          <div class="data-panel" role="tabpanel">
+            <app-member-data-view [member]="member()"></app-member-data-view>
+          </div>
+        }
+
+        @case ('legacy') {
+          <div class="legacy-panel" role="tabpanel">
+            <h3>Legacy Member Information View</h3>
             <div class="info-grid">
               <div class="info-item">
                 <label>Full Name:</label>
@@ -102,12 +94,9 @@
                 }
               </div>
             }
-          </div>
-        }
 
-        @case ('claims') {
-          <div class="claims-panel" role="tabpanel">
-            <h3>Claims History</h3>
+            <!-- Legacy Claims Section -->
+            <h3>Claims History (Legacy View)</h3>
             @if (claims().length === 0) {
               <p class="no-data">No claims found for this member.</p>
             } @else {
@@ -133,140 +122,6 @@
                   </div>
                 }
               </div>
-            }
-          </div>
-        }
-
-        @case ('benefits') {
-          <div class="benefits-panel" role="tabpanel">
-            <h3>Benefit Information</h3>
-            @if (benefits().length === 0) {
-              <p class="no-data">No benefits information available.</p>
-            } @else {
-              @for (benefit of benefits(); track benefit.id) {
-                <div class="benefit-card">
-                  <h4>{{ benefit.benefitType }} - {{ benefit.description }}</h4>
-                  <div class="benefit-details">
-                    <div class="benefit-item">
-                      <label>Coverage Amount:</label>
-                      <span>{{ formatCurrency(benefit.coverageAmount) }}</span>
-                    </div>
-                    <div class="benefit-item">
-                      <label>Deductible:</label>
-                      <span>{{ formatCurrency(benefit.deductible) }}</span>
-                    </div>
-                    <div class="benefit-item">
-                      <label>Copay:</label>
-                      <span>{{ formatCurrency(benefit.copay) }}</span>
-                    </div>
-                    <div class="benefit-item">
-                      <label>Coinsurance:</label>
-                      <span>{{ benefit.coinsurance }}%</span>
-                    </div>
-                    <div class="benefit-item">
-                      <label>Plan Year:</label>
-                      <span>{{ benefit.planYear }}</span>
-                    </div>
-                  </div>
-                </div>
-              }
-            }
-          </div>
-        }
-
-        @case ('deductibles') {
-          <div class="deductibles-panel" role="tabpanel">
-            <h3>Deductible Information</h3>
-            @if (deductibles().length === 0) {
-              <p class="no-data">No deductible information available.</p>
-            } @else {
-              @for (deductible of deductibles(); track deductible.id) {
-                <div class="deductible-card">
-                  <h4>{{ deductible.planYear }} Plan Year</h4>
-                  <div class="deductible-grid">
-                    <div class="deductible-section">
-                      <h5>Individual</h5>
-                      <div class="deductible-item">
-                        <label>Annual Deductible:</label>
-                        <span>{{ formatCurrency(deductible.individualDeductible) }}</span>
-                      </div>
-                      <div class="deductible-item">
-                        <label>Met to Date:</label>
-                        <span>{{ formatCurrency(deductible.individualMet) }}</span>
-                      </div>
-                      <div class="deductible-item">
-                        <label>Remaining:</label>
-                        <span>{{ formatCurrency(deductible.remainingIndividual) }}</span>
-                      </div>
-                    </div>
-                    <div class="deductible-section">
-                      <h5>Family</h5>
-                      <div class="deductible-item">
-                        <label>Annual Deductible:</label>
-                        <span>{{ formatCurrency(deductible.familyDeductible) }}</span>
-                      </div>
-                      <div class="deductible-item">
-                        <label>Met to Date:</label>
-                        <span>{{ formatCurrency(deductible.familyMet) }}</span>
-                      </div>
-                      <div class="deductible-item">
-                        <label>Remaining:</label>
-                        <span>{{ formatCurrency(deductible.remainingFamily) }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              }
-            }
-          </div>
-        }
-
-        @case ('authorizations') {
-          <div class="authorizations-panel" role="tabpanel">
-            <h3>Prior Authorizations</h3>
-            @if (authorizations().length === 0) {
-              <p class="no-data">No prior authorizations found.</p>
-            } @else {
-              @for (auth of authorizations(); track auth.id) {
-                <div class="auth-card">
-                  <div class="auth-header">
-                    <h4>{{ auth.serviceType }}</h4>
-                    <span [class]="getStatusClass(auth.status)">{{ auth.status | titlecase }}</span>
-                  </div>
-                  <div class="auth-details">
-                    <div class="auth-item">
-                      <label>Authorization Number:</label>
-                      <span>{{ auth.authNumber }}</span>
-                    </div>
-                    <div class="auth-item">
-                      <label>Provider:</label>
-                      <span>{{ auth.provider }}</span>
-                    </div>
-                    <div class="auth-item">
-                      <label>Request Date:</label>
-                      <span>{{ formatDate(auth.requestDate) }}</span>
-                    </div>
-                    @if (auth.approvedDate) {
-                      <div class="auth-item">
-                        <label>Approved Date:</label>
-                        <span>{{ formatDate(auth.approvedDate) }}</span>
-                      </div>
-                    }
-                    @if (auth.expirationDate) {
-                      <div class="auth-item">
-                        <label>Expiration Date:</label>
-                        <span>{{ formatDate(auth.expirationDate) }}</span>
-                      </div>
-                    }
-                    @if (auth.notes) {
-                      <div class="auth-item notes">
-                        <label>Notes:</label>
-                        <span>{{ auth.notes }}</span>
-                      </div>
-                    }
-                  </div>
-                </div>
-              }
             }
           </div>
         }

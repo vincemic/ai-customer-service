@@ -1,20 +1,22 @@
-import { Component, signal, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, input, signal, OnInit } from '@angular/core';
+import { Benefit, Claim, Deductible, Member, PriorAuthorization } from '../models/member.model';
 import { MemberService } from '../services/member.service';
-import { Member, Claim, Benefit, Deductible, PriorAuthorization } from '../models/member.model';
+import { MemberDemographicsComponent } from './member-demographics/member-demographics.component';
+import { MemberDataViewComponent } from './member-data-view/member-data-view.component';
 
 @Component({
   selector: 'app-member-details',
   templateUrl: './member-details.component.html',
   styleUrls: ['./member-details.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, MemberDemographicsComponent, MemberDataViewComponent]
 })
-export class MemberDetailsComponent {
+export class MemberDetailsComponent implements OnInit {
   private memberService = inject(MemberService);
   
   member = input.required<Member>();
   
-  activeTab = signal<'demographics' | 'claims' | 'benefits' | 'deductibles' | 'authorizations'>('demographics');
+  activeTab = signal<'demographics' | 'data' | 'legacy'>('demographics');
   
   claims = signal<Claim[]>([]);
   benefits = signal<Benefit[]>([]);
@@ -48,7 +50,7 @@ export class MemberDetailsComponent {
     });
   }
 
-  setActiveTab(tab: 'demographics' | 'claims' | 'benefits' | 'deductibles' | 'authorizations'): void {
+  setActiveTab(tab: 'demographics' | 'data' | 'legacy'): void {
     this.activeTab.set(tab);
   }
 

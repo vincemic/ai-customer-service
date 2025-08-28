@@ -1,0 +1,214 @@
+<div class="demographics-container">
+  <div class="demographics-header">
+    <h2>Member Demographics</h2>
+    <div class="tabs">
+      <button 
+        [class.active]="selectedTab() === 'primary'"
+        (click)="setSelectedTab('primary')">
+        Primary Member
+      </button>
+      <button 
+        [class.active]="selectedTab() === 'dependents'"
+        (click)="setSelectedTab('dependents')">
+        Dependents ({{ activeDependents().length }})
+      </button>
+      <button 
+        [class.active]="selectedTab() === 'contacts'"
+        (click)="setSelectedTab('contacts')">
+        Emergency Contacts
+      </button>
+    </div>
+  </div>
+
+  <div class="demographics-content">
+    @if (selectedTab() === 'primary') {
+      <div class="primary-member-section">
+        <div class="member-card">
+          <div class="member-header">
+            <h3>{{ member().firstName }} {{ member().lastName }}</h3>
+            <span class="member-id">ID: {{ member().memberId }}</span>
+          </div>
+          
+          <div class="member-details">
+            <div class="detail-grid">
+              <div class="detail-item">
+                <label>Date of Birth:</label>
+                <span>{{ formatDate(member().dateOfBirth) }} (Age {{ age() }})</span>
+              </div>
+              
+              <div class="detail-item">
+                <label>Phone:</label>
+                <span>{{ formatPhone(member().phone) }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <label>Email:</label>
+                <span>{{ member().email }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <label>Address:</label>
+                <span>
+                  {{ member().address.street }}<br>
+                  {{ member().address.city }}, {{ member().address.state }} {{ member().address.zipCode }}
+                </span>
+              </div>
+              
+              @if (member().enrollmentDate) {
+                <div class="detail-item">
+                  <label>Enrollment Date:</label>
+                  <span>{{ formatDate(member().enrollmentDate!) }}</span>
+                </div>
+              }
+              
+              @if (member().planName) {
+                <div class="detail-item">
+                  <label>Plan:</label>
+                  <span>{{ member().planName }} ({{ member().planCode }})</span>
+                </div>
+              }
+              
+              @if (member().groupNumber) {
+                <div class="detail-item">
+                  <label>Group Number:</label>
+                  <span>{{ member().groupNumber }}</span>
+                </div>
+              }
+              
+              @if (member().employerName) {
+                <div class="detail-item">
+                  <label>Employer:</label>
+                  <span>{{ member().employerName }}</span>
+                </div>
+              }
+              
+              @if (member().primaryCarePhysician) {
+                <div class="detail-item">
+                  <label>Primary Care Physician:</label>
+                  <span>{{ member().primaryCarePhysician }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (selectedTab() === 'dependents') {
+      <div class="dependents-section">
+        @if (activeDependents().length > 0) {
+          <div class="dependents-grid">
+            @for (dependent of activeDependents(); track dependent.id) {
+              <div class="dependent-card">
+                <div class="dependent-header">
+                  <h4>{{ dependent.firstName }} {{ dependent.lastName }}</h4>
+                  <span class="relationship">{{ dependent.relationship }}</span>
+                  <span class="status active">Active</span>
+                </div>
+                
+                <div class="dependent-details">
+                  <div class="detail-item">
+                    <label>Member ID:</label>
+                    <span>{{ dependent.memberId }}</span>
+                  </div>
+                  
+                  <div class="detail-item">
+                    <label>Date of Birth:</label>
+                    <span>{{ formatDate(dependent.dateOfBirth) }} (Age {{ calculateAge(dependent.dateOfBirth) }})</span>
+                  </div>
+                  
+                  @if (dependent.enrollmentDate) {
+                    <div class="detail-item">
+                      <label>Enrollment Date:</label>
+                      <span>{{ formatDate(dependent.enrollmentDate!) }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-data">
+            <p>No active dependents found</p>
+          </div>
+        }
+        
+        @if (inactiveDependents().length > 0) {
+          <div class="inactive-section">
+            <h4>Inactive Dependents</h4>
+            <div class="dependents-grid">
+              @for (dependent of inactiveDependents(); track dependent.id) {
+                <div class="dependent-card inactive">
+                  <div class="dependent-header">
+                    <h4>{{ dependent.firstName }} {{ dependent.lastName }}</h4>
+                    <span class="relationship">{{ dependent.relationship }}</span>
+                    <span class="status inactive">Terminated</span>
+                  </div>
+                  
+                  <div class="dependent-details">
+                    <div class="detail-item">
+                      <label>Member ID:</label>
+                      <span>{{ dependent.memberId }}</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                      <label>Date of Birth:</label>
+                      <span>{{ formatDate(dependent.dateOfBirth) }} (Age {{ calculateAge(dependent.dateOfBirth) }})</span>
+                    </div>
+                    
+                    @if (dependent.enrollmentDate) {
+                      <div class="detail-item">
+                        <label>Enrollment Date:</label>
+                        <span>{{ formatDate(dependent.enrollmentDate!) }}</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    @if (selectedTab() === 'contacts') {
+      <div class="contacts-section">
+        @if (member().emergencyContact) {
+          <div class="contact-card">
+            <div class="contact-header">
+              <h4>Emergency Contact</h4>
+            </div>
+            
+            <div class="contact-details">
+              <div class="detail-item">
+                <label>Name:</label>
+                <span>{{ member().emergencyContact!.name }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <label>Relationship:</label>
+                <span>{{ member().emergencyContact!.relationship }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <label>Phone:</label>
+                <span>{{ formatPhone(member().emergencyContact!.phone) }}</span>
+              </div>
+              
+              @if (member().emergencyContact!.email) {
+                <div class="detail-item">
+                  <label>Email:</label>
+                  <span>{{ member().emergencyContact!.email }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        } @else {
+          <div class="no-data">
+            <p>No emergency contact information on file</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
