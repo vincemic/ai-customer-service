@@ -1,0 +1,131 @@
+<div class="member-lookup-container">
+  <h1>Member Lookup</h1>
+  
+  @if (!foundMember()) {
+    <form [formGroup]="searchForm" (ngSubmit)="onSearchMember()" class="search-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="memberId">Member ID (Optional)</label>
+          <input 
+            type="text" 
+            id="memberId" 
+            formControlName="memberId" 
+            placeholder="M123456789"
+            [class.error]="searchForm.get('memberId')?.invalid && searchForm.get('memberId')?.touched"
+          />
+          @if (searchForm.get('memberId')?.invalid && searchForm.get('memberId')?.touched) {
+            <div class="error-message">Please enter a valid Member ID (e.g., M123456789)</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name (Optional)</label>
+          <input 
+            type="text" 
+            id="firstName" 
+            formControlName="firstName"
+            placeholder="Enter first name"
+            [class.error]="searchForm.get('firstName')?.invalid && searchForm.get('firstName')?.touched"
+          />
+          @if (searchForm.get('firstName')?.invalid && searchForm.get('firstName')?.touched) {
+            <div class="error-message">First name must be at least 2 characters</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input 
+            type="text" 
+            id="lastName" 
+            formControlName="lastName"
+            placeholder="Enter last name"
+            [class.error]="searchForm.get('lastName')?.invalid && searchForm.get('lastName')?.touched"
+            required
+          />
+          @if (searchForm.get('lastName')?.invalid && searchForm.get('lastName')?.touched) {
+            <div class="error-message">Last name is required and must be at least 2 characters</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth *</label>
+          <input 
+            type="date" 
+            id="dateOfBirth" 
+            formControlName="dateOfBirth"
+            [class.error]="searchForm.get('dateOfBirth')?.invalid && searchForm.get('dateOfBirth')?.touched"
+            required
+          />
+          @if (searchForm.get('dateOfBirth')?.invalid && searchForm.get('dateOfBirth')?.touched) {
+            <div class="error-message">Date of birth is required</div>
+          }
+        </div>
+      </div>
+
+      @if (searchError()) {
+        <div class="error-banner" role="alert">
+          {{ searchError() }}
+        </div>
+      }
+
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          [disabled]="!canSearch()"
+          class="btn btn-primary"
+        >
+          @if (isLoading()) {
+            <span class="loading">Searching...</span>
+          } @else {
+            Search Member
+          }
+        </button>
+        
+        <button 
+          type="button" 
+          (click)="onClearSearch()"
+          class="btn btn-secondary"
+        >
+          Clear
+        </button>
+      </div>
+    </form>
+  }
+
+  @if (foundMember()) {
+    <div class="member-found" role="region" aria-label="Member Information">
+      <h2>Member Found</h2>
+      <div class="member-info">
+        <div class="info-group">
+          <strong>Name:</strong> {{ foundMember()!.firstName }} {{ foundMember()!.lastName }}
+        </div>
+        <div class="info-group">
+          <strong>Member ID:</strong> {{ foundMember()!.memberId }}
+        </div>
+        <div class="info-group">
+          <strong>Date of Birth:</strong> {{ foundMember()!.dateOfBirth | date:'MM/dd/yyyy' }}
+        </div>
+        <div class="info-group">
+          <strong>Phone:</strong> {{ foundMember()!.phone }}
+        </div>
+        <div class="info-group">
+          <strong>Email:</strong> {{ foundMember()!.email }}
+        </div>
+      </div>
+      
+      <div class="member-actions">
+        <button 
+          type="button" 
+          (click)="onClearSearch()"
+          class="btn btn-secondary"
+        >
+          Search New Member
+        </button>
+      </div>
+    </div>
+  }
+</div>

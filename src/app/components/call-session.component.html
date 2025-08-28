@@ -1,0 +1,140 @@
+<div class="call-session-container">
+  @if (currentSession()) {
+    <div class="call-header">
+      <div class="call-info">
+        <h2>Active Call Session</h2>
+        <div class="call-details">
+          <div class="detail-item">
+            <label>Agent:</label>
+            <span>{{ currentSession()!.agent }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Start Time:</label>
+            <span>{{ formatTime(currentSession()!.startTime) }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Duration:</label>
+            <span class="duration">{{ callDuration() }}</span>
+          </div>
+          @if (currentSession()!.member) {
+            <div class="detail-item">
+              <label>Member:</label>
+              <span>{{ currentSession()!.member!.firstName }} {{ currentSession()!.member!.lastName }}</span>
+            </div>
+          }
+        </div>
+      </div>
+      
+      <div class="call-actions">
+        @if (currentSession()!.status === 'active') {
+          <button 
+            type="button" 
+            (click)="onEndCall()"
+            class="btn btn-danger"
+            [attr.aria-label]="'End call for ' + currentSession()!.agent"
+          >
+            End Call
+          </button>
+        } @else if (currentSession()!.status === 'completed') {
+          <div class="call-completed">
+            <span class="completed-badge">Call Completed</span>
+            <button 
+              type="button" 
+              (click)="startNewCall()"
+              class="btn btn-primary"
+            >
+              Start New Call
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (currentSession()!.status === 'active') {
+      <div class="call-notes-section">
+        <label for="callNotes">Call Notes:</label>
+        <textarea 
+          id="callNotes"
+          [value]="currentSession()!.callNotes"
+          (input)="updateCallNotes($event)"
+          placeholder="Enter notes about this call..."
+          rows="6"
+          class="call-notes-textarea"
+        ></textarea>
+        <div class="notes-help">
+          <small>Use this area to document important information discussed during the call.</small>
+        </div>
+      </div>
+    }
+
+    @if (currentSession()!.status === 'completed' && currentSession()!.callNotes) {
+      <div class="completed-notes">
+        <h3>Final Call Notes</h3>
+        <div class="notes-display">
+          {{ currentSession()!.callNotes }}
+        </div>
+        @if (currentSession()!.endTime) {
+          <div class="completion-info">
+            <small>Call ended at {{ formatTime(currentSession()!.endTime!) }}</small>
+          </div>
+        }
+      </div>
+    }
+  } @else {
+    <div class="no-active-call">
+      <h2>No Active Call</h2>
+      <p>Start a new call session to begin assisting members.</p>
+      <button 
+        type="button" 
+        (click)="startNewCall()"
+        class="btn btn-primary btn-large"
+      >
+        Start New Call
+      </button>
+    </div>
+  }
+
+  <!-- End Call Modal -->
+  @if (showEndCallModal()) {
+    <div class="modal-overlay" (click)="cancelEndCall()">
+      <div class="modal-content" (click)="$event.stopPropagation()" role="dialog" aria-labelledby="endCallTitle">
+        <h3 id="endCallTitle">End Call Session</h3>
+        
+        <form [formGroup]="endCallForm" (ngSubmit)="confirmEndCall()">
+          <div class="form-group">
+            <label for="finalNotes">Final Notes (Optional):</label>
+            <textarea 
+              id="finalNotes"
+              formControlName="finalNotes"
+              placeholder="Add any final notes before ending the call..."
+              rows="4"
+              class="form-textarea"
+            ></textarea>
+            @if (endCallForm.get('finalNotes')?.invalid && endCallForm.get('finalNotes')?.touched) {
+              <div class="error-message">
+                Notes cannot exceed 500 characters.
+              </div>
+            }
+          </div>
+
+          <div class="modal-actions">
+            <button 
+              type="button" 
+              (click)="cancelEndCall()"
+              class="btn btn-secondary"
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              class="btn btn-danger"
+              [disabled]="endCallForm.invalid"
+            >
+              End Call
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,34 @@
+<div class="app-container">
+  <header class="app-header">
+    <h1>{{ title() }}</h1>
+    <div class="header-info">
+      <p>Health Insurance Call Center System</p>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Call Session Management -->
+    <section class="call-session-section">
+      <app-call-session></app-call-session>
+    </section>
+
+    <!-- Member Lookup and Details -->
+    @if (currentSession()?.status === 'active') {
+      <section class="member-section">
+        @if (!memberIdentified()) {
+          <!-- Show member lookup when no member is identified -->
+          <app-member-lookup></app-member-lookup>
+        } @else {
+          <!-- Show member details when member is identified -->
+          <app-member-details [member]="currentSession()!.member!"></app-member-details>
+        }
+      </section>
+    }
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2024 Health Insurance Call Center. All rights reserved.</p>
+  </footer>
+</div>
+
+<router-outlet></router-outlet>
