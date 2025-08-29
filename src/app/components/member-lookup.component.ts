@@ -185,4 +185,30 @@ export class MemberLookupComponent {
     this.memberStateService.setCurrentMember(member);
     this.agentSessionService.setCallMember(member.id);
   }
+
+  // Helper methods for enhanced contact information display
+  getPrimaryEmail(member: Member): string {
+    // First try to find a primary email from the new emailAddresses array
+    if (member.emailAddresses && member.emailAddresses.length > 0) {
+      const primaryEmail = member.emailAddresses.find(email => email.isPrimary && email.isActive);
+      if (primaryEmail) {
+        return primaryEmail.email;
+      }
+      // If no primary, return the first active email
+      const firstActiveEmail = member.emailAddresses.find(email => email.isActive);
+      if (firstActiveEmail) {
+        return firstActiveEmail.email;
+      }
+    }
+    // Fall back to legacy email field
+    return member.email || 'No email on file';
+  }
+
+  getAddressCount(member: Member): number {
+    if (member.addresses && member.addresses.length > 0) {
+      return member.addresses.filter(addr => addr.isActive).length;
+    }
+    // If no addresses in new format, assume 1 for legacy address
+    return member.address ? 1 : 0;
+  }
 }

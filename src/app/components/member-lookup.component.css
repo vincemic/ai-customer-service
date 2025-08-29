@@ -608,6 +608,90 @@
   line-height: 1.6;
 }
 
+/* Contact List Styles */
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-sm);
+}
+
+.contact-item {
+  background: var(--background-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  transition: all var(--transition-fast);
+}
+
+.contact-item.primary {
+  border-left: 4px solid var(--vscode-blue);
+  background: var(--vscode-list-focus-bg);
+}
+
+.contact-item:hover {
+  background: var(--background-hover);
+  border-color: var(--border-light);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.contact-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-small);
+}
+
+.contact-type {
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-dates {
+  color: var(--text-secondary);
+  font-size: var(--font-size-small);
+  font-style: italic;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.primary {
+  background: var(--vscode-blue);
+  color: var(--text-bright);
+}
+
+.badge.verified {
+  background: var(--success);
+  color: var(--text-bright);
+}
+
+.badge.unverified {
+  background: var(--warning);
+  color: var(--background-primary);
+}
+
+.badge.inactive {
+  background: var(--error);
+  color: var(--text-bright);
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .results-grid {
@@ -677,4 +761,182 @@
 .member-card:focus-visible {
   outline: 2px solid var(--vscode-blue);
   outline-offset: 2px;
+}
+
+/* Family Members Styles */
+.family-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.family-member-card {
+  background: var(--background-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  transition: all var(--transition-fast);
+}
+
+.family-member-card:hover {
+  background: var(--background-hover);
+  border-color: var(--border-light);
+}
+
+.family-member-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.family-member-header h4 {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--text-bright);
+  font-weight: var(--font-weight-bold);
+}
+
+.relationship-badge {
+  background: var(--vscode-badge-background);
+  color: var(--vscode-badge-foreground);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.family-member-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.family-member-info {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--spacing-sm);
+  align-items: start;
+}
+
+.family-member-info.full-width {
+  grid-column: 1 / -1;
+  display: block;
+}
+
+.family-member-info .label {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.family-member-info .value {
+  color: var(--text-bright);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.family-member-info .value.address {
+  line-height: 1.4;
+}
+
+.family-member-info .value.email {
+  word-break: break-word;
+  color: var(--vscode-blue);
+}
+
+.family-member-info .value.monospace {
+  font-family: var(--font-family-mono);
+  background: var(--background-secondary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-primary);
+}
+
+.family-member-info .value.status-active {
+  color: var(--success);
+}
+
+.family-member-info .value.status-inactive {
+  color: var(--error);
+}
+
+.family-member-info .value.status-pending {
+  color: var(--warning);
+}
+
+/* Compact contact lists for family members */
+.contact-list-compact {
+  margin-top: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.contact-item-compact {
+  background: var(--background-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  transition: all var(--transition-fast);
+}
+
+.contact-item-compact:hover {
+  background: var(--background-hover);
+  border-color: var(--border-light);
+}
+
+.contact-item-compact.primary {
+  border-left: 3px solid var(--vscode-blue);
+  background: var(--vscode-list-focus-bg);
+}
+
+.contact-meta-compact {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.contact-meta-compact .contact-type {
+  font-size: var(--font-size-small);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive layout for family members */
+@media (max-width: 768px) {
+  .family-member-info {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+  }
+  
+  .family-member-info .label {
+    font-weight: var(--font-weight-bold);
+  }
+  
+  .family-member-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+  
+  .family-members-list {
+    gap: var(--spacing-md);
+  }
+  
+  .family-member-card {
+    padding: var(--spacing-md);
+  }
 }

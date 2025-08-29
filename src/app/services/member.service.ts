@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Accumulator, AuthorizationHistory, Benefit, CallHistory, Claim, ClaimHistory, Deductible, Member, PriorAuthorization } from '../models/member.model';
+import { Accumulator, Address, AuthorizationHistory, Benefit, CallHistory, Claim, ClaimHistory, Deductible, EmailAddress, Member, PriorAuthorization } from '../models/member.model';
 import { LoadingService } from './loading.service';
 
 @Injectable({
@@ -14,14 +14,59 @@ export class MemberService {
       firstName: 'John',
       lastName: 'Doe',
       dateOfBirth: new Date('1985-06-15'),
-      email: 'john.doe@email.com',
+      email: 'john.doe@email.com', // Legacy field
       phone: '555-123-4567',
-      address: {
+      address: { // Legacy field
         street: '123 Main St',
         city: 'Anytown',
         state: 'CA',
         zipCode: '12345'
       },
+      addresses: [
+        {
+          id: 'addr_1',
+          type: 'home',
+          street: '123 Main St',
+          city: 'Anytown',
+          state: 'CA',
+          zipCode: '12345',
+          country: 'USA',
+          isPrimary: true,
+          isActive: true
+        },
+        {
+          id: 'addr_2',
+          type: 'work',
+          street: '456 Business Blvd',
+          street2: 'Suite 100',
+          city: 'Anytown',
+          state: 'CA',
+          zipCode: '12346',
+          country: 'USA',
+          isPrimary: false,
+          isActive: true
+        }
+      ],
+      emailAddresses: [
+        {
+          id: 'email_1',
+          type: 'personal',
+          email: 'john.doe@email.com',
+          isPrimary: true,
+          isActive: true,
+          isVerified: true,
+          verificationDate: new Date('2023-01-15')
+        },
+        {
+          id: 'email_2',
+          type: 'work',
+          email: 'john.doe@company.com',
+          isPrimary: false,
+          isActive: true,
+          isVerified: true,
+          verificationDate: new Date('2023-02-01')
+        }
+      ],
       familyMembers: [
         {
           id: '2',
@@ -29,7 +74,32 @@ export class MemberService {
           lastName: 'Doe',
           dateOfBirth: new Date('1987-03-22'),
           relationship: 'Spouse',
-          memberId: 'M123456789'
+          memberId: 'M123456789',
+          phone: '555-123-4568',
+          addresses: [
+            {
+              id: 'addr_3',
+              type: 'home',
+              street: '123 Main St',
+              city: 'Anytown',
+              state: 'CA',
+              zipCode: '12345',
+              country: 'USA',
+              isPrimary: true,
+              isActive: true
+            }
+          ],
+          emailAddresses: [
+            {
+              id: 'email_3',
+              type: 'personal',
+              email: 'jane.doe@email.com',
+              isPrimary: true,
+              isActive: true,
+              isVerified: true,
+              verificationDate: new Date('2023-01-20')
+            }
+          ]
         },
         {
           id: '3',
@@ -37,7 +107,21 @@ export class MemberService {
           lastName: 'Doe',
           dateOfBirth: new Date('2010-09-10'),
           relationship: 'Child',
-          memberId: 'M123456789'
+          memberId: 'M123456789',
+          addresses: [
+            {
+              id: 'addr_4',
+              type: 'home',
+              street: '123 Main St',
+              city: 'Anytown',
+              state: 'CA',
+              zipCode: '12345',
+              country: 'USA',
+              isPrimary: true,
+              isActive: true
+            }
+          ],
+          emailAddresses: []
         }
       ]
     },
@@ -47,14 +131,49 @@ export class MemberService {
       firstName: 'Alice',
       lastName: 'Smith',
       dateOfBirth: new Date('1990-12-03'),
-      email: 'alice.smith@email.com',
+      email: 'alice.smith@email.com', // Legacy field
       phone: '555-987-6543',
-      address: {
+      address: { // Legacy field
         street: '456 Oak Ave',
         city: 'Springfield',
         state: 'IL',
         zipCode: '54321'
       },
+      addresses: [
+        {
+          id: 'addr_5',
+          type: 'home',
+          street: '456 Oak Ave',
+          city: 'Springfield',
+          state: 'IL',
+          zipCode: '54321',
+          country: 'USA',
+          isPrimary: true,
+          isActive: true
+        },
+        {
+          id: 'addr_6',
+          type: 'mailing',
+          street: 'PO Box 789',
+          city: 'Springfield',
+          state: 'IL',
+          zipCode: '54322',
+          country: 'USA',
+          isPrimary: false,
+          isActive: true
+        }
+      ],
+      emailAddresses: [
+        {
+          id: 'email_4',
+          type: 'personal',
+          email: 'alice.smith@email.com',
+          isPrimary: true,
+          isActive: true,
+          isVerified: true,
+          verificationDate: new Date('2023-03-10')
+        }
+      ],
       familyMembers: []
     },
     {
@@ -63,14 +182,46 @@ export class MemberService {
       firstName: 'Robert',
       lastName: 'Johnson',
       dateOfBirth: new Date('1978-04-12'),
-      email: 'robert.johnson@email.com',
+      email: 'robert.johnson@email.com', // Legacy field
       phone: '555-111-2222',
-      address: {
+      address: { // Legacy field
         street: '789 Pine Street',
         city: 'Madison',
         state: 'WI',
         zipCode: '53703'
       },
+      addresses: [
+        {
+          id: 'addr_7',
+          type: 'home',
+          street: '789 Pine Street',
+          city: 'Madison',
+          state: 'WI',
+          zipCode: '53703',
+          country: 'USA',
+          isPrimary: true,
+          isActive: true
+        }
+      ],
+      emailAddresses: [
+        {
+          id: 'email_5',
+          type: 'personal',
+          email: 'robert.johnson@email.com',
+          isPrimary: true,
+          isActive: true,
+          isVerified: true,
+          verificationDate: new Date('2023-01-05')
+        },
+        {
+          id: 'email_6',
+          type: 'alternate',
+          email: 'rjohnson.backup@email.com',
+          isPrimary: false,
+          isActive: true,
+          isVerified: false
+        }
+      ],
       familyMembers: []
     },
     {
@@ -79,14 +230,52 @@ export class MemberService {
       firstName: 'Sarah',
       lastName: 'Johnson',
       dateOfBirth: new Date('1982-09-25'),
-      email: 'sarah.johnson@email.com',
+      email: 'sarah.johnson@email.com', // Legacy field
       phone: '555-444-3333',
-      address: {
+      address: { // Legacy field
         street: '321 Elm Drive',
         city: 'Portland',
         state: 'OR',
         zipCode: '97201'
       },
+      addresses: [
+        {
+          id: 'addr_8',
+          type: 'home',
+          street: '321 Elm Drive',
+          city: 'Portland',
+          state: 'OR',
+          zipCode: '97201',
+          country: 'USA',
+          isPrimary: true,
+          isActive: true
+        },
+        {
+          id: 'addr_9',
+          type: 'temporary',
+          street: '555 Hotel Lane',
+          street2: 'Room 301',
+          city: 'Seattle',
+          state: 'WA',
+          zipCode: '98101',
+          country: 'USA',
+          isPrimary: false,
+          isActive: true,
+          effectiveDate: new Date('2024-02-01'),
+          expirationDate: new Date('2024-04-01')
+        }
+      ],
+      emailAddresses: [
+        {
+          id: 'email_7',
+          type: 'personal',
+          email: 'sarah.johnson@email.com',
+          isPrimary: true,
+          isActive: true,
+          isVerified: true,
+          verificationDate: new Date('2023-02-14')
+        }
+      ],
       familyMembers: []
     },
     {
@@ -95,14 +284,59 @@ export class MemberService {
       firstName: 'Michael',
       lastName: 'Smith',
       dateOfBirth: new Date('1975-11-08'),
-      email: 'michael.smith@email.com',
+      email: 'michael.smith@email.com', // Legacy field
       phone: '555-888-7777',
-      address: {
+      address: { // Legacy field
         street: '654 Maple Avenue',
         city: 'Austin',
         state: 'TX',
         zipCode: '73301'
       },
+      addresses: [
+        {
+          id: 'addr_10',
+          type: 'home',
+          street: '654 Maple Avenue',
+          city: 'Austin',
+          state: 'TX',
+          zipCode: '73301',
+          country: 'USA',
+          isPrimary: true,
+          isActive: true
+        },
+        {
+          id: 'addr_11',
+          type: 'billing',
+          street: '123 Financial Plaza',
+          street2: 'Apt 4B',
+          city: 'Austin',
+          state: 'TX',
+          zipCode: '73302',
+          country: 'USA',
+          isPrimary: false,
+          isActive: true
+        }
+      ],
+      emailAddresses: [
+        {
+          id: 'email_8',
+          type: 'personal',
+          email: 'michael.smith@email.com',
+          isPrimary: true,
+          isActive: true,
+          isVerified: true,
+          verificationDate: new Date('2023-01-01')
+        },
+        {
+          id: 'email_9',
+          type: 'work',
+          email: 'msmith@techcorp.com',
+          isPrimary: false,
+          isActive: true,
+          isVerified: true,
+          verificationDate: new Date('2023-01-15')
+        }
+      ],
       familyMembers: []
     }
   ];

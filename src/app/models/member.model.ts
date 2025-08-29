@@ -1,17 +1,45 @@
+export interface Address {
+  id: string;
+  type: 'home' | 'work' | 'mailing' | 'billing' | 'temporary' | 'other';
+  street: string;
+  street2?: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country?: string;
+  isPrimary: boolean;
+  isActive: boolean;
+  effectiveDate?: Date;
+  expirationDate?: Date;
+}
+
+export interface EmailAddress {
+  id: string;
+  type: 'personal' | 'work' | 'alternate' | 'other';
+  email: string;
+  isPrimary: boolean;
+  isActive: boolean;
+  isVerified: boolean;
+  verificationDate?: Date;
+}
+
 export interface Member {
   id: string;
   memberId: string;
   firstName: string;
   lastName: string;
   dateOfBirth: Date;
-  email: string;
+  email: string; // Legacy field - kept for backward compatibility
   phone: string;
-  address: {
+  address: { // Legacy field - kept for backward compatibility
     street: string;
     city: string;
     state: string;
     zipCode: string;
   };
+  // New enhanced fields
+  addresses: Address[];
+  emailAddresses: EmailAddress[];
   familyMembers: FamilyMember[];
   enrollmentDate?: Date;
   planCode?: string;
@@ -27,6 +55,7 @@ export interface EmergencyContact {
   relationship: string;
   phone: string;
   email?: string;
+  address?: Address;
 }
 
 export interface FamilyMember {
@@ -39,6 +68,10 @@ export interface FamilyMember {
   isSubscriber?: boolean;
   enrollmentDate?: Date;
   status?: 'active' | 'inactive' | 'terminated';
+  // Enhanced contact information
+  addresses: Address[];
+  emailAddresses: EmailAddress[];
+  phone?: string;
 }
 
 export interface Claim {

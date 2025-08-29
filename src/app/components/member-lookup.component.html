@@ -174,8 +174,17 @@
               
               <div class="member-detail">
                 <span class="detail-label">Email:</span>
-                <span class="detail-value email">{{ member.email }}</span>
+                <span class="detail-value email">
+                  {{ getPrimaryEmail(member) }}
+                </span>
               </div>
+              
+              @if (getAddressCount(member) > 1) {
+                <div class="member-detail">
+                  <span class="detail-label">Addresses:</span>
+                  <span class="detail-value">{{ getAddressCount(member) }} on file</span>
+                </div>
+              }
             </div>
             
             <div class="card-action">
@@ -241,27 +250,193 @@
                 <label>Phone Number</label>
                 <span class="value monospace">{{ selectedMember()!.phone }}</span>
               </div>
+              
+              <!-- Primary Email (Legacy) -->
               <div class="info-item">
-                <label>Email Address</label>
+                <label>Primary Email</label>
                 <span class="value email">{{ selectedMember()!.email }}</span>
               </div>
+              
+              <!-- All Email Addresses -->
+              @if (selectedMember()!.emailAddresses && selectedMember()!.emailAddresses.length > 0) {
+                <div class="info-item full-width">
+                  <label>Email Addresses</label>
+                  <div class="contact-list">
+                    @for (emailAddr of selectedMember()!.emailAddresses; track emailAddr.id) {
+                      <div class="contact-item" [class.primary]="emailAddr.isPrimary">
+                        <div class="contact-info">
+                          <span class="value email">{{ emailAddr.email }}</span>
+                          <div class="contact-meta">
+                            <span class="contact-type">{{ emailAddr.type | titlecase }}</span>
+                            @if (emailAddr.isPrimary) {
+                              <span class="badge primary">Primary</span>
+                            }
+                            @if (emailAddr.isVerified) {
+                              <span class="badge verified">Verified</span>
+                            } @else {
+                              <span class="badge unverified">Unverified</span>
+                            }
+                            @if (!emailAddr.isActive) {
+                              <span class="badge inactive">Inactive</span>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
             </div>
           </div>
           
           <div class="detail-group">
             <div class="detail-header">
-              <h3>Address</h3>
+              <h3>Addresses</h3>
             </div>
             <div class="detail-content">
+              <!-- Primary Address (Legacy) -->
               <div class="info-item full-width">
-                <label>Mailing Address</label>
+                <label>Primary Address (Legacy)</label>
                 <span class="value address">
                   {{ selectedMember()!.address.street }}<br>
                   {{ selectedMember()!.address.city }}, {{ selectedMember()!.address.state }} {{ selectedMember()!.address.zipCode }}
                 </span>
               </div>
+              
+              <!-- All Addresses -->
+              @if (selectedMember()!.addresses && selectedMember()!.addresses.length > 0) {
+                <div class="info-item full-width">
+                  <label>All Addresses</label>
+                  <div class="contact-list">
+                    @for (addr of selectedMember()!.addresses; track addr.id) {
+                      <div class="contact-item" [class.primary]="addr.isPrimary">
+                        <div class="contact-info">
+                          <span class="value address">
+                            {{ addr.street }}
+                            @if (addr.street2) {
+                              <br>{{ addr.street2 }}
+                            }
+                            <br>{{ addr.city }}, {{ addr.state }} {{ addr.zipCode }}
+                            @if (addr.country && addr.country !== 'USA') {
+                              <br>{{ addr.country }}
+                            }
+                          </span>
+                          <div class="contact-meta">
+                            <span class="contact-type">{{ addr.type | titlecase }}</span>
+                            @if (addr.isPrimary) {
+                              <span class="badge primary">Primary</span>
+                            }
+                            @if (!addr.isActive) {
+                              <span class="badge inactive">Inactive</span>
+                            }
+                            @if (addr.effectiveDate) {
+                              <span class="contact-dates">
+                                From: {{ addr.effectiveDate | date:'MM/dd/yyyy' }}
+                                @if (addr.expirationDate) {
+                                  - {{ addr.expirationDate | date:'MM/dd/yyyy' }}
+                                }
+                              </span>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
             </div>
           </div>
+          
+          <!-- Family Members -->
+          @if (selectedMember()!.familyMembers && selectedMember()!.familyMembers.length > 0) {
+            <div class="detail-group">
+              <div class="detail-header">
+                <h3>Family Members</h3>
+              </div>
+              <div class="detail-content">
+                <div class="family-members-list">
+                  @for (familyMember of selectedMember()!.familyMembers; track familyMember.id) {
+                    <div class="family-member-card">
+                      <div class="family-member-header">
+                        <h4>{{ familyMember.firstName }} {{ familyMember.lastName }}</h4>
+                        <span class="relationship-badge">{{ familyMember.relationship }}</span>
+                      </div>
+                      
+                      <div class="family-member-details">
+                        <div class="family-member-info">
+                          <span class="label">Date of Birth:</span>
+                          <span class="value">{{ familyMember.dateOfBirth | date:'MMMM d, yyyy' }}</span>
+                        </div>
+                        
+                        @if (familyMember.phone) {
+                          <div class="family-member-info">
+                            <span class="label">Phone:</span>
+                            <span class="value monospace">{{ familyMember.phone }}</span>
+                          </div>
+                        }
+                        
+                        @if (familyMember.status) {
+                          <div class="family-member-info">
+                            <span class="label">Status:</span>
+                            <span class="value" [class]="'status-' + familyMember.status">{{ familyMember.status | titlecase }}</span>
+                          </div>
+                        }
+                        
+                        <!-- Family Member Email Addresses -->
+                        @if (familyMember.emailAddresses && familyMember.emailAddresses.length > 0) {
+                          <div class="family-member-info full-width">
+                            <span class="label">Email Addresses:</span>
+                            <div class="contact-list-compact">
+                              @for (emailAddr of familyMember.emailAddresses; track emailAddr.id) {
+                                <div class="contact-item-compact" [class.primary]="emailAddr.isPrimary">
+                                  <span class="value email">{{ emailAddr.email }}</span>
+                                  <div class="contact-meta-compact">
+                                    <span class="contact-type">{{ emailAddr.type | titlecase }}</span>
+                                    @if (emailAddr.isPrimary) {
+                                      <span class="badge primary">Primary</span>
+                                    }
+                                    @if (emailAddr.isVerified) {
+                                      <span class="badge verified">✓</span>
+                                    }
+                                  </div>
+                                </div>
+                              }
+                            </div>
+                          </div>
+                        }
+                        
+                        <!-- Family Member Addresses -->
+                        @if (familyMember.addresses && familyMember.addresses.length > 0) {
+                          <div class="family-member-info full-width">
+                            <span class="label">Addresses:</span>
+                            <div class="contact-list-compact">
+                              @for (addr of familyMember.addresses; track addr.id) {
+                                <div class="contact-item-compact" [class.primary]="addr.isPrimary">
+                                  <span class="value address">
+                                    {{ addr.street }}
+                                    @if (addr.street2) {
+                                      <br>{{ addr.street2 }}
+                                    }
+                                    <br>{{ addr.city }}, {{ addr.state }} {{ addr.zipCode }}
+                                  </span>
+                                  <div class="contact-meta-compact">
+                                    <span class="contact-type">{{ addr.type | titlecase }}</span>
+                                    @if (addr.isPrimary) {
+                                      <span class="badge primary">Primary</span>
+                                    }
+                                  </div>
+                                </div>
+                              }
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
         </div>
       </div>
     </div>
