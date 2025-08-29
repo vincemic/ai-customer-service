@@ -23,6 +23,18 @@ export interface EmailAddress {
   verificationDate?: Date;
 }
 
+export interface PhoneNumber {
+  id: string;
+  type: 'mobile' | 'home' | 'work' | 'fax' | 'emergency' | 'other';
+  number: string;
+  extension?: string;
+  isPrimary: boolean;
+  isActive: boolean;
+  canReceiveText: boolean;
+  isVerified?: boolean;
+  verificationDate?: Date;
+}
+
 export interface Member {
   id: string;
   memberId: string;
@@ -40,6 +52,7 @@ export interface Member {
   // New enhanced fields
   addresses: Address[];
   emailAddresses: EmailAddress[];
+  phoneNumbers: PhoneNumber[];
   familyMembers: FamilyMember[];
   enrollmentDate?: Date;
   planCode?: string;
@@ -71,7 +84,8 @@ export interface FamilyMember {
   // Enhanced contact information
   addresses: Address[];
   emailAddresses: EmailAddress[];
-  phone?: string;
+  phoneNumbers: PhoneNumber[];
+  phone?: string; // Legacy field - kept for backward compatibility
 }
 
 export interface Claim {

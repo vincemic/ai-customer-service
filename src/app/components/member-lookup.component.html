@@ -169,8 +169,15 @@
               
               <div class="member-detail">
                 <span class="detail-label">Phone:</span>
-                <span class="detail-value">{{ member.phone }}</span>
+                <span class="detail-value">{{ getPrimaryPhone(member) }}</span>
               </div>
+              
+              @if (getPhoneCount(member) > 1) {
+                <div class="member-detail">
+                  <span class="detail-label">Phone Numbers:</span>
+                  <span class="detail-value">{{ getPhoneCount(member) }} on file</span>
+                </div>
+              }
               
               <div class="member-detail">
                 <span class="detail-label">Email:</span>
@@ -286,6 +293,44 @@
                   </div>
                 </div>
               }
+              
+              <!-- All Phone Numbers -->
+              @if (selectedMember()!.phoneNumbers && selectedMember()!.phoneNumbers.length > 0) {
+                <div class="info-item full-width">
+                  <label>Phone Numbers</label>
+                  <div class="contact-list">
+                    @for (phoneNum of selectedMember()!.phoneNumbers; track phoneNum.id) {
+                      <div class="contact-item" [class.primary]="phoneNum.isPrimary">
+                        <div class="contact-info">
+                          <span class="value monospace">
+                            {{ phoneNum.number }}
+                            @if (phoneNum.extension) {
+                              ext. {{ phoneNum.extension }}
+                            }
+                          </span>
+                          <div class="contact-meta">
+                            <span class="contact-type">{{ phoneNum.type | titlecase }}</span>
+                            @if (phoneNum.isPrimary) {
+                              <span class="badge primary">Primary</span>
+                            }
+                            @if (phoneNum.canReceiveText) {
+                              <span class="badge verified">Text Enabled</span>
+                            }
+                            @if (phoneNum.isVerified) {
+                              <span class="badge verified">Verified</span>
+                            } @else {
+                              <span class="badge unverified">Unverified</span>
+                            }
+                            @if (!phoneNum.isActive) {
+                              <span class="badge inactive">Inactive</span>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
             </div>
           </div>
           
@@ -379,6 +424,37 @@
                           <div class="family-member-info">
                             <span class="label">Status:</span>
                             <span class="value" [class]="'status-' + familyMember.status">{{ familyMember.status | titlecase }}</span>
+                          </div>
+                        }
+                        
+                        <!-- Family Member Phone Numbers -->
+                        @if (familyMember.phoneNumbers && familyMember.phoneNumbers.length > 0) {
+                          <div class="family-member-info full-width">
+                            <span class="label">Phone Numbers:</span>
+                            <div class="contact-list-compact">
+                              @for (phoneNum of familyMember.phoneNumbers; track phoneNum.id) {
+                                <div class="contact-item-compact" [class.primary]="phoneNum.isPrimary">
+                                  <span class="value monospace">
+                                    {{ phoneNum.number }}
+                                    @if (phoneNum.extension) {
+                                      ext. {{ phoneNum.extension }}
+                                    }
+                                  </span>
+                                  <div class="contact-meta-compact">
+                                    <span class="contact-type">{{ phoneNum.type | titlecase }}</span>
+                                    @if (phoneNum.isPrimary) {
+                                      <span class="badge primary">Primary</span>
+                                    }
+                                    @if (phoneNum.canReceiveText) {
+                                      <span class="badge verified">SMS</span>
+                                    }
+                                    @if (phoneNum.isVerified) {
+                                      <span class="badge verified">✓</span>
+                                    }
+                                  </div>
+                                </div>
+                              }
+                            </div>
                           </div>
                         }
                         

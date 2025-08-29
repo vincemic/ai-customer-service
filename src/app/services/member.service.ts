@@ -67,6 +67,38 @@ export class MemberService {
           verificationDate: new Date('2023-02-01')
         }
       ],
+      phoneNumbers: [
+        {
+          id: 'phone_1',
+          type: 'mobile',
+          number: '555-123-4567',
+          isPrimary: true,
+          isActive: true,
+          canReceiveText: true,
+          isVerified: true,
+          verificationDate: new Date('2023-01-10')
+        },
+        {
+          id: 'phone_2',
+          type: 'home',
+          number: '555-987-6543',
+          isPrimary: false,
+          isActive: true,
+          canReceiveText: false,
+          isVerified: false
+        },
+        {
+          id: 'phone_3',
+          type: 'work',
+          number: '555-555-1234',
+          extension: '1001',
+          isPrimary: false,
+          isActive: true,
+          canReceiveText: false,
+          isVerified: true,
+          verificationDate: new Date('2023-02-15')
+        }
+      ],
       familyMembers: [
         {
           id: '2',
@@ -99,6 +131,18 @@ export class MemberService {
               isVerified: true,
               verificationDate: new Date('2023-01-20')
             }
+          ],
+          phoneNumbers: [
+            {
+              id: 'phone_4',
+              type: 'mobile',
+              number: '555-123-4568',
+              isPrimary: true,
+              isActive: true,
+              canReceiveText: true,
+              isVerified: true,
+              verificationDate: new Date('2023-01-20')
+            }
           ]
         },
         {
@@ -121,7 +165,8 @@ export class MemberService {
               isActive: true
             }
           ],
-          emailAddresses: []
+          emailAddresses: [],
+          phoneNumbers: []
         }
       ]
     },
@@ -174,6 +219,18 @@ export class MemberService {
           verificationDate: new Date('2023-03-10')
         }
       ],
+      phoneNumbers: [
+        {
+          id: 'phone_5',
+          type: 'mobile',
+          number: '555-654-3210',
+          isPrimary: true,
+          isActive: true,
+          canReceiveText: true,
+          isVerified: true,
+          verificationDate: new Date('2023-03-10')
+        }
+      ],
       familyMembers: []
     },
     {
@@ -220,6 +277,17 @@ export class MemberService {
           isPrimary: false,
           isActive: true,
           isVerified: false
+        }
+      ],
+      phoneNumbers: [
+        {
+          id: 'phone_6',
+          type: 'mobile',
+          number: '555-111-2222',
+          isPrimary: true,
+          isActive: true,
+          canReceiveText: true,
+          isVerified: true
         }
       ],
       familyMembers: []
@@ -274,6 +342,17 @@ export class MemberService {
           isActive: true,
           isVerified: true,
           verificationDate: new Date('2023-02-14')
+        }
+      ],
+      phoneNumbers: [
+        {
+          id: 'phone_7',
+          type: 'mobile',
+          number: '555-333-2222',
+          isPrimary: true,
+          isActive: true,
+          canReceiveText: true,
+          isVerified: true
         }
       ],
       familyMembers: []
@@ -335,6 +414,27 @@ export class MemberService {
           isActive: true,
           isVerified: true,
           verificationDate: new Date('2023-01-15')
+        }
+      ],
+      phoneNumbers: [
+        {
+          id: 'phone_8',
+          type: 'mobile',
+          number: '555-777-6666',
+          isPrimary: true,
+          isActive: true,
+          canReceiveText: true,
+          isVerified: true
+        },
+        {
+          id: 'phone_9',
+          type: 'work',
+          number: '555-888-9999',
+          extension: '2055',
+          isPrimary: false,
+          isActive: true,
+          canReceiveText: false,
+          isVerified: true
         }
       ],
       familyMembers: []

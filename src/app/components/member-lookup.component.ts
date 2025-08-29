@@ -211,4 +211,29 @@ export class MemberLookupComponent {
     // If no addresses in new format, assume 1 for legacy address
     return member.address ? 1 : 0;
   }
+
+  getPrimaryPhone(member: Member): string {
+    // First try to find a primary phone from the new phoneNumbers array
+    if (member.phoneNumbers && member.phoneNumbers.length > 0) {
+      const primaryPhone = member.phoneNumbers.find(phone => phone.isPrimary && phone.isActive);
+      if (primaryPhone) {
+        return primaryPhone.number + (primaryPhone.extension ? ` ext. ${primaryPhone.extension}` : '');
+      }
+      // If no primary, return the first active phone
+      const firstActivePhone = member.phoneNumbers.find(phone => phone.isActive);
+      if (firstActivePhone) {
+        return firstActivePhone.number + (firstActivePhone.extension ? ` ext. ${firstActivePhone.extension}` : '');
+      }
+    }
+    // Fall back to legacy phone field
+    return member.phone || 'No phone on file';
+  }
+
+  getPhoneCount(member: Member): number {
+    if (member.phoneNumbers && member.phoneNumbers.length > 0) {
+      return member.phoneNumbers.filter(phone => phone.isActive).length;
+    }
+    // If no phones in new format, assume 1 for legacy phone
+    return member.phone ? 1 : 0;
+  }
 }
