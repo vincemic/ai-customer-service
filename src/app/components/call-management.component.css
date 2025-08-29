@@ -59,9 +59,19 @@
 .call-content {
   padding: var(--spacing-xl);
   display: grid;
-  grid-template-columns: 2fr 1fr;
   gap: var(--spacing-xl);
   background: var(--background-primary);
+}
+
+/* When call notes are shown (headerMode true), use 2-column grid */
+.call-content.with-notes {
+  grid-template-columns: 2fr 1fr;
+}
+
+/* When call notes are hidden (headerMode false), use single column */
+.call-content.without-notes {
+  grid-template-columns: 1fr;
+  justify-items: center;
 }
 
 /* Call Notes Section */
@@ -387,6 +397,14 @@
   .call-content {
     grid-template-columns: 1fr;
     padding: var(--spacing-lg);
+  }
+  
+  .call-content.with-notes {
+    grid-template-columns: 1fr;
+  }
+  
+  .call-content.without-notes {
+    grid-template-columns: 1fr;
   }
   
   .secondary-actions {

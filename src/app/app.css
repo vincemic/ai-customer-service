@@ -187,11 +187,21 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  padding-bottom: 2rem; /* Default bottom padding */
 }
 
 /* Add top padding when call header is visible */
 .app-main.with-call-header {
   padding-top: calc(48px + 0.125rem);
+}
+
+/* Add bottom padding when call notes footer is visible */
+.app-main.with-call-notes {
+  padding-bottom: 80px; /* Space for collapsed footer */
+}
+
+.app-main.with-call-notes.footer-expanded {
+  padding-bottom: 300px; /* Space for expanded footer */
 }
 
 .call-session-section {

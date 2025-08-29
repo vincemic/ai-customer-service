@@ -19,29 +19,32 @@
       </div>
     }
 
-    <div class="call-content">
-      <!-- Call Notes Section -->
-      <div class="call-notes-section">
-        <h3>Call Notes</h3>
-        <div class="notes-container">
-          <textarea
-            class="call-notes-input"
-            placeholder="Enter call notes and interaction details..."
-            [value]="callNotes()"
-            (input)="updateCallNotes($event)"
-            rows="8"
-          ></textarea>
-          <div class="notes-tips">
-            <h4>Note-taking Tips:</h4>
-            <ul>
-              <li>Document caller's reason for contacting</li>
-              <li>Record any issues discussed</li>
-              <li>Note resolutions provided</li>
-              <li>Include any follow-up actions needed</li>
-            </ul>
+    <div class="call-content" [class.with-notes]="headerMode()" [class.without-notes]="!headerMode()">
+      <!-- Only show call notes section if headerMode is true -->
+      @if (headerMode()) {
+        <!-- Call Notes Section -->
+        <div class="call-notes-section">
+          <h3>Call Notes</h3>
+          <div class="notes-container">
+            <textarea
+              class="call-notes-input"
+              placeholder="Enter call notes and interaction details..."
+              [value]="callNotes()"
+              (input)="updateCallNotes($event)"
+              rows="8"
+            ></textarea>
+            <div class="notes-tips">
+              <h4>Note-taking Tips:</h4>
+              <ul>
+                <li>Document caller's reason for contacting</li>
+                <li>Record any issues discussed</li>
+                <li>Note resolutions provided</li>
+                <li>Include any follow-up actions needed</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      }
 
       <!-- Only show call actions if headerMode is true -->
       @if (headerMode()) {

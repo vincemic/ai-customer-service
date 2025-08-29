@@ -39,7 +39,9 @@
     </header>
   }
 
-  <main class="app-main" [class.with-call-header]="isOnCall()">
+  <main class="app-main" 
+        [class.with-call-header]="isOnCall()" 
+        [class.with-call-notes]="isOnCall()">
     @if (!isLoggedIn()) {
       <!-- Show agent login when not logged in -->
       <section class="login-section">
@@ -75,6 +77,9 @@
     <p>&copy; 2024 AI Customer Service. All rights reserved.</p>
   </footer>
 </div>
+
+<!-- Call Notes Footer - pinned to bottom when on call -->
+<app-call-notes-footer></app-call-notes-footer>
 
 <!-- Global Loading Spinner -->
 <app-loading-spinner></app-loading-spinner>
