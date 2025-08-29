@@ -135,9 +135,20 @@
   border-radius: 0;
   font-size: var(--font-size-base);
   transition: all var(--transition-fast);
-  background: var(--vscode-input-bg) !important;
-  color: var(--vscode-input-fg) !important;
+  background: var(--vscode-input-bg);
+  color: var(--vscode-input-fg);
   box-sizing: border-box;
+}
+
+/* Prevent autofill from overriding background */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus,
+.form-group input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--vscode-input-bg) inset;
+  -webkit-text-fill-color: var(--vscode-input-fg);
+  background-color: var(--vscode-input-bg) !important;
+  color: var(--vscode-input-fg) !important;
 }
 
 .form-group input::placeholder {
@@ -148,7 +159,8 @@
   outline: none;
   border-color: var(--vscode-blue);
   box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.2);
-  background: var(--vscode-input-bg) !important;
+  background: var(--vscode-input-bg);
+  color: var(--vscode-input-fg);
 }
 
 .form-group input.error {

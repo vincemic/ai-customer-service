@@ -81,6 +81,10 @@ export class AgentDashboardComponent implements OnInit, OnDestroy {
     this.agentSessionService.setAgentStatus('break');
   }
 
+  onSetOffline(): void {
+    this.agentSessionService.setAgentStatus('offline');
+  }
+
   // Logout
   onLogout(): void {
     this.showLogoutModal.set(true);

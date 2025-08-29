@@ -17,6 +17,36 @@
       </div>
       
       <div class="header-actions">
+        <!-- Agent Status Controls -->
+        <div class="header-status-controls">
+          <div class="status-buttons-header">
+            <button 
+              class="btn-status-header available" 
+              (click)="onSetAvailable()"
+              [class.active]="session.status === 'available'"
+              title="Set status to Available"
+            >
+              Available
+            </button>
+            <button 
+              class="btn-status-header break" 
+              (click)="onSetBreak()"
+              [class.active]="session.status === 'break'"
+              title="Set status to Break"
+            >
+              Break
+            </button>
+            <button 
+              class="btn-status-header offline" 
+              (click)="onSetOffline()"
+              [class.active]="session.status === 'offline'"
+              title="Set status to Offline"
+            >
+              Offline
+            </button>
+          </div>
+        </div>
+        
         <button 
           class="btn-logout" 
           (click)="onLogout()"
@@ -48,27 +78,6 @@
             >
               Make Outbound Call
             </button>
-          </div>
-          
-          <!-- Status Controls -->
-          <div class="status-controls">
-            <h4>Change Status:</h4>
-            <div class="status-buttons">
-              <button 
-                class="btn-status available" 
-                (click)="onSetAvailable()"
-                [class.active]="session.status === 'available'"
-              >
-                Available
-              </button>
-              <button 
-                class="btn-status break" 
-                (click)="onSetBreak()"
-                [class.active]="session.status === 'break'"
-              >
-                Break
-              </button>
-            </div>
           </div>
         </div>
       } @else {
