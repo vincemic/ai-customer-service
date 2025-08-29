@@ -74,23 +74,11 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Start development server
-        run: npm start &
-        continue-on-error: true
-
-      - name: Wait for server to start
-        run: |
-          timeout 60 bash -c 'until curl -f http://localhost:4200; do sleep 2; done'
-        continue-on-error: true
-
       - name: Run Playwright tests
         run: npm run e2e
         continue-on-error: true
         env:
           CI: true
-
-      - name: Stop development server
-        run: pkill -f "ng serve" || true
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4

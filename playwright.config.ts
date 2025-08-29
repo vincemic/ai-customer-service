@@ -19,9 +19,12 @@ export default defineConfig({
     },
   ],
 
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:4200',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  webServer: {
+    command: 'npm run start',
+    url: 'http://localhost:4200',
+    reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000, // 2 minutes
+    stdout: 'pipe',
+    stderr: 'pipe',
+  },
 });
