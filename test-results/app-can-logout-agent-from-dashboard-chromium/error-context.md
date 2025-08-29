@@ -1,0 +1,54 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - main [ref=e4]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e11]:
+          - heading "Test Agent" [level=2] [ref=e12]
+          - generic [ref=e13]:
+            - generic [ref=e14]: Available
+            - generic [ref=e15]: "Session: 00:00:00"
+        - button "Logout" [active] [ref=e17] [cursor=pointer]
+      - generic [ref=e19]:
+        - heading "Ready for Calls" [level=3] [ref=e20]
+        - generic [ref=e21]:
+          - button "Answer Incoming Call" [ref=e22] [cursor=pointer]
+          - button "Make Outbound Call" [ref=e23] [cursor=pointer]
+        - generic [ref=e24]:
+          - heading "Change Status:" [level=4] [ref=e25]
+          - generic [ref=e26]:
+            - button "Available" [ref=e27] [cursor=pointer]
+            - button "Break" [ref=e28] [cursor=pointer]
+      - generic [ref=e29]:
+        - heading "Session Statistics" [level=3] [ref=e30]
+        - generic [ref=e31]:
+          - generic [ref=e33]:
+            - generic [ref=e34]: "0"
+            - generic [ref=e35]: Total Calls
+          - generic [ref=e37]:
+            - generic [ref=e38]: "0"
+            - generic [ref=e39]: Completed
+          - generic [ref=e41]:
+            - generic [ref=e42]: 0.0m
+            - generic [ref=e43]: Avg Call Time
+          - generic [ref=e45]:
+            - generic [ref=e46]: "0.0"
+            - generic [ref=e47]: Calls/Hour
+      - generic [ref=e48]:
+        - heading "Quick Actions" [level=3] [ref=e49]
+        - generic [ref=e50]:
+          - button "View Call History" [ref=e51] [cursor=pointer]
+          - button "Performance Metrics" [ref=e52] [cursor=pointer]
+          - button "Settings" [ref=e53] [cursor=pointer]
+          - button "Speed Dial" [ref=e54] [cursor=pointer]
+      - generic [ref=e56]:
+        - heading "Confirm Logout" [level=3] [ref=e57]
+        - paragraph [ref=e58]: Are you sure you want to end your session and logout?
+        - generic [ref=e59]:
+          - button "Cancel" [ref=e60] [cursor=pointer]
+          - button "Logout" [ref=e61] [cursor=pointer]
+  - contentinfo [ref=e62]:
+    - paragraph [ref=e63]: © 2024 AI Customer Service. All rights reserved.
+```

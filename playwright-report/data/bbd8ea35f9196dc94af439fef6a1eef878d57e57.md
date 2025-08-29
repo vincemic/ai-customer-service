@@ -1,0 +1,54 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - generic [ref=e7]: Inbound
+          - generic [ref=e8]: mewemgfg3cw85apqsgl
+          - generic [ref=e9]: 00:00
+        - generic [ref=e11]: Identifying member...
+      - generic [ref=e12]:
+        - button "Hold" [ref=e13] [cursor=pointer]
+        - button "Transfer" [ref=e14] [cursor=pointer]
+        - button "Conference" [ref=e15] [cursor=pointer]
+        - button "Notes" [ref=e16] [cursor=pointer]
+        - button "End Call" [ref=e17] [cursor=pointer]
+    - main [ref=e18]:
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - heading "Search Criteria" [level=2] [ref=e25]
+          - generic [ref=e26]: Enter member details to begin search
+        - generic [ref=e27]:
+          - generic [ref=e29]:
+            - generic [ref=e30]: Member ID (Quick Search)
+            - textbox "Member ID (Quick Search)" [ref=e31]
+          - generic [ref=e33]: OR
+          - generic [ref=e34]:
+            - heading "Search by Personal Information" [level=3] [ref=e35]
+            - generic [ref=e36]:
+              - generic [ref=e37]:
+                - generic [ref=e38]: First Name
+                - textbox "First Name" [ref=e39]: John
+              - generic [ref=e40]:
+                - generic [ref=e41]: Last Name *
+                - textbox "Last Name *" [ref=e42]: Smith
+            - generic [ref=e44]:
+              - generic [ref=e45]: Date of Birth
+              - textbox "Date of Birth" [ref=e46]: 1980-01-15
+          - alert [ref=e48]: No members found matching search criteria
+          - generic [ref=e49]:
+            - button "Search Members" [active] [ref=e50] [cursor=pointer]
+            - button "Clear Form" [ref=e51] [cursor=pointer]
+    - contentinfo [ref=e56]:
+      - paragraph [ref=e57]: © 2024 AI Customer Service. All rights reserved.
+  - generic [ref=e59] [cursor=pointer]:
+    - generic [ref=e60] [cursor=pointer]:
+      - generic [ref=e61] [cursor=pointer]: Call Notes
+      - generic [ref=e62] [cursor=pointer]: mewemgfg3cw85apqsgl
+    - generic [ref=e63] [cursor=pointer]:
+      - generic [ref=e64] [cursor=pointer]: 00:00:00
+      - button "Expand notes" [ref=e65] [cursor=pointer]: ▲
+```
