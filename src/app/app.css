@@ -6,8 +6,8 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f8f9fa;
-  color: #212529;
+  background-color: var(--vscode-bg);
+  color: var(--text-bright);
   line-height: 1.6;
 }
 
@@ -17,20 +17,160 @@ body {
   flex-direction: column;
 }
 
-/* Header Styles */
-.app-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem 1rem;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Fixed Call Header */
+.call-header-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, var(--vscode-activitybar-bg) 0%, #2a2a2c 100%);
+  color: var(--text-bright);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  height: 48px;
+  border-bottom: 1px solid var(--vscode-border);
+  position: relative;
 }
 
-.app-header h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 2.5rem;
-  font-weight: 300;
-  letter-spacing: -0.5px;
+.call-header-fixed::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.call-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+  flex: 1;
+}
+
+.call-basic-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  min-width: 180px;
+}
+
+.call-basic-info .call-type {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--vscode-fg-bright);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.call-basic-info .call-id {
+  font-size: var(--font-size-small);
+  color: var(--vscode-fg-muted);
+  font-family: var(--font-family-mono);
+  background: rgba(0, 122, 204, 0.1);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 122, 204, 0.2);
+}
+
+.call-basic-info .call-duration {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--vscode-blue-light);
+  font-family: var(--font-family-mono);
+  background: rgba(0, 122, 204, 0.1);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 122, 204, 0.2);
+}
+
+.member-status {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-lg);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  min-width: 160px;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.member-status.identified {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: var(--success);
+}
+
+.member-status.pending {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: var(--warning);
+}
+
+
+
+.call-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.control-btn {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--vscode-fg);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 0;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  height: 28px;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--vscode-fg-bright);
+}
+
+.control-btn:active {
+  transform: none;
+}
+
+.control-btn.end-call-btn {
+  background: var(--error);
+  border-color: var(--error);
+  color: var(--text-bright);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  gap: var(--spacing-xs);
+  min-width: 80px;
+  font-weight: var(--font-weight-medium);
+}
+
+.control-btn.end-call-btn:hover {
+  background: #cc444b;
+  border-color: #cc444b;
+  color: var(--text-bright);
 }
 
 .header-info p {
@@ -49,21 +189,42 @@ body {
   width: 100%;
 }
 
+/* Add top padding when call header is visible */
+.app-main.with-call-header {
+  padding-top: calc(48px + 0.125rem);
+}
+
 .call-session-section {
   margin-bottom: 2rem;
 }
 
+.call-start-section {
+  min-height: 60vh;
+}
+
+.login-section {
+  min-height: 80vh;
+}
+
+.dashboard-section {
+  min-height: 60vh;
+}
+
+.call-management-section {
+  margin-bottom: 2rem;
+}
+
 .member-section {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: var(--background-secondary);
+  border-radius: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
 /* Footer */
 .app-footer {
-  background: #343a40;
-  color: white;
+  background: var(--background-secondary);
+  color: var(--text-bright);
   text-align: center;
   padding: 1rem;
   margin-top: auto;
@@ -81,16 +242,53 @@ body {
     padding: 1rem;
   }
   
-  .app-header h1 {
-    font-size: 2rem;
-  }
-  
-  .header-info p {
-    font-size: 1rem;
-  }
-  
   .app-main {
     padding: 1rem 0.5rem;
+  }
+
+  /* Fixed call header responsive */
+  .call-header-fixed {
+    padding: var(--spacing-lg);
+    height: unset;
+    min-height: 44px;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .call-info {
+    gap: var(--spacing-lg);
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .call-basic-info {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .call-controls {
+    gap: var(--spacing-xs);
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .control-btn {
+    min-width: 45px;
+    height: 28px;
+    padding: var(--spacing-xs);
+    font-size: 10px;
+  }
+
+  .control-btn.end-call-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-width: 60px;
+  }
+
+  .app-main.with-call-header {
+    padding-top: calc(44px + 1rem);
   }
 }
 
@@ -114,7 +312,6 @@ select:focus {
 
 /* Print styles */
 @media print {
-  .app-header,
   .app-footer {
     display: none;
   }

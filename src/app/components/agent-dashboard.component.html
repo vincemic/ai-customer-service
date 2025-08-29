@@ -1,0 +1,180 @@
+<div class="agent-dashboard">
+  @if (currentSession(); as session) {
+    <!-- Agent Header -->
+    <header class="agent-header">
+      <div class="agent-info">
+        <div class="agent-avatar">
+        </div>
+        <div class="agent-details">
+          <h2>{{ session.agentName }}</h2>
+          <div class="session-info">
+            <span class="status-badge" [style.background-color]="getStatusColor(session.status)">
+              {{ session.status | titlecase }}
+            </span>
+            <span class="session-time">Session: {{ sessionDuration() }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <button 
+          class="btn-logout" 
+          (click)="onLogout()"
+          title="End session and logout"
+        >
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- Call Controls -->
+    <section class="call-controls">
+      @if (!isOnCall()) {
+        <!-- Available for calls -->
+        <div class="call-ready">
+          <h3>Ready for Calls</h3>
+          <div class="call-buttons">
+            <button 
+              class="btn-answer-call" 
+              (click)="onStartCall()"
+              [disabled]="!canTakeCall()"
+            >
+              Answer Incoming Call
+            </button>
+            <button 
+              class="btn-outbound-call" 
+              (click)="onStartOutboundCall()"
+              [disabled]="!canTakeCall()"
+            >
+              Make Outbound Call
+            </button>
+          </div>
+          
+          <!-- Status Controls -->
+          <div class="status-controls">
+            <h4>Change Status:</h4>
+            <div class="status-buttons">
+              <button 
+                class="btn-status available" 
+                (click)="onSetAvailable()"
+                [class.active]="session.status === 'available'"
+              >
+                Available
+              </button>
+              <button 
+                class="btn-status break" 
+                (click)="onSetBreak()"
+                [class.active]="session.status === 'break'"
+              >
+                Break
+              </button>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <!-- Currently on call -->
+        @if (currentCall(); as call) {
+          <div class="call-active">
+            <h3>Call in Progress</h3>
+            <div class="call-info">
+              <div class="call-details">
+                <span class="call-type">{{ call.callType | titlecase }} Call</span>
+                <span class="call-id">ID: {{ call.id }}</span>
+                <span class="call-start-time">Started: {{ formatTime(call.startTime) }}</span>
+              </div>
+              <div class="call-timer">
+                <span class="timer-label">Duration:</span>
+                <span class="timer-value">{{ callDuration() }}</span>
+              </div>
+            </div>
+            
+            <div class="call-actions">
+              <button class="btn-end-call" (click)="onEndCall()">
+                End Call
+              </button>
+            </div>
+          </div>
+        }
+      }
+    </section>
+
+    <!-- Session Statistics -->
+    @if (sessionStats(); as stats) {
+      <section class="session-stats">
+        <h3>Session Statistics</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-value">{{ stats.totalCalls }}</span>
+              <span class="stat-label">Total Calls</span>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-value">{{ stats.completedCalls }}</span>
+              <span class="stat-label">Completed</span>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-value">{{ (stats.averageCallTime / 1000 / 60) | number:'1.1-1' }}m</span>
+              <span class="stat-label">Avg Call Time</span>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-value">{{ stats.callsPerHour | number:'1.1-1' }}</span>
+              <span class="stat-label">Calls/Hour</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+      <h3>Quick Actions</h3>
+      <div class="action-buttons">
+        <button class="btn-action">
+          View Call History
+        </button>
+        <button class="btn-action">
+          Performance Metrics
+        </button>
+        <button class="btn-action">
+          Settings
+        </button>
+        <button class="btn-action">
+          Speed Dial
+        </button>
+      </div>
+    </section>
+  }
+
+  <!-- Logout Confirmation Modal -->
+  @if (showLogoutModal()) {
+    <div class="modal-overlay" (click)="cancelLogout()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <h3>Confirm Logout</h3>
+        <p>Are you sure you want to end your session and logout?</p>
+        @if (isOnCall()) {
+          <div class="warning">
+            <span class="warning-icon">Warning</span>
+            <span>You are currently on a call. Logging out will end the active call.</span>
+          </div>
+        }
+        <div class="modal-actions">
+          <button class="btn-cancel" (click)="cancelLogout()">
+            Cancel
+          </button>
+          <button class="btn-confirm" (click)="confirmLogout()">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

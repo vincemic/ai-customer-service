@@ -1,0 +1,99 @@
+<div class="call-start-container">
+  <div class="call-start-card">
+    <header class="call-start-header">
+      <h2>Start New Call Session</h2>
+      <p>Please enter your information to begin a new customer call</p>
+    </header>
+
+    <form [formGroup]="callStartForm" (ngSubmit)="onStartCall()" class="call-start-form">
+      <!-- Agent Name Field -->
+      <div class="form-group">
+        <label for="agentName" class="form-label">Agent Name *</label>
+        <input 
+          id="agentName"
+          type="text" 
+          formControlName="agentName"
+          class="form-input"
+          [class.error]="getFieldError('agentName')"
+          placeholder="Enter your full name"
+          autocomplete="name"
+        >
+        @if (getFieldError('agentName')) {
+          <div class="error-message" role="alert">
+            {{ getFieldError('agentName') }}
+          </div>
+        }
+      </div>
+
+      <!-- Call Type Field -->
+      <div class="form-group">
+        <label for="callType" class="form-label">Call Type *</label>
+        <select 
+          id="callType"
+          formControlName="callType"
+          class="form-select"
+          [class.error]="getFieldError('callType')"
+        >
+          <option value="inbound">Inbound Call</option>
+          <option value="outbound">Outbound Call</option>
+          <option value="callback">Scheduled Callback</option>
+          <option value="followup">Follow-up Call</option>
+        </select>
+        @if (getFieldError('callType')) {
+          <div class="error-message" role="alert">
+            {{ getFieldError('callType') }}
+          </div>
+        }
+      </div>
+
+      <!-- Priority Field -->
+      <div class="form-group">
+        <label for="priority" class="form-label">Call Priority *</label>
+        <select 
+          id="priority"
+          formControlName="priority"
+          class="form-select"
+          [class.error]="getFieldError('priority')"
+        >
+          <option value="low">Low Priority</option>
+          <option value="normal">Normal Priority</option>
+          <option value="high">High Priority</option>
+          <option value="urgent">Urgent</option>
+        </select>
+        @if (getFieldError('priority')) {
+          <div class="error-message" role="alert">
+            {{ getFieldError('priority') }}
+          </div>
+        }
+      </div>
+
+      <!-- Start Call Button -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn-start-call"
+          [disabled]="isStarting() || callStartForm.invalid"
+          [attr.aria-busy]="isStarting()"
+        >
+          @if (isStarting()) {
+            <span class="loading-spinner" aria-hidden="true"></span>
+            Starting Call...
+          } @else {
+            Start Call Session
+          }
+        </button>
+      </div>
+    </form>
+
+    <!-- Quick Info Section -->
+    <div class="quick-info">
+      <h3>Quick Reminders</h3>
+      <ul>
+        <li>Verify caller identity before accessing member information</li>
+        <li>Document all interactions in call notes</li>
+        <li>Follow HIPAA guidelines for protected health information</li>
+        <li>Use empathetic and professional communication</li>
+      </ul>
+    </div>
+  </div>
+</div>

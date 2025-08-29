@@ -1,0 +1,155 @@
+<div class="call-management">
+  @if (currentCall(); as call) {
+    <!-- Only show header if headerMode is true -->
+    @if (headerMode()) {
+      <div class="call-session-header">
+        <div class="call-info">
+          <h2>Active Call Session</h2>
+          <div class="call-details">
+            <span class="call-type">{{ call.callType | titlecase }} Call</span>
+            <span class="call-id">ID: {{ call.id }}</span>
+            <span class="call-start">Started: {{ formatTime(call.startTime) }}</span>
+          </div>
+        </div>
+        
+        <div class="call-timer">
+          <span class="timer-label">Duration</span>
+          <span class="timer-display">{{ callDuration() }}</span>
+        </div>
+      </div>
+    }
+
+    <div class="call-content">
+      <!-- Call Notes Section -->
+      <div class="call-notes-section">
+        <h3>Call Notes</h3>
+        <div class="notes-container">
+          <textarea
+            class="call-notes-input"
+            placeholder="Enter call notes and interaction details..."
+            [value]="callNotes()"
+            (input)="updateCallNotes($event)"
+            rows="8"
+          ></textarea>
+          <div class="notes-tips">
+            <h4>Note-taking Tips:</h4>
+            <ul>
+              <li>Document caller's reason for contacting</li>
+              <li>Record any issues discussed</li>
+              <li>Note resolutions provided</li>
+              <li>Include any follow-up actions needed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Only show call actions if headerMode is true -->
+      @if (headerMode()) {
+        <div class="call-actions">
+          <button class="btn-end-call" (click)="onEndCall()">
+            End Call
+          </button>
+          
+          <div class="secondary-actions">
+            <button class="btn-secondary" title="Put call on hold">
+              Hold
+            </button>
+            <button class="btn-secondary" title="Transfer call">
+              Transfer
+            </button>
+            <button class="btn-secondary" title="Conference call">
+              Conference
+            </button>
+            <button class="btn-secondary" title="Add quick note">
+              Quick Note
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Only show member information if headerMode is true -->
+    @if (headerMode()) {
+      @if (call.memberId) {
+        <div class="member-identified">
+          <span class="success-icon">✓</span>
+          <span>Member identified: {{ call.memberId }}</span>
+        </div>
+      } @else {
+        <div class="member-pending">
+          <span class="pending-icon">?</span>
+          <span>Member identification pending...</span>
+        </div>
+      }
+    }
+  }
+
+  <!-- End Call Modal -->
+  @if (showEndCallModal()) {
+    <div class="modal-overlay" (click)="cancelEndCall()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3>End Call Session</h3>
+          <p>Please provide call outcome and final notes</p>
+        </header>
+
+        <form [formGroup]="endCallForm" (ngSubmit)="confirmEndCall()" class="end-call-form">
+          <!-- Call Outcome -->
+          <div class="form-group">
+            <label for="outcome" class="form-label">Call Outcome *</label>
+            <select 
+              id="outcome"
+              formControlName="outcome"
+              class="form-select"
+              [class.error]="getFieldError('outcome')"
+            >
+              <option value="completed">Completed Successfully</option>
+              <option value="transferred">Transferred to Specialist</option>
+              <option value="abandoned">Call Abandoned/Dropped</option>
+            </select>
+            @if (getFieldError('outcome')) {
+              <div class="error-message" role="alert">
+                {{ getFieldError('outcome') }}
+              </div>
+            }
+          </div>
+
+          <!-- Final Notes -->
+          <div class="form-group">
+            <label for="finalNotes" class="form-label">Final Notes</label>
+            <textarea 
+              id="finalNotes"
+              formControlName="finalNotes"
+              class="form-textarea"
+              [class.error]="getFieldError('finalNotes')"
+              placeholder="Summary of call resolution, next steps, or additional notes..."
+              rows="4"
+            ></textarea>
+            <small class="field-hint">
+              Character count: {{ endCallForm.get('finalNotes')?.value?.length || 0 }} / 1000
+            </small>
+            @if (getFieldError('finalNotes')) {
+              <div class="error-message" role="alert">
+                {{ getFieldError('finalNotes') }}
+              </div>
+            }
+          </div>
+
+          <!-- Modal Actions -->
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" (click)="cancelEndCall()">
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              class="btn-confirm"
+              [disabled]="endCallForm.invalid"
+            >
+              Complete Call
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

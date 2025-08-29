@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { Benefit, Claim, Deductible, Member, PriorAuthorization, Accumulator, ClaimHistory, CallHistory, AuthorizationHistory } from '../models/member.model';
+import { Accumulator, AuthorizationHistory, Benefit, CallHistory, Claim, ClaimHistory, Deductible, Member, PriorAuthorization } from '../models/member.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +55,54 @@ export class MemberService {
         zipCode: '54321'
       },
       familyMembers: []
+    },
+    {
+      id: '5',
+      memberId: 'M555111222',
+      firstName: 'Robert',
+      lastName: 'Johnson',
+      dateOfBirth: new Date('1978-04-12'),
+      email: 'robert.johnson@email.com',
+      phone: '555-111-2222',
+      address: {
+        street: '789 Pine Street',
+        city: 'Madison',
+        state: 'WI',
+        zipCode: '53703'
+      },
+      familyMembers: []
+    },
+    {
+      id: '6',
+      memberId: 'M444333222',
+      firstName: 'Sarah',
+      lastName: 'Johnson',
+      dateOfBirth: new Date('1982-09-25'),
+      email: 'sarah.johnson@email.com',
+      phone: '555-444-3333',
+      address: {
+        street: '321 Elm Drive',
+        city: 'Portland',
+        state: 'OR',
+        zipCode: '97201'
+      },
+      familyMembers: []
+    },
+    {
+      id: '7',
+      memberId: 'M888777666',
+      firstName: 'Michael',
+      lastName: 'Smith',
+      dateOfBirth: new Date('1975-11-08'),
+      email: 'michael.smith@email.com',
+      phone: '555-888-7777',
+      address: {
+        street: '654 Maple Avenue',
+        city: 'Austin',
+        state: 'TX',
+        zipCode: '73301'
+      },
+      familyMembers: []
     }
   ];
 
@@ -69,6 +117,19 @@ export class MemberService {
     });
 
     return of(member || null).pipe(delay(500)); // Simulate API delay
+  }
+
+  searchMembers(criteria: { memberId?: string; firstName?: string; lastName?: string; dateOfBirth?: Date }): Observable<Member[]> {
+    const matchingMembers = this.mockMembers.filter(m => {
+      const matchesMemberId = !criteria.memberId || m.memberId.toLowerCase().includes(criteria.memberId.toLowerCase());
+      const matchesFirstName = !criteria.firstName || m.firstName.toLowerCase().includes(criteria.firstName.toLowerCase());
+      const matchesLastName = !criteria.lastName || m.lastName.toLowerCase().includes(criteria.lastName.toLowerCase());
+      const matchesDob = !criteria.dateOfBirth || m.dateOfBirth.getTime() === criteria.dateOfBirth.getTime();
+      
+      return matchesMemberId && matchesFirstName && matchesLastName && matchesDob;
+    });
+
+    return of(matchingMembers).pipe(delay(500)); // Simulate API delay
   }
 
   getMemberById(id: string): Observable<Member | null> {

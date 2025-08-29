@@ -37,11 +37,6 @@ export class CallSessionComponent {
   });
 
   ngOnInit(): void {
-    // Start a new call session if none exists
-    if (!this.currentSession()) {
-      this.startNewCall();
-    }
-    
     // Update call duration every second
     setInterval(() => {
       // This will trigger the computed signal to recalculate

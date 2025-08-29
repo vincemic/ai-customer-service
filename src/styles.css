@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles - VS Code Dark Theme */
+@import './styles/pointc-theme.css';
+
+/* Application-specific global styles */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}
+
+/* Global form styling */
+input, select, textarea, button {
+  font-family: inherit;
+}
+
+/* Focus styles for accessibility - VS Code style */
+*:focus {
+  outline: 1px solid var(--border-focus);
+  outline-offset: 1px;
+}
+
+button:focus,
+.btn:focus {
+  outline-color: var(--border-focus);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styles - VS Code style */
+::selection {
+  background-color: var(--vscode-list-select-bg);
+  color: var(--text-bright);
+}
+
+/* Print styles */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+}

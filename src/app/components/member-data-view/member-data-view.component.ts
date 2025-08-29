@@ -1,6 +1,6 @@
-import { Component, computed, input, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Member, Claim, Benefit, Accumulator, PriorAuthorization, ClaimHistory, CallHistory, AuthorizationHistory } from '../../models/member.model';
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import { Accumulator, AuthorizationHistory, Benefit, CallHistory, Claim, ClaimHistory, Member, PriorAuthorization } from '../../models/member.model';
 import { MemberService } from '../../services/member.service';
 
 @Component({

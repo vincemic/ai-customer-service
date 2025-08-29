@@ -1,0 +1,483 @@
+/* VS Code Dark Theme Inspired */
+/* Based on VS Code Dark+ theme colors */
+
+:root {
+  /* VS Code Dark Theme Core Colors */
+  --vscode-bg: #181818;                    /* Main background - darker */
+  --vscode-sidebar-bg: #252526;            /* Sidebar background */
+  --vscode-editor-bg: #1e1e1e;             /* Editor background */
+  --vscode-panel-bg: #181818;              /* Panel background */
+  --vscode-border: #2d2d30;                /* Border color */
+  --vscode-border-light: #3e3e42;          /* Lighter border */
+  
+  /* Text Colors */
+  --vscode-fg: #cccccc;                     /* Primary text */
+  --vscode-fg-muted: #969696;              /* Muted text */
+  --vscode-fg-bright: #ffffff;             /* Bright text */
+  --vscode-fg-inactive: #6a6a6a;           /* Inactive text */
+  
+  /* Accent Colors */
+  --vscode-blue: #007acc;                  /* VS Code blue */
+  --vscode-blue-light: #0098ff;            /* Lighter blue */
+  --vscode-blue-dark: #005a9e;             /* Darker blue */
+  --vscode-orange: #ce9178;                /* Orange accent */
+  --vscode-green: #6a9955;                 /* Green */
+  --vscode-red: #f44747;                   /* Red */
+  --vscode-yellow: #ffcc02;                /* Yellow */
+  --vscode-purple: #c586c0;                /* Purple */
+  
+  /* Activity Bar Colors */
+  --vscode-activitybar-bg: #2d2d30;
+  --vscode-activitybar-fg: #cccccc;
+  --vscode-activitybar-inactive: #969696;
+  
+  /* Status Bar Colors */
+  --vscode-statusbar-bg: #007acc;
+  --vscode-statusbar-fg: #ffffff;
+  --vscode-statusbar-debug-bg: #cc6633;
+  --vscode-statusbar-error-bg: #f44747;
+  
+  /* Button Colors */
+  --vscode-button-bg: #0e639c;
+  --vscode-button-hover-bg: #1177bb;
+  --vscode-button-fg: #ffffff;
+  --vscode-button-secondary-bg: #3a3d41;
+  --vscode-button-secondary-hover-bg: #45494e;
+  
+  /* Input Colors */
+  --vscode-input-bg: #3c3c3c;
+  --vscode-input-border: #3c3c3c;
+  --vscode-input-fg: #cccccc;
+  --vscode-input-placeholder: #a6a6a6;
+  
+  /* List Colors */
+  --vscode-list-hover-bg: #2a2d2e;
+  --vscode-list-active-bg: #37373d;
+  --vscode-list-focus-bg: #062f4a;
+  --vscode-list-select-bg: #094771;
+  
+  /* Notification Colors */
+  --vscode-notification-bg: #252526;
+  --vscode-notification-border: #474747;
+  
+  /* Semantic Colors - VS Code Style */
+  --success: #89d185;                      /* VS Code green */
+  --success-bg: #1e3a20;                   /* Success background */
+  --warning: #ffcc02;                      /* VS Code yellow */
+  --warning-bg: #3d3a1c;                   /* Warning background */
+  --error: #f44747;                        /* VS Code red */
+  --error-bg: #3d1a1a;                     /* Error background */
+  --info: #75beff;                         /* VS Code info blue */
+  --info-bg: #1a2332;                      /* Info background */
+  
+  /* Extended Palette */
+  --primary: var(--vscode-blue);
+  --primary-light: var(--vscode-blue-light);
+  --primary-dark: var(--vscode-blue-dark);
+  --accent: var(--vscode-orange);
+  --accent-light: #d7ba7d;
+  --accent-dark: #b8986b;
+  
+  /* Background Variants */
+  --background-primary: var(--vscode-bg);
+  --background-secondary: var(--vscode-sidebar-bg);
+  --background-tertiary: var(--vscode-panel-bg);
+  --background-hover: var(--vscode-list-hover-bg);
+  --background-active: var(--vscode-list-active-bg);
+  --background-focus: var(--vscode-list-focus-bg);
+  
+  /* Text Variants */
+  --text-primary: var(--vscode-fg);
+  --text-secondary: var(--vscode-fg-muted);
+  --text-bright: var(--vscode-fg-bright);
+  --text-inactive: var(--vscode-fg-inactive);
+  
+  /* Border Variants */
+  --border-primary: var(--vscode-border);
+  --border-light: var(--vscode-border-light);
+  --border-focus: var(--vscode-blue);
+  
+  /* Shadow Colors */
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.2);
+  --shadow-dark: rgba(0, 0, 0, 0.4);
+  
+  /* Typography */
+  --font-family: 'Segoe UI', 'Consolas', 'Courier New', monospace, Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-mono: 'Consolas', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Courier, monospace;
+  --font-size-base: 13px;        /* VS Code default font size */
+  --font-size-small: 11px;
+  --font-size-large: 14px;
+  --font-size-xl: 16px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+  
+  /* Spacing - VS Code style */
+  --spacing-xs: 2px;
+  --spacing-sm: 4px;
+  --spacing-md: 8px;
+  --spacing-lg: 12px;
+  --spacing-xl: 16px;
+  --spacing-xxl: 24px;
+  
+  /* Border Radius - VS Code style (minimal) */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 6px;
+  
+  /* Transitions */
+  --transition-fast: 100ms ease-in-out;
+  --transition-medium: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
+}
+
+/* Global Reset and Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-bright);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-lg) 0;
+  line-height: 1.2;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.125rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.875rem; }
+
+/* Links */
+a {
+  color: var(--vscode-blue-light);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--text-bright);
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: 1px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Buttons - VS Code Style */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 28px; /* VS Code button height */
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Button Variants - VS Code Style */
+.btn-primary {
+  color: var(--vscode-button-fg);
+  background-color: var(--vscode-button-bg);
+  border-color: var(--vscode-button-bg);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--vscode-button-hover-bg);
+  border-color: var(--vscode-button-hover-bg);
+}
+
+.btn-secondary {
+  color: var(--text-primary);
+  background-color: var(--vscode-button-secondary-bg);
+  border-color: var(--border-primary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--vscode-button-secondary-hover-bg);
+  border-color: var(--border-light);
+}
+
+.btn-accent {
+  color: var(--text-bright);
+  background-color: var(--vscode-orange);
+  border-color: var(--vscode-orange);
+}
+
+.btn-accent:hover:not(:disabled) {
+  background-color: var(--accent-light);
+  border-color: var(--accent-light);
+}
+
+.btn-success {
+  color: var(--text-bright);
+  background-color: var(--success);
+  border-color: var(--success);
+}
+
+.btn-warning {
+  color: var(--background-primary);
+  background-color: var(--warning);
+  border-color: var(--warning);
+}
+
+.btn-danger {
+  color: var(--text-bright);
+  background-color: var(--error);
+  border-color: var(--error);
+}
+
+/* Form Elements - VS Code Style */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  color: var(--vscode-input-fg);
+  background-color: var(--vscode-input-bg);
+  border: 1px solid var(--vscode-input-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control::placeholder {
+  color: var(--vscode-input-placeholder);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 1px var(--border-focus);
+}
+
+.form-control.error {
+  border-color: var(--error);
+}
+
+.form-control.error:focus {
+  border-color: var(--error);
+  box-shadow: 0 0 0 1px var(--error);
+}
+
+/* Cards - VS Code Panel Style */
+.card {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px var(--shadow-light);
+  transition: box-shadow var(--transition-medium);
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px var(--shadow-medium);
+}
+
+.card-header {
+  padding: var(--spacing-xl);
+  border-bottom: 1px solid var(--border-primary);
+  background-color: var(--background-tertiary);
+  color: var(--text-bright);
+}
+
+.card-body {
+  padding: var(--spacing-xl);
+}
+
+.card-footer {
+  padding: var(--spacing-xl);
+  border-top: 1px solid var(--border-primary);
+  background-color: var(--background-tertiary);
+}
+
+/* Status Indicators - VS Code Style */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-available {
+  color: var(--success);
+  background-color: var(--success-bg);
+  border: 1px solid var(--success);
+}
+
+.status-on-call {
+  color: var(--warning);
+  background-color: var(--warning-bg);
+  border: 1px solid var(--warning);
+}
+
+.status-break {
+  color: var(--info);
+  background-color: var(--info-bg);
+  border: 1px solid var(--info);
+}
+
+.status-offline {
+  color: var(--error);
+  background-color: var(--error-bg);
+  border: 1px solid var(--error);
+}
+
+/* Utility Classes */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-bright { color: var(--text-bright); }
+.text-muted { color: var(--text-inactive); }
+.text-accent { color: var(--accent); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-danger { color: var(--error); }
+.text-info { color: var(--info); }
+
+.bg-primary { background-color: var(--background-primary); }
+.bg-secondary { background-color: var(--background-secondary); }
+.bg-tertiary { background-color: var(--background-tertiary); }
+.bg-accent { background-color: var(--accent); }
+
+.border-primary { border-color: var(--border-primary); }
+.border-light { border-color: var(--border-light); }
+.border-focus { border-color: var(--border-focus); }
+
+/* Loading Spinner - VS Code Style */
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-primary);
+  border-top: 2px solid var(--vscode-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* VS Code Activity Bar Style */
+.activity-bar {
+  background-color: var(--vscode-activitybar-bg);
+  border-right: 1px solid var(--border-primary);
+  color: var(--vscode-activitybar-fg);
+}
+
+.activity-bar-item {
+  color: var(--vscode-activitybar-inactive);
+  transition: color var(--transition-fast);
+}
+
+.activity-bar-item:hover,
+.activity-bar-item.active {
+  color: var(--vscode-activitybar-fg);
+}
+
+/* VS Code Status Bar Style */
+.status-bar {
+  background-color: var(--vscode-statusbar-bg);
+  color: var(--vscode-statusbar-fg);
+  font-size: var(--font-size-small);
+  height: 22px;
+  border-top: 1px solid var(--border-primary);
+}
+
+.status-bar-item {
+  padding: 0 var(--spacing-md);
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Scrollbar Styling - VS Code Style */
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 0;
+  border: 3px solid var(--background-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--background-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 12px;
+    --spacing-md: 6px;
+    --spacing-lg: 8px;
+    --spacing-xl: 12px;
+  }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.125rem; }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --shadow-light: rgba(0, 0, 0, 0.8);
+    --shadow-medium: rgba(0, 0, 0, 0.9);
+    --shadow-dark: rgba(0, 0, 0, 1);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,99 @@
+<div class="agent-login-container">
+  <div class="login-card">
+    <header class="login-header">
+      <div class="logo">
+        <h1>AI Customer Service</h1>
+      </div>
+      <h2>Agent Login</h2>
+      <p>Please sign in to start your working session</p>
+    </header>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
+      <!-- Agent Name Field -->
+      <div class="form-group">
+        <label for="agentName" class="form-label">Full Name *</label>
+        <input 
+          id="agentName"
+          type="text" 
+          formControlName="agentName"
+          class="form-input"
+          [class.error]="getFieldError('agentName')"
+          placeholder="Enter your full name"
+          autocomplete="name"
+        >
+        @if (getFieldError('agentName')) {
+          <div class="error-message" role="alert">
+            {{ getFieldError('agentName') }}
+          </div>
+        }
+      </div>
+
+      <!-- Department Field -->
+      <div class="form-group">
+        <label for="department" class="form-label">Department *</label>
+        <select 
+          id="department"
+          formControlName="department"
+          class="form-select"
+          [class.error]="getFieldError('department')"
+        >
+          <option value="customer-service">Customer Service</option>
+          <option value="claims">Claims Processing</option>
+          <option value="benefits">Benefits Coordination</option>
+          <option value="enrollment">Member Enrollment</option>
+          <option value="appeals">Appeals & Grievances</option>
+          <option value="prior-auth">Prior Authorization</option>
+        </select>
+        @if (getFieldError('department')) {
+          <div class="error-message" role="alert">
+            {{ getFieldError('department') }}
+          </div>
+        }
+      </div>
+
+      <!-- Login Button -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn-login"
+          [disabled]="isLoggingIn() || loginForm.invalid"
+          [attr.aria-busy]="isLoggingIn()"
+        >
+          @if (isLoggingIn()) {
+            <span class="loading-spinner" aria-hidden="true"></span>
+            Signing In...
+          } @else {
+            Sign In to Start Session
+          }
+        </button>
+      </div>
+    </form>
+
+    <!-- Security Notice -->
+    <div class="security-notice">
+      <h3>Security Reminder</h3>
+      <ul>
+        <li>Never share your login credentials</li>
+        <li>Always log out when leaving your workstation</li>
+        <li>Report any suspicious activity immediately</li>
+        <li>Follow HIPAA guidelines for all member interactions</li>
+      </ul>
+    </div>
+
+    <!-- System Status -->
+    <div class="system-status">
+      <div class="status-item">
+        <span class="status-indicator online"></span>
+        <span>Call System Online</span>
+      </div>
+      <div class="status-item">
+        <span class="status-indicator online"></span>
+        <span>Member Database Connected</span>
+      </div>
+      <div class="status-item">
+        <span class="status-indicator online"></span>
+        <span>Claims System Available</span>
+      </div>
+    </div>
+  </div>
+</div>

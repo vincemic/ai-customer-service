@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, signal, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Benefit, Claim, Deductible, Member, PriorAuthorization } from '../models/member.model';
 import { MemberService } from '../services/member.service';
-import { MemberDemographicsComponent } from './member-demographics/member-demographics.component';
 import { MemberDataViewComponent } from './member-data-view/member-data-view.component';
+import { MemberDemographicsComponent } from './member-demographics/member-demographics.component';
 
 @Component({
   selector: 'app-member-details',

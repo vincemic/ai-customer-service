@@ -1,59 +1,64 @@
 .demographics-container {
-  padding: 20px;
+  padding: var(--spacing-xl);
   max-width: 1200px;
   margin: 0 auto;
+  background: var(--background-primary);
+  min-height: 100vh;
 }
 
 .demographics-header {
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-xl);
 }
 
 .demographics-header h2 {
-  margin: 0 0 15px 0;
-  color: #2c3e50;
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--text-bright);
   font-size: 1.8rem;
+  font-weight: var(--font-weight-bold);
 }
 
 .tabs {
   display: flex;
-  gap: 5px;
-  border-bottom: 2px solid #e9ecef;
+  gap: var(--spacing-xs);
+  border-bottom: 2px solid var(--border-primary);
 }
 
 .tabs button {
   background: none;
   border: none;
-  padding: 12px 20px;
+  padding: var(--spacing-md) var(--spacing-xl);
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: #6c757d;
-  border-radius: 8px 8px 0 0;
-  transition: all 0.2s ease;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  transition: all var(--transition-fast);
 }
 
 .tabs button:hover {
-  background-color: #f8f9fa;
-  color: #495057;
+  background-color: var(--background-hover);
+  color: var(--text-bright);
 }
 
 .tabs button.active {
-  background-color: #007bff;
-  color: white;
-  border-bottom: 2px solid #007bff;
+  background-color: var(--vscode-blue);
+  color: var(--text-bright);
+  border-bottom: 2px solid var(--vscode-blue);
 }
 
 .demographics-content {
-  padding: 20px 0;
+  padding: var(--spacing-xl) 0;
+  background: var(--background-secondary);
 }
 
 /* Primary Member Styles */
 .member-card {
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--background-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: var(--spacing-xl);
 }
 
 .member-header {
@@ -62,21 +67,21 @@
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .member-header h3 {
   margin: 0;
-  color: #2c3e50;
+  color: var(--text-bright);
   font-size: 1.5rem;
 }
 
 .member-id {
-  background-color: #e9ecef;
+  background-color: var(--background-tertiary);
   padding: 5px 12px;
   border-radius: 4px;
   font-size: 0.9rem;
-  color: #495057;
+  color: var(--text-bright);
   font-weight: 500;
 }
 
@@ -94,14 +99,14 @@
 
 .detail-item label {
   font-weight: 600;
-  color: #495057;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .detail-item span {
-  color: #2c3e50;
+  color: var(--text-bright);
   font-size: 1rem;
   line-height: 1.4;
 }
@@ -115,22 +120,22 @@
 }
 
 .dependent-card {
-  background: white;
-  border: 1px solid #dee2e6;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-primary);
   border-radius: 8px;
   padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease;
 }
 
 .dependent-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .dependent-card.inactive {
   opacity: 0.7;
-  border-color: #adb5bd;
+  border-color: var(--border-secondary);
 }
 
 .dependent-header {
@@ -146,16 +151,16 @@
 
 .dependent-header h4 {
   margin: 0;
-  color: #2c3e50;
+  color: var(--text-bright);
   font-size: 1.1rem;
 }
 
 .relationship {
-  background-color: #f8f9fa;
+  background-color: var(--background-tertiary);
   padding: 3px 8px;
   border-radius: 12px;
   font-size: 0.8rem;
-  color: #495057;
+  color: var(--text-bright);
   font-weight: 500;
 }
 
@@ -167,13 +172,13 @@
 }
 
 .status.active {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: var(--vscode-green-dark);
+  color: var(--text-bright);
 }
 
 .status.inactive {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: var(--vscode-red-dark);
+  color: var(--text-bright);
 }
 
 .dependent-details {
@@ -202,34 +207,34 @@
 .inactive-section {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 2px solid #e9ecef;
+  border-top: 2px solid var(--border-primary);
 }
 
 .inactive-section h4 {
-  color: #6c757d;
+  color: var(--text-secondary);
   margin-bottom: 15px;
   font-size: 1.2rem;
 }
 
 /* Contacts Styles */
 .contact-card {
-  background: white;
-  border: 1px solid #dee2e6;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-primary);
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   max-width: 500px;
 }
 
 .contact-header {
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .contact-header h4 {
   margin: 0;
-  color: #2c3e50;
+  color: var(--text-bright);
   font-size: 1.3rem;
 }
 

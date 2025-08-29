@@ -1,39 +1,44 @@
 .member-data-container {
-  padding: 20px;
+  padding: var(--spacing-xl);
   max-width: 1400px;
   margin: 0 auto;
+  background: var(--background-primary);
+  min-height: 100vh;
 }
 
 .data-header {
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-xl);
 }
 
 .data-header h2 {
-  margin: 0 0 20px 0;
-  color: #2c3e50;
+  margin: 0 0 var(--spacing-xl) 0;
+  color: var(--text-bright);
   font-size: 1.8rem;
+  font-weight: var(--font-weight-bold);
 }
 
 .summary-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
 }
 
 .summary-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, var(--vscode-blue) 0%, var(--vscode-blue-dark) 100%);
+  color: var(--text-bright);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-primary);
 }
 
 .card-value {
   font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-bright);
 }
 
 .card-label {
@@ -41,13 +46,14 @@
   opacity: 0.9;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  color: var(--text-bright);
 }
 
 .tabs {
   display: flex;
-  gap: 5px;
-  border-bottom: 2px solid #e9ecef;
-  margin-bottom: 20px;
+  gap: var(--spacing-xs);
+  border-bottom: 2px solid var(--border-primary);
+  margin-bottom: var(--spacing-xl);
   overflow-x: auto;
 }
 
@@ -65,14 +71,14 @@
 }
 
 .tabs button:hover {
-  background-color: #f8f9fa;
-  color: #495057;
+  background-color: var(--background-tertiary);
+  color: var(--text-bright);
 }
 
 .tabs button.active {
-  background-color: #007bff;
-  color: white;
-  border-bottom: 2px solid #007bff;
+  background-color: var(--vscode-blue);
+  color: var(--text-bright);
+  border-bottom: 2px solid var(--vscode-blue);
 }
 
 .data-content {
@@ -117,9 +123,9 @@
 
 /* Claims Section */
 .claims-table {
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -127,23 +133,23 @@
 .table-header {
   display: grid;
   grid-template-columns: 150px 120px 200px 200px 120px 120px;
-  background-color: #f8f9fa;
+  background-color: var(--background-tertiary);
   padding: 15px;
   font-weight: 600;
-  color: #495057;
-  border-bottom: 1px solid #dee2e6;
+  color: var(--text-bright);
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .table-row {
   display: grid;
   grid-template-columns: 150px 120px 200px 200px 120px 120px;
   padding: 15px;
-  border-bottom: 1px solid #f8f9fa;
+  border-bottom: 1px solid var(--border-primary);
   transition: background-color 0.2s ease;
 }
 
 .table-row:hover {
-  background-color: #f8f9fa;
+  background-color: var(--background-tertiary);
 }
 
 .table-row:last-child {
@@ -158,10 +164,10 @@
 }
 
 .benefit-card {
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 20px;
+  background: var(--background-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -227,10 +233,10 @@
 }
 
 .accumulator-card {
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 20px;
+  background: var(--background-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -304,10 +310,10 @@
 }
 
 .authorization-card {
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 20px;
+  background: var(--background-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -368,10 +374,10 @@
 }
 
 .history-card {
-  background: white;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 20px;
+  background: var(--background-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

@@ -1,0 +1,531 @@
+.agent-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xxl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxl);
+  background-color: var(--background-primary);
+  min-height: 100vh;
+}
+
+/* Agent Header - VS Code Activity Bar Style */
+.agent-header {
+  background: var(--background-secondary);
+  color: var(--text-bright);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl);
+  border: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.agent-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+}
+
+.agent-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--vscode-blue);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-bright);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.agent-details h2 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--text-bright);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.session-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.status-badge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.session-time {
+  color: var(--text-secondary);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.header-actions .btn-logout {
+  background: var(--error);
+  color: var(--text-bright);
+  border: 1px solid var(--error);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-base);
+}
+
+.btn-logout:hover {
+  background: #cc444b;
+  border-color: #cc444b;
+}
+
+/* Call Controls - VS Code Panel Style */
+.call-controls {
+  background: var(--background-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl);
+  border: 1px solid var(--border-primary);
+}
+
+.call-ready h3,
+.call-active h3 {
+  margin: 0 0 var(--spacing-xl) 0;
+  color: var(--text-bright);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.call-buttons {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xxl);
+}
+
+.btn-answer-call,
+.btn-outbound-call {
+  flex: 1;
+  background: var(--vscode-button-bg);
+  color: var(--vscode-button-fg);
+  border: 1px solid var(--vscode-button-bg);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-height: 36px;
+}
+
+.btn-answer-call:hover:not(:disabled) {
+  background: var(--vscode-button-hover-bg);
+  border-color: var(--vscode-button-hover-bg);
+}
+
+.btn-outbound-call {
+  background: var(--vscode-button-secondary-bg);
+  color: var(--text-primary);
+  border-color: var(--border-primary);
+}
+
+.btn-outbound-call:hover:not(:disabled) {
+  background: var(--vscode-button-secondary-hover-bg);
+  border-color: var(--border-light);
+}
+
+.btn-answer-call:disabled,
+.btn-outbound-call:disabled {
+  background: var(--background-tertiary);
+  color: var(--text-inactive);
+  border-color: var(--border-primary);
+  cursor: not-allowed;
+}
+
+.status-controls {
+  border-top: 1px solid var(--border-primary);
+  padding-top: var(--spacing-xl);
+}
+
+.status-controls h4 {
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--text-bright);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.status-buttons {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.btn-status {
+  flex: 1;
+  background: var(--background-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.btn-status.available:hover,
+.btn-status.available.active {
+  background: var(--success);
+  color: var(--text-bright);
+  border-color: var(--success);
+}
+
+.btn-status.break:hover,
+.btn-status.break.active {
+  background: var(--info);
+  color: var(--text-bright);
+  border-color: var(--info);
+}
+
+/* Call Active State - VS Code Editor Style */
+.call-active {
+  background: var(--background-secondary);
+  border: 1px solid var(--vscode-blue);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl);
+}
+
+.call-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  background: var(--background-tertiary);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+}
+
+.call-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.call-type,
+.call-id,
+.call-start-time {
+  font-size: var(--font-size-small);
+  color: var(--text-secondary);
+}
+
+.call-timer {
+  text-align: right;
+}
+
+.timer-label {
+  display: block;
+  font-size: var(--font-size-small);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.timer-value {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--vscode-blue-light);
+  font-family: var(--font-family-mono);
+}
+
+.call-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-end-call {
+  background: var(--error);
+  color: var(--text-bright);
+  border: 1px solid var(--error);
+  padding: var(--spacing-lg) var(--spacing-xxl);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.btn-end-call:hover {
+  background: #cc444b;
+  border-color: #cc444b;
+}
+
+/* Session Statistics - VS Code Panel Style */
+.session-stats {
+  background: var(--background-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl);
+  border: 1px solid var(--border-primary);
+}
+
+.session-stats h3 {
+  margin: 0 0 var(--spacing-xl) 0;
+  color: var(--text-bright);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.stat-card {
+  background: var(--background-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl);
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.stat-card:hover {
+  background: var(--background-hover);
+  border-color: var(--border-light);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--vscode-blue-light);
+  margin-bottom: var(--spacing-xs);
+  font-family: var(--font-family-mono);
+}
+
+.stat-label {
+  font-size: var(--font-size-small);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Quick Actions - VS Code Panel Style */
+.quick-actions {
+  background: var(--background-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl);
+  border: 1px solid var(--border-primary);
+}
+
+.quick-actions h3 {
+  margin: 0 0 var(--spacing-xl) 0;
+  color: var(--text-bright);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.btn-action {
+  background: var(--background-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  text-align: center;
+}
+
+.btn-action:hover {
+  background: var(--vscode-button-bg);
+  color: var(--vscode-button-fg);
+  border-color: var(--vscode-button-bg);
+}
+
+/* Modal Styles - VS Code Dialog Style */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--background-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl);
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px var(--shadow-dark);
+}
+
+.modal-content h3 {
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--text-bright);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.modal-content p {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xl);
+}
+
+.warning {
+  background: var(--warning-bg);
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.warning-icon {
+  color: var(--warning);
+  font-weight: var(--font-weight-bold);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--spacing-lg);
+  justify-content: flex-end;
+}
+
+.btn-cancel {
+  background: var(--background-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-cancel:hover {
+  background: var(--background-hover);
+  border-color: var(--border-light);
+}
+
+.btn-confirm {
+  background: var(--error);
+  color: var(--text-bright);
+  border: 1px solid var(--error);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-confirm:hover {
+  background: #cc444b;
+  border-color: #cc444b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .agent-dashboard {
+    padding: var(--spacing-lg);
+    gap: var(--spacing-xl);
+  }
+
+  .agent-header {
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    text-align: center;
+    padding: var(--spacing-xl);
+  }
+
+  .call-buttons {
+    flex-direction: column;
+  }
+
+  .status-buttons {
+    flex-direction: column;
+  }
+
+  .call-info {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    text-align: center;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .agent-dashboard {
+    padding: var(--spacing-md);
+  }
+  
+  .call-controls,
+  .session-stats,
+  .quick-actions {
+    padding: var(--spacing-xl);
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    transform: none !important;
+  }
+}

@@ -1,33 +1,78 @@
 <div class="app-container">
-  <header class="app-header">
-    <h1>{{ title() }}</h1>
-    <div class="header-info">
-      <p>Health Insurance Call Center System</p>
-    </div>
-  </header>
+  <!-- Fixed Call Header - only show when on call -->
+  @if (isOnCall() && currentCall(); as call) {
+    <header class="call-header-fixed">
+      <div class="call-info">
+        <div class="call-basic-info">
+          <span class="call-type">{{ call.callType | titlecase }}</span>
+          <span class="call-id">{{ call.id }}</span>
+          <span class="call-duration">{{ callDuration() }}</span>
+        </div>
+        @if (call.memberId) {
+          <div class="member-status identified">
+            <span>Member: {{ call.memberId }}</span>
+          </div>
+        } @else {
+          <div class="member-status pending">
+            <span>Identifying member...</span>
+          </div>
+        }
+      </div>
+      
+      <div class="call-controls">
+        <button class="control-btn hold-btn" title="Put call on hold">
+          Hold
+        </button>
+        <button class="control-btn transfer-btn" title="Transfer call">
+          Transfer
+        </button>
+        <button class="control-btn conference-btn" title="Conference call">
+          Conference
+        </button>
+        <button class="control-btn notes-btn" title="Quick note">
+          Notes
+        </button>
+        <button class="control-btn end-call-btn" (click)="onEndCall()" title="End call">
+          End Call
+        </button>
+      </div>
+    </header>
+  }
 
-  <main class="app-main">
-    <!-- Call Session Management -->
-    <section class="call-session-section">
-      <app-call-session></app-call-session>
-    </section>
-
-    <!-- Member Lookup and Details -->
-    @if (currentSession()?.status === 'active') {
+  <main class="app-main" [class.with-call-header]="isOnCall()">
+    @if (!isLoggedIn()) {
+      <!-- Show agent login when not logged in -->
+      <section class="login-section">
+        <app-agent-login></app-agent-login>
+      </section>
+    } @else if (!isOnCall()) {
+      <!-- Show agent dashboard when logged in but not on call -->
+      <section class="dashboard-section">
+        <app-agent-dashboard></app-agent-dashboard>
+      </section>
+    } @else {
+      <!-- Show member lookup/details when on call -->
       <section class="member-section">
         @if (!memberIdentified()) {
           <!-- Show member lookup when no member is identified -->
           <app-member-lookup></app-member-lookup>
         } @else {
           <!-- Show member details when member is identified -->
-          <app-member-details [member]="currentSession()!.member!"></app-member-details>
+          @if (currentMember(); as member) {
+            <app-member-details [member]="member"></app-member-details>
+          }
         }
+      </section>
+
+      <!-- Show simplified call management (just notes) -->
+      <section class="call-notes-section">
+        <app-call-management [headerMode]="false"></app-call-management>
       </section>
     }
   </main>
 
   <footer class="app-footer">
-    <p>&copy; 2024 Health Insurance Call Center. All rights reserved.</p>
+    <p>&copy; 2024 AI Customer Service. All rights reserved.</p>
   </footer>
 </div>
 

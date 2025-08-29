@@ -1,6 +1,6 @@
-import { Component, computed, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Member, FamilyMember } from '../../models/member.model';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { Member } from '../../models/member.model';
 
 @Component({
   selector: 'app-member-demographics',
