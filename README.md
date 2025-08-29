@@ -1,212 +1,459 @@
-# Health Insurance Call Center Application
+# AI Customer Service Application# Health Insurance Call Center Application
 
-An Angular 18+ application designed for health insurance call center operations, enabling service representatives to efficiently lookup member information, track calls, and manage customer interactions with a modern VS Code-inspired dark theme interface.
 
-## Features
 
-- **Modern Angular 18+** with standalone components and signal-based state management
+[![Build and Deploy](https://github.com/vincemic/ai-customer-service/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/vincemic/ai-customer-service/actions/workflows/ci-cd.yml)An Angular 18+ application designed for health insurance call center operations, enabling service representatives to efficiently lookup member information, track calls, and manage customer interactions with a modern VS Code-inspired dark theme interface.
+
+
+
+A modern AI-powered customer service application built with Angular 18+ featuring call management, member lookup, and integrated call notes functionality.## Features
+
+
+
+## 🚀 Live Demo- **Modern Angular 18+** with standalone components and signal-based state management
+
 - **VS Code Dark Theme UI** - Consistent dark theme styling throughout the application
-- **Central Loading Service** - Unified loading states with contextual messages and realistic delays
+
+- **GitHub Pages Demo**: [https://vincemic.github.io/ai-customer-service](https://vincemic.github.io/ai-customer-service)- **Central Loading Service** - Unified loading states with contextual messages and realistic delays
+
 - **Call Session Management** - Track calls from start to finish with professional interface
-- **Member Lookup** - Search by Member ID, name, and date of birth with instant feedback
+
+## ✨ Features- **Member Lookup** - Search by Member ID, name, and date of birth with instant feedback
+
 - **Comprehensive Member Information**:
-  - Demographics and contact information
-  - Claims history with status tracking
-  - Benefits information and accumulators
-  - Prior authorizations and history
-  - Call history tracking
-- **Async/Await Architecture** - Modern Promise-based data operations with loading integration
+
+- **Call Management**: Start, manage, and end customer service calls  - Demographics and contact information
+
+- **Member Lookup**: Search and retrieve member information  - Claims history with status tracking
+
+- **Call Notes**: Real-time call notes with quick actions and persistence  - Benefits information and accumulators
+
+- **Agent Dashboard**: Comprehensive agent interface  - Prior authorizations and history
+
+- **Responsive Design**: Mobile-friendly interface with VS Code dark theme  - Call history tracking
+
+- **Real-time Updates**: Live call duration and session management- **Async/Await Architecture** - Modern Promise-based data operations with loading integration
+
 - **Keyboard & Mouse Navigation** - Full accessibility support
-- **Responsive Design** - Works on desktop and mobile devices
+
+## 🛠️ Technology Stack- **Responsive Design** - Works on desktop and mobile devices
+
 - **Mock Data Service** - Ready for integration with real APIs with realistic network simulation
 
-## Technology Stack
+- **Frontend**: Angular 18+ with standalone components
 
-- **Frontend**: Angular 18+ with TypeScript
-- **Styling**: CSS3 with responsive design
+- **State Management**: Angular Signals## Technology Stack
+
+- **Styling**: CSS Custom Properties with VS Code Dark Theme
+
+- **Testing**: Playwright for E2E testing- **Frontend**: Angular 18+ with TypeScript
+
+- **Deployment**: GitHub Pages with automated CI/CD- **Styling**: CSS3 with responsive design
+
 - **Testing**: Jasmine, Karma, and Playwright
-- **CI/CD**: GitHub Actions
+
+## 🌍 Environments- **CI/CD**: GitHub Actions
+
 - **Deployment**: GitHub Pages ready
+
+The application supports multiple deployment environments:
 
 ## Development Setup
 
-### Prerequisites
+### Development
 
-- Node.js 18 or higher
-- npm or yarn
+- **Purpose**: Local development and testing### Prerequisites
+
+- **Configuration**: `environment.ts`
+
+- **Features**: Debug logging, source maps, unoptimized builds- Node.js 18 or higher
+
+- **Command**: `npm run start:dev`- npm or yarn
+
 - Git
 
-### Installation
+### Production
 
-1. Clone the repository:
-   ```bash
+- **Purpose**: Production deployment### Installation
+
+- **Configuration**: `environment.prod.ts`
+
+- **Features**: Optimized builds, analytics enabled, minification1. Clone the repository:
+
+- **Command**: `npm run build:prod`   ```bash
+
    git clone <repository-url>
-   cd ai-customer-service
+
+### GitHub Pages   cd ai-customer-service
+
+- **Purpose**: Demo deployment on GitHub Pages   ```
+
+- **Configuration**: `environment.github-pages.ts`
+
+- **Features**: Production optimizations with GitHub Pages-specific settings2. Install dependencies:
+
+- **Command**: `npm run build:github-pages`   ```bash
+
+- **Base Href**: `/ai-customer-service/`   npm install
+
    ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+## 🚀 Getting Started
 
 3. Start the development server:
-   ```bash
+
+### Prerequisites   ```bash
+
    npm start
-   ```
+
+- Node.js 20 or higher   ```
+
+- npm or yarn package manager
 
 4. Open your browser to `http://localhost:4200`
 
+### Installation
+
 ## Available Scripts
 
-- `npm start` - Start development server
-- `npm run build` - Build for production
-- `npm run build:github-pages` - Build for GitHub Pages deployment
-- `npm test` - Run unit tests
+1. **Clone the repository**
+
+   ```bash- `npm start` - Start development server
+
+   git clone https://github.com/vincemic/ai-customer-service.git- `npm run build` - Build for production
+
+   cd ai-customer-service- `npm run build:github-pages` - Build for GitHub Pages deployment
+
+   ```- `npm test` - Run unit tests
+
 - `npm run test:ci` - Run tests in CI mode
-- `npm run e2e` - Run Playwright end-to-end tests
-- `npm run e2e:ui` - Run Playwright tests with UI
-- `npm run lint` - Run linting
+
+2. **Install dependencies**- `npm run e2e` - Run Playwright end-to-end tests
+
+   ```bash- `npm run e2e:ui` - Run Playwright tests with UI
+
+   npm install- `npm run lint` - Run linting
+
+   ```
 
 ## Environments
 
-The application supports multiple environments:
+3. **Start development server**
 
-- **Development** (`environment.ts`) - Local development
-- **Production** (`environment.prod.ts`) - Production deployment
-- **GitHub Pages** (`environment.github-pages.ts`) - GitHub Pages deployment
+   ```bashThe application supports multiple environments:
 
-## Project Structure
+   npm start
+
+   # or for specific environment- **Development** (`environment.ts`) - Local development
+
+   npm run start:dev- **Production** (`environment.prod.ts`) - Production deployment
+
+   ```- **GitHub Pages** (`environment.github-pages.ts`) - GitHub Pages deployment
+
+
+
+4. **Open browser**## Project Structure
+
+   Navigate to `http://localhost:4200`
 
 ```
-src/
+
+## 📦 Available Scriptssrc/
+
 ├── app/
-│   ├── components/           # Angular standalone components
-│   │   ├── member-lookup.component.*
-│   │   ├── member-details.component.*
-│   │   ├── member-data-view/
-│   │   │   └── member-data-view.component.*
+
+### Development│   ├── components/           # Angular standalone components
+
+- `npm start` - Start development server (port 4200)│   │   ├── member-lookup.component.*
+
+- `npm run start:dev` - Start with development configuration│   │   ├── member-details.component.*
+
+- `npm run start:prod` - Start with production configuration│   │   ├── member-data-view/
+
+- `npm run watch` - Build with file watching│   │   │   └── member-data-view.component.*
+
 │   │   ├── member-demographics/
-│   │   │   └── member-demographics.component.*
-│   │   ├── call-session.component.*
-│   │   └── loading-spinner.component.*
-│   ├── services/            # Service layer for data access
-│   │   ├── member.service.ts
+
+### Building│   │   │   └── member-demographics.component.*
+
+- `npm run build` - Build for production│   │   ├── call-session.component.*
+
+- `npm run build:dev` - Build for development│   │   └── loading-spinner.component.*
+
+- `npm run build:prod` - Build for production│   ├── services/            # Service layer for data access
+
+- `npm run build:github-pages` - Build for GitHub Pages deployment│   │   ├── member.service.ts
+
 │   │   ├── call-session.service.ts
-│   │   └── loading.service.ts
-│   ├── models/              # TypeScript interfaces and types
-│   │   └── member.model.ts
-│   ├── styles/              # Global theme styles
-│   │   └── pointc-theme.css
+
+### Testing│   │   └── loading.service.ts
+
+- `npm run e2e` - Run Playwright end-to-end tests│   ├── models/              # TypeScript interfaces and types
+
+- `npm run e2e:ui` - Run Playwright tests with UI mode│   │   └── member.model.ts
+
+- `npm run e2e:debug` - Run Playwright tests in debug mode│   ├── styles/              # Global theme styles
+
+- `npm run lint` - Run linting│   │   └── pointc-theme.css
+
 │   └── environments/        # Environment configurations
-├── e2e/                     # Playwright tests
-└── .github/
-    └── workflows/           # GitHub Actions CI/CD
+
+### Utilities├── e2e/                     # Playwright tests
+
+- `npm run serve:dist` - Serve built application locally└── .github/
+
+- `npm run analyze` - Analyze bundle size    └── workflows/           # GitHub Actions CI/CD
+
 ```
+
+## 🔄 CI/CD Pipeline
 
 ## Component Architecture
 
+The project uses GitHub Actions for automated building, testing, and deployment:
+
 ### Call Session Management
 
-- **CallSessionComponent**: Manages active call sessions with VS Code-styled interface
-- Tracks call duration, agent information, and call notes
-- Provides modal for ending calls with final notes
+### Pipeline Features
 
-### Member Lookup
+- **Multi-environment builds**: Verifies all environment configurations- **CallSessionComponent**: Manages active call sessions with VS Code-styled interface
 
-- **MemberLookupComponent**: Search interface for member identification with loading integration
-- Supports search by Member ID, name, and date of birth
-- Form validation, error handling, and real-time loading feedback
+- **Playwright testing**: Runs E2E tests (non-blocking for deployment)- Tracks call duration, agent information, and call notes
+
+- **Automated deployment**: Deploys to GitHub Pages on main branch pushes- Provides modal for ending calls with final notes
+
+- **Artifact management**: Stores test reports and build artifacts
+
+- **Environment verification**: Validates all environment configurations### Member Lookup
+
+
+
+### Pipeline Triggers- **MemberLookupComponent**: Search interface for member identification with loading integration
+
+- Push to `main` branch- Supports search by Member ID, name, and date of birth
+
+- Pull requests to `main` branch- Form validation, error handling, and real-time loading feedback
+
+- Manual workflow dispatch
 
 ### Member Details
 
-- **MemberDetailsComponent**: Clean two-tab interface for member information
-- Demographics & Family tab for personal information
-- Claims, Benefits & History tab for comprehensive data view
-- Responsive design with keyboard navigation (legacy view removed)
+### Deployment Process
 
-### Member Data View
+1. **Checkout code** and setup Node.js environment- **MemberDetailsComponent**: Clean two-tab interface for member information
 
-- **MemberDataViewComponent**: Comprehensive tabbed interface for member data
+2. **Install dependencies** with caching- Demographics & Family tab for personal information
+
+3. **Verify environments** and configurations- Claims, Benefits & History tab for comprehensive data view
+
+4. **Run linting** (continues on error)- Responsive design with keyboard navigation (legacy view removed)
+
+5. **Build verification** for all environments
+
+6. **Install Playwright** and run E2E tests (non-blocking)### Member Data View
+
+7. **Build for GitHub Pages** with optimizations
+
+8. **Deploy to GitHub Pages** (main branch only)- **MemberDataViewComponent**: Comprehensive tabbed interface for member data
+
 - Claims, benefits, accumulators, prior authorizations, and history
-- Async data loading with contextual loading messages
 
-### Loading System
+## 🏗️ Architecture- Async data loading with contextual loading messages
 
-- **LoadingSpinnerComponent**: VS Code-themed loading overlay with spinner animation
-- **LoadingService**: Signal-based centralized loading state management
-- Contextual loading messages and realistic network delay simulation
 
-## Service Layer
 
-### MemberService
-- Mock data service for member information
-- Simulates API calls with realistic delays
-- Provides methods for searching and retrieving member data
+### Component Structure### Loading System
 
-### CallSessionService
-- Manages call session state using Angular signals
-- Tracks call lifecycle from start to completion
-- Integrates with member identification workflow
-
-## Testing
-
-### Unit Tests
-Run with Jest and Angular Testing Utilities:
-```bash
-npm test
 ```
 
-### End-to-End Tests
+src/- **LoadingSpinnerComponent**: VS Code-themed loading overlay with spinner animation
+
+├── app/- **LoadingService**: Signal-based centralized loading state management
+
+│   ├── components/          # Standalone Angular components- Contextual loading messages and realistic network delay simulation
+
+│   │   ├── agent-dashboard/ # Agent management interface
+
+│   │   ├── call-management/ # Call control interface## Service Layer
+
+│   │   ├── call-notes-footer/ # Persistent call notes
+
+│   │   ├── member-lookup/   # Member search functionality### MemberService
+
+│   │   └── ...- Mock data service for member information
+
+│   ├── services/           # Injectable services- Simulates API calls with realistic delays
+
+│   │   ├── agent-session.service.ts- Provides methods for searching and retrieving member data
+
+│   │   ├── member.service.ts
+
+│   │   └── ...### CallSessionService
+
+│   ├── models/            # TypeScript interfaces- Manages call session state using Angular signals
+
+│   └── ...- Tracks call lifecycle from start to completion
+
+├── environments/          # Environment configurations- Integrates with member identification workflow
+
+└── styles/               # Global styles and themes
+
+```## Testing
+
+
+
+### Key Services### Unit Tests
+
+- **AgentSessionService**: Manages agent login and call sessionsRun with Jest and Angular Testing Utilities:
+
+- **MemberService**: Handles member lookup and data retrieval```bash
+
+- **MemberStateService**: Manages member state across componentsnpm test
+
+- **LoadingService**: Centralized loading state management```
+
+
+
+## 🎨 Styling### End-to-End Tests
+
 Run with Playwright:
-```bash
-npm run e2e
-```
 
-## Deployment
+The application uses a custom VS Code dark theme with:```bash
 
-### GitHub Pages
+- CSS Custom Properties for consistent themingnpm run e2e
+
+- Responsive design patterns```
+
+- Mobile-first approach
+
+- Accessibility considerations## Deployment
+
+
+
+## 🧪 Testing### GitHub Pages
+
 The application is configured for automatic deployment to GitHub Pages:
 
-1. Push to the `main` branch
-2. GitHub Actions will build and test the application
-3. If tests pass, deploys to GitHub Pages
-4. Failed tests do not prevent deployment (as requested)
+### Playwright E2E Tests
 
-### Manual Deployment
+The application includes comprehensive end-to-end tests using Playwright:1. Push to the `main` branch
+
+2. GitHub Actions will build and test the application
+
+- **Test Coverage**: Login flow, member lookup, call management3. If tests pass, deploys to GitHub Pages
+
+- **Cross-browser**: Supports Chrome, Firefox, and Safari4. Failed tests do not prevent deployment (as requested)
+
+- **CI Integration**: Automated testing in GitHub Actions
+
+- **Reports**: Detailed test reports with screenshots### Manual Deployment
+
 Build for production:
-```bash
-npm run build:github-pages
-```
+
+### Running Tests Locally```bash
+
+```bashnpm run build:github-pages
+
+# Install Playwright browsers```
+
+npx playwright install
 
 ## Accessibility
 
-The application follows WCAG guidelines:
+# Run tests
+
+npm run e2eThe application follows WCAG guidelines:
+
 - Semantic HTML structure
-- ARIA labels and roles
-- Keyboard navigation support
+
+# Run with UI- ARIA labels and roles
+
+npm run e2e:ui- Keyboard navigation support
+
 - Screen reader compatibility
-- High contrast color schemes
-- Focus indicators
+
+# Debug mode- High contrast color schemes
+
+npm run e2e:debug- Focus indicators
+
+```
 
 ## Browser Support
 
+## 📈 Performance
+
 - Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
 
-## Contributing
+### Build Optimizations- Firefox 88+
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
+- **Tree Shaking**: Removes unused code- Safari 14+
+
+- **Bundle Splitting**: Optimized code splitting- Edge 90+
+
+- **Compression**: Gzip compression enabled
+
+- **Caching**: Aggressive caching strategies## Contributing
+
+
+
+### Bundle Size Limits1. Fork the repository
+
+- Initial bundle: < 1MB2. Create a feature branch
+
+- Component styles: < 8KB each3. Make your changes
+
 4. Add tests for new functionality
-5. Submit a pull request
 
-## License
+## 🚀 Deployment5. Submit a pull request
+
+
+
+### Automatic Deployment## License
+
+Every push to the `main` branch triggers automatic deployment to GitHub Pages.
 
 This project is licensed under the MIT License.
 
-## Support
+### Manual Deployment
 
-For questions or issues, please contact the development team.
+```bash## Support
+
+# Build for GitHub Pages
+
+npm run build:github-pagesFor questions or issues, please contact the development team.
+
+# The dist/ai-customer-service folder contains the deployable application
+```
+
+### Environment Variables
+The application uses environment-specific configurations without requiring environment variables during build time.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+### Development Guidelines
+- Use Angular 18+ standalone components
+- Follow the established coding patterns
+- Write Playwright tests for new features
+- Ensure responsive design compatibility
+- Update documentation as needed
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+For support and questions:
+- Create an issue in the GitHub repository
+- Check the [GitHub Actions logs](https://github.com/vincemic/ai-customer-service/actions) for deployment status
+- Review the [live demo](https://vincemic.github.io/ai-customer-service) for expected functionality
+
+---
+
+**Built with ❤️ using Angular 18+ and deployed with GitHub Actions**

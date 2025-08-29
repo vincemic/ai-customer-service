@@ -4,13 +4,21 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:dev": "ng serve --configuration=development",
+    "start:prod": "ng serve --configuration=production",
     "start:test": "ng serve --configuration=test",
     "build": "ng build",
+    "build:dev": "ng build --configuration=development",
+    "build:prod": "ng build --configuration=production",
     "build:github-pages": "ng build --configuration=github-pages",
     "watch": "ng build --watch --configuration development",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
-    "lint": "echo 'Linting completed'"
+    "e2e:debug": "playwright test --debug",
+    "lint": "echo 'Linting completed'",
+    "test": "echo 'No unit tests configured yet'",
+    "serve:dist": "npx serve dist/ai-customer-service -s",
+    "analyze": "ng build --configuration=production --stats-json && npx webpack-bundle-analyzer dist/ai-customer-service/stats.json"
   },
   "prettier": {
     "printWidth": 100,
