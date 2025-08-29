@@ -29,25 +29,25 @@ export class MemberDetailsComponent implements OnInit {
     this.loadMemberData();
   }
 
-  private loadMemberData(): void {
+  private async loadMemberData(): Promise<void> {
     const memberId = this.member().id;
     
-    // Load all member-related data
-    this.memberService.getMemberClaims(memberId).subscribe(claims => {
+    try {
+      // Load all member-related data in parallel
+      const [claims, benefits, deductibles, auths] = await Promise.all([
+        this.memberService.getMemberClaims(memberId),
+        this.memberService.getMemberBenefits(memberId),
+        this.memberService.getMemberDeductibles(memberId),
+        this.memberService.getPriorAuthorizations(memberId)
+      ]);
+      
       this.claims.set(claims);
-    });
-    
-    this.memberService.getMemberBenefits(memberId).subscribe(benefits => {
       this.benefits.set(benefits);
-    });
-    
-    this.memberService.getMemberDeductibles(memberId).subscribe(deductibles => {
       this.deductibles.set(deductibles);
-    });
-    
-    this.memberService.getPriorAuthorizations(memberId).subscribe(auths => {
       this.authorizations.set(auths);
-    });
+    } catch (error) {
+      console.error('Error loading member data:', error);
+    }
   }
 
   setActiveTab(tab: 'demographics' | 'data' | 'legacy'): void {

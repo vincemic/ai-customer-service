@@ -83,10 +83,10 @@ export class MemberDataViewComponent implements OnInit {
     
     try {
       const [claims, benefits, accumulators, priorAuths] = await Promise.all([
-        this.memberService.getMemberClaims(this.member().id).toPromise(),
-        this.memberService.getMemberBenefits(this.member().id).toPromise(),
-        this.memberService.getMemberAccumulators(this.member().id).toPromise(),
-        this.memberService.getPriorAuthorizations(this.member().id).toPromise()
+        this.memberService.getMemberClaims(this.member().id),
+        this.memberService.getMemberBenefits(this.member().id),
+        this.memberService.getMemberAccumulators(this.member().id),
+        this.memberService.getPriorAuthorizations(this.member().id)
       ]);
       
       this.claims.set(claims || []);
@@ -96,9 +96,9 @@ export class MemberDataViewComponent implements OnInit {
       
       // Load history data
       const [claimHist, callHist, authHist] = await Promise.all([
-        this.memberService.getClaimHistory(this.member().id).toPromise(),
-        this.memberService.getCallHistory(this.member().id).toPromise(),
-        this.memberService.getAuthorizationHistory(this.member().id).toPromise()
+        this.memberService.getClaimHistory(this.member().id),
+        this.memberService.getCallHistory(this.member().id),
+        this.memberService.getAuthorizationHistory(this.member().id)
       ]);
       
       this.claimHistory.set(claimHist || []);

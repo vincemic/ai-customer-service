@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { Accumulator, AuthorizationHistory, Benefit, CallHistory, Claim, ClaimHistory, Deductible, Member, PriorAuthorization } from '../models/member.model';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MemberService {
+  private loadingService = inject(LoadingService);
   private mockMembers: Member[] = [
     {
       id: '1',
@@ -106,39 +107,53 @@ export class MemberService {
     }
   ];
 
-  findMember(criteria: { memberId?: string; firstName?: string; lastName?: string; dateOfBirth?: Date }): Observable<Member | null> {
-    const member = this.mockMembers.find(m => {
-      const matchesMemberId = !criteria.memberId || m.memberId.toLowerCase().includes(criteria.memberId.toLowerCase());
-      const matchesFirstName = !criteria.firstName || m.firstName.toLowerCase().includes(criteria.firstName.toLowerCase());
-      const matchesLastName = !criteria.lastName || m.lastName.toLowerCase().includes(criteria.lastName.toLowerCase());
-      const matchesDob = !criteria.dateOfBirth || m.dateOfBirth.getTime() === criteria.dateOfBirth.getTime();
+  async findMember(criteria: { memberId?: string; firstName?: string; lastName?: string; dateOfBirth?: Date }): Promise<Member | null> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(800, 1500);
       
-      return matchesMemberId && matchesFirstName && matchesLastName && matchesDob;
-    });
+      const member = this.mockMembers.find(m => {
+        const matchesMemberId = !criteria.memberId || m.memberId.toLowerCase().includes(criteria.memberId.toLowerCase());
+        const matchesFirstName = !criteria.firstName || m.firstName.toLowerCase().includes(criteria.firstName.toLowerCase());
+        const matchesLastName = !criteria.lastName || m.lastName.toLowerCase().includes(criteria.lastName.toLowerCase());
+        const matchesDob = !criteria.dateOfBirth || m.dateOfBirth.getTime() === criteria.dateOfBirth.getTime();
+        
+        return matchesMemberId && matchesFirstName && matchesLastName && matchesDob;
+      });
 
-    return of(member || null).pipe(delay(500)); // Simulate API delay
+      return member || null;
+    }, 'Searching for member...');
   }
 
-  searchMembers(criteria: { memberId?: string; firstName?: string; lastName?: string; dateOfBirth?: Date }): Observable<Member[]> {
-    const matchingMembers = this.mockMembers.filter(m => {
-      const matchesMemberId = !criteria.memberId || m.memberId.toLowerCase().includes(criteria.memberId.toLowerCase());
-      const matchesFirstName = !criteria.firstName || m.firstName.toLowerCase().includes(criteria.firstName.toLowerCase());
-      const matchesLastName = !criteria.lastName || m.lastName.toLowerCase().includes(criteria.lastName.toLowerCase());
-      const matchesDob = !criteria.dateOfBirth || m.dateOfBirth.getTime() === criteria.dateOfBirth.getTime();
+  async searchMembers(criteria: { memberId?: string; firstName?: string; lastName?: string; dateOfBirth?: Date }): Promise<Member[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(1000, 2000);
       
-      return matchesMemberId && matchesFirstName && matchesLastName && matchesDob;
-    });
+      const matchingMembers = this.mockMembers.filter(m => {
+        const matchesMemberId = !criteria.memberId || m.memberId.toLowerCase().includes(criteria.memberId.toLowerCase());
+        const matchesFirstName = !criteria.firstName || m.firstName.toLowerCase().includes(criteria.firstName.toLowerCase());
+        const matchesLastName = !criteria.lastName || m.lastName.toLowerCase().includes(criteria.lastName.toLowerCase());
+        const matchesDob = !criteria.dateOfBirth || m.dateOfBirth.getTime() === criteria.dateOfBirth.getTime();
+        
+        return matchesMemberId && matchesFirstName && matchesLastName && matchesDob;
+      });
 
-    return of(matchingMembers).pipe(delay(500)); // Simulate API delay
+      return matchingMembers;
+    }, 'Searching member database...');
   }
 
-  getMemberById(id: string): Observable<Member | null> {
-    const member = this.mockMembers.find(m => m.id === id);
-    return of(member || null).pipe(delay(300));
+  async getMemberById(id: string): Promise<Member | null> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(500, 1000);
+      const member = this.mockMembers.find(m => m.id === id);
+      return member || null;
+    }, 'Loading member details...');
   }
 
-  getMemberClaims(memberId: string): Observable<Claim[]> {
-    const mockClaims: Claim[] = [
+  async getMemberClaims(memberId: string): Promise<Claim[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(600, 1200);
+      
+      const mockClaims: Claim[] = [
       {
         id: '1',
         memberId,
@@ -163,234 +178,263 @@ export class MemberService {
       }
     ];
 
-    return of(mockClaims).pipe(delay(400));
+    return mockClaims;
+    }, 'Loading claims...');
   }
 
-  getMemberBenefits(memberId: string): Observable<Benefit[]> {
-    const mockBenefits: Benefit[] = [
-      {
-        id: '1',
-        memberId,
-        benefitType: 'Medical',
-        description: 'Comprehensive Medical Coverage',
-        coverageAmount: 1000000,
-        deductible: 1500,
-        copay: 25,
-        coinsurance: 20,
-        planYear: 2024
-      },
-      {
-        id: '2',
-        memberId,
-        benefitType: 'Dental',
-        description: 'Basic Dental Coverage',
-        coverageAmount: 2000,
-        deductible: 50,
-        copay: 10,
-        coinsurance: 0,
-        planYear: 2024
-      }
-    ];
+  async getMemberBenefits(memberId: string): Promise<Benefit[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(600, 1200);
+      
+      const mockBenefits: Benefit[] = [
+        {
+          id: '1',
+          memberId,
+          benefitType: 'Medical',
+          description: 'Comprehensive Medical Coverage',
+          coverageAmount: 1000000,
+          deductible: 1500,
+          copay: 25,
+          coinsurance: 20,
+          planYear: 2024
+        },
+        {
+          id: '2',
+          memberId,
+          benefitType: 'Dental',
+          description: 'Basic Dental Coverage',
+          coverageAmount: 2000,
+          deductible: 50,
+          copay: 10,
+          coinsurance: 0,
+          planYear: 2024
+        }
+      ];
 
-    return of(mockBenefits).pipe(delay(350));
+      return mockBenefits;
+    }, 'Loading benefits...');
   }
 
-  getMemberDeductibles(memberId: string): Observable<Deductible[]> {
-    const mockDeductibles: Deductible[] = [
-      {
-        id: '1',
-        memberId,
-        planYear: 2024,
-        individualDeductible: 1500,
-        familyDeductible: 3000,
-        individualMet: 450,
-        familyMet: 450,
-        remainingIndividual: 1050,
-        remainingFamily: 2550
-      }
-    ];
+  async getMemberDeductibles(memberId: string): Promise<Deductible[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(300, 600);
+      
+      const mockDeductibles: Deductible[] = [
+        {
+          id: '1',
+          memberId,
+          planYear: 2024,
+          individualDeductible: 1500,
+          familyDeductible: 3000,
+          individualMet: 450,
+          familyMet: 450,
+          remainingIndividual: 1050,
+          remainingFamily: 2550
+        }
+      ];
 
-    return of(mockDeductibles).pipe(delay(300));
+      return mockDeductibles;
+    }, 'Loading deductibles...');
   }
 
-  getPriorAuthorizations(memberId: string): Observable<PriorAuthorization[]> {
-    const mockAuths: PriorAuthorization[] = [
-      {
-        id: '1',
-        memberId,
-        authNumber: 'AUTH2024001',
-        requestDate: new Date('2024-01-05'),
-        approvedDate: new Date('2024-01-07'),
-        expirationDate: new Date('2024-07-07'),
-        status: 'approved',
-        serviceType: 'MRI Scan',
-        provider: 'Imaging Center',
-        notes: 'Pre-approved for lower back MRI'
-      }
-    ];
+  async getPriorAuthorizations(memberId: string): Promise<PriorAuthorization[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(700, 1300);
+      
+      const mockAuths: PriorAuthorization[] = [
+        {
+          id: '1',
+          memberId,
+          authNumber: 'AUTH2024001',
+          requestDate: new Date('2024-01-05'),
+          approvedDate: new Date('2024-01-07'),
+          expirationDate: new Date('2024-07-07'),
+          status: 'approved',
+          serviceType: 'MRI Scan',
+          provider: 'Imaging Center',
+          notes: 'Pre-approved for lower back MRI'
+        }
+      ];
 
-    return of(mockAuths).pipe(delay(400));
+      return mockAuths;
+    }, 'Loading authorizations...');
   }
 
-  getMemberAccumulators(memberId: string): Observable<Accumulator[]> {
-    const mockAccumulators: Accumulator[] = [
-      {
-        id: '1',
-        memberId,
-        planYear: 2024,
-        type: 'deductible',
-        category: 'medical',
-        individualLimit: 1500,
-        familyLimit: 3000,
-        individualMet: 450,
-        familyMet: 450,
-        individualRemaining: 1050,
-        familyRemaining: 2550,
-        lastUpdated: new Date('2024-02-15')
-      },
-      {
-        id: '2',
-        memberId,
-        planYear: 2024,
-        type: 'out_of_pocket',
-        category: 'medical',
-        individualLimit: 6000,
-        familyLimit: 12000,
-        individualMet: 800,
-        familyMet: 800,
-        individualRemaining: 5200,
-        familyRemaining: 11200,
-        lastUpdated: new Date('2024-02-15')
-      },
-      {
-        id: '3',
-        memberId,
-        planYear: 2024,
-        type: 'deductible',
-        category: 'dental',
-        individualLimit: 50,
-        individualMet: 0,
-        individualRemaining: 50,
-        lastUpdated: new Date('2024-01-01')
-      }
-    ];
+  async getMemberAccumulators(memberId: string): Promise<Accumulator[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(500, 1000);
+      
+      const mockAccumulators: Accumulator[] = [
+        {
+          id: '1',
+          memberId,
+          planYear: 2024,
+          type: 'deductible',
+          category: 'medical',
+          individualLimit: 1500,
+          familyLimit: 3000,
+          individualMet: 450,
+          familyMet: 450,
+          individualRemaining: 1050,
+          familyRemaining: 2550,
+          lastUpdated: new Date('2024-02-15')
+        },
+        {
+          id: '2',
+          memberId,
+          planYear: 2024,
+          type: 'out_of_pocket',
+          category: 'medical',
+          individualLimit: 6000,
+          familyLimit: 12000,
+          individualMet: 800,
+          familyMet: 800,
+          individualRemaining: 5200,
+          familyRemaining: 11200,
+          lastUpdated: new Date('2024-02-15')
+        },
+        {
+          id: '3',
+          memberId,
+          planYear: 2024,
+          type: 'deductible',
+          category: 'dental',
+          individualLimit: 50,
+          individualMet: 0,
+          individualRemaining: 50,
+          lastUpdated: new Date('2024-01-01')
+        }
+      ];
 
-    return of(mockAccumulators).pipe(delay(350));
+      return mockAccumulators;
+    }, 'Loading accumulators...');
   }
 
-  getClaimHistory(memberId: string): Observable<ClaimHistory[]> {
-    const mockClaimHistory: ClaimHistory[] = [
-      {
-        id: '1',
-        memberId,
-        year: 2024,
-        totalClaims: 8,
-        totalAmount: 2840.50,
-        totalPaid: 2420.30,
-        totalDenied: 0,
-        averageClaimAmount: 355.06,
-        mostFrequentProvider: 'City General Hospital',
-        mostCommonDiagnosis: 'Preventive Care'
-      },
-      {
-        id: '2',
-        memberId,
-        year: 2023,
-        totalClaims: 12,
-        totalAmount: 4200.75,
-        totalPaid: 3800.50,
-        totalDenied: 400.25,
-        averageClaimAmount: 350.06,
-        mostFrequentProvider: 'Dr. Smith Family Practice',
-        mostCommonDiagnosis: 'General Checkup'
-      }
-    ];
+  async getClaimHistory(memberId: string): Promise<ClaimHistory[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(600, 1100);
+      
+      const mockClaimHistory: ClaimHistory[] = [
+        {
+          id: '1',
+          memberId,
+          year: 2024,
+          totalClaims: 8,
+          totalAmount: 2840.50,
+          totalPaid: 2420.30,
+          totalDenied: 0,
+          averageClaimAmount: 355.06,
+          mostFrequentProvider: 'City General Hospital',
+          mostCommonDiagnosis: 'Preventive Care'
+        },
+        {
+          id: '2',
+          memberId,
+          year: 2023,
+          totalClaims: 12,
+          totalAmount: 4200.75,
+          totalPaid: 3800.50,
+          totalDenied: 400.25,
+          averageClaimAmount: 350.06,
+          mostFrequentProvider: 'Dr. Smith Family Practice',
+          mostCommonDiagnosis: 'General Checkup'
+        }
+      ];
 
-    return of(mockClaimHistory).pipe(delay(400));
+      return mockClaimHistory;
+    }, 'Loading claim history...');
   }
 
-  getCallHistory(memberId: string): Observable<CallHistory[]> {
-    const mockCallHistory: CallHistory[] = [
-      {
-        id: '1',
-        memberId,
-        callDate: new Date('2024-02-20'),
-        agent: 'Sarah Johnson',
-        duration: 12,
-        callType: 'benefit',
-        resolution: 'resolved',
-        notes: 'Member inquired about dental coverage limits. Provided benefit summary.',
-        followUpRequired: false
-      },
-      {
-        id: '2',
-        memberId,
-        callDate: new Date('2024-01-15'),
-        agent: 'Mike Rodriguez',
-        duration: 8,
-        callType: 'claim',
-        resolution: 'resolved',
-        notes: 'Assisted member with claim status inquiry for recent hospital visit.',
-        followUpRequired: false
-      },
-      {
-        id: '3',
-        memberId,
-        callDate: new Date('2023-12-10'),
-        agent: 'Jennifer Lee',
-        duration: 25,
-        callType: 'authorization',
-        resolution: 'escalated',
-        notes: 'Member needs prior authorization for MRI. Escalated to medical review team.',
-        followUpRequired: true,
-        followUpDate: new Date('2023-12-12')
-      }
-    ];
+  async getCallHistory(memberId: string): Promise<CallHistory[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(500, 1000);
+      
+      const mockCallHistory: CallHistory[] = [
+        {
+          id: '1',
+          memberId,
+          callDate: new Date('2024-02-20'),
+          agent: 'Sarah Johnson',
+          duration: 12,
+          callType: 'benefit',
+          resolution: 'resolved',
+          notes: 'Member inquired about dental coverage limits. Provided benefit summary.',
+          followUpRequired: false
+        },
+        {
+          id: '2',
+          memberId,
+          callDate: new Date('2024-01-15'),
+          agent: 'Mike Rodriguez',
+          duration: 8,
+          callType: 'claim',
+          resolution: 'resolved',
+          notes: 'Assisted member with claim status inquiry for recent hospital visit.',
+          followUpRequired: false
+        },
+        {
+          id: '3',
+          memberId,
+          callDate: new Date('2023-12-10'),
+          agent: 'Jennifer Lee',
+          duration: 25,
+          callType: 'authorization',
+          resolution: 'escalated',
+          notes: 'Member needs prior authorization for MRI. Escalated to medical review team.',
+          followUpRequired: true,
+          followUpDate: new Date('2023-12-12')
+        }
+      ];
 
-    return of(mockCallHistory).pipe(delay(450));
+      return mockCallHistory;
+    }, 'Loading call history...');
   }
 
-  getAuthorizationHistory(memberId: string): Observable<AuthorizationHistory[]> {
-    const mockAuthHistory: AuthorizationHistory[] = [
-      {
-        id: '1',
-        memberId,
-        requestDate: new Date('2024-01-05'),
-        serviceType: 'MRI - Lower Back',
-        provider: 'City Imaging Center',
-        status: 'approved',
-        approvedUnits: 1,
-        usedUnits: 1,
-        expirationDate: new Date('2024-07-05'),
-        reviewDate: new Date('2024-01-07'),
-        reviewer: 'Dr. Patricia Wilson'
-      },
-      {
-        id: '2',
-        memberId,
-        requestDate: new Date('2023-11-20'),
-        serviceType: 'Physical Therapy',
-        provider: 'Wellness Rehabilitation Center',
-        status: 'approved',
-        approvedUnits: 12,
-        usedUnits: 8,
-        expirationDate: new Date('2024-02-20'),
-        reviewDate: new Date('2023-11-22'),
-        reviewer: 'Dr. Mark Thompson'
-      },
-      {
-        id: '3',
-        memberId,
-        requestDate: new Date('2023-08-15'),
-        serviceType: 'Specialist Consultation',
-        provider: 'Cardiology Associates',
-        status: 'denied',
-        denialReason: 'Not medically necessary based on current symptoms',
-        reviewDate: new Date('2023-08-17'),
-        reviewer: 'Dr. Lisa Chen'
-      }
-    ];
+  async getAuthorizationHistory(memberId: string): Promise<AuthorizationHistory[]> {
+    return this.loadingService.withLoading(async () => {
+      await this.loadingService.simulateNetworkCall(400, 800);
+      
+      const mockAuthHistory: AuthorizationHistory[] = [
+        {
+          id: '1',
+          memberId,
+          requestDate: new Date('2024-01-05'),
+          serviceType: 'MRI - Lower Back',
+          provider: 'City Imaging Center',
+          status: 'approved',
+          approvedUnits: 1,
+          usedUnits: 1,
+          expirationDate: new Date('2024-07-05'),
+          reviewDate: new Date('2024-01-07'),
+          reviewer: 'Dr. Patricia Wilson'
+        },
+        {
+          id: '2',
+          memberId,
+          requestDate: new Date('2023-11-20'),
+          serviceType: 'Physical Therapy',
+          provider: 'Wellness Rehabilitation Center',
+          status: 'approved',
+          approvedUnits: 12,
+          usedUnits: 8,
+          expirationDate: new Date('2024-02-20'),
+          reviewDate: new Date('2023-11-22'),
+          reviewer: 'Dr. Mark Thompson'
+        },
+        {
+          id: '3',
+          memberId,
+          requestDate: new Date('2023-08-15'),
+          serviceType: 'Specialist Consultation',
+          provider: 'Cardiology Associates',
+          status: 'denied',
+          denialReason: 'Not medically necessary based on current symptoms',
+          reviewDate: new Date('2023-08-17'),
+          reviewer: 'Dr. Lisa Chen'
+        }
+      ];
 
-    return of(mockAuthHistory).pipe(delay(400));
+      return mockAuthHistory;
+    }, 'Loading authorization history...');
   }
 }

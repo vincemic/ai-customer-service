@@ -3,6 +3,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Member } from '../models/member.model';
 import { AgentSessionService } from '../services/agent-session.service';
+import { LoadingService } from '../services/loading.service';
 import { MemberStateService } from '../services/member-state.service';
 import { MemberService } from '../services/member.service';
 
@@ -17,14 +18,17 @@ export class MemberLookupComponent {
   private agentSessionService = inject(AgentSessionService);
   private memberStateService = inject(MemberStateService);
   private fb = inject(FormBuilder);
+  private loadingService = inject(LoadingService);
 
-  isLoading = signal(false);
   searchError = signal<string | null>(null);
   searchResults = signal<Member[]>([]);
   selectedMember = signal<Member | null>(null);
   
   // Signal to track form values for reactivity
   formValues = signal<any>({});
+
+  // Expose loading state from service
+  isLoading = this.loadingService.isLoading;
 
   searchForm = this.fb.group({
     memberId: ['', [Validators.pattern(/^[A-Za-z]\d{8,9}$/)]],
@@ -61,7 +65,7 @@ export class MemberLookupComponent {
     // Check for validation errors only on filled fields
     const hasErrors = this.hasValidationErrors();
     
-    const canSearchResult = hasMinimumData && !hasErrors && !this.isLoading();
+    const canSearchResult = hasMinimumData && !hasErrors;
     
     // Debug logging
     console.log('canSearch debug:', {
@@ -71,7 +75,6 @@ export class MemberLookupComponent {
       hasValidLastName,
       hasMinimumData,
       hasErrors,
-      isLoading: this.isLoading(),
       result: canSearchResult,
       formStatus: this.searchForm.status,
       formValid: this.searchForm.valid,
@@ -117,7 +120,7 @@ export class MemberLookupComponent {
     return false;
   }
 
-  onSearchMember(): void {
+  async onSearchMember(): Promise<void> {
     if (!this.canSearch()) return;
 
     // Validate that we have minimum search criteria
@@ -130,7 +133,6 @@ export class MemberLookupComponent {
       return;
     }
 
-    this.isLoading.set(true);
     this.searchError.set(null);
 
     const searchCriteria = {
@@ -140,19 +142,15 @@ export class MemberLookupComponent {
       dateOfBirth: formValue.dateOfBirth ? new Date(formValue.dateOfBirth) : undefined
     };
 
-    this.memberService.searchMembers(searchCriteria).subscribe({
-      next: (members) => {
-        this.isLoading.set(false);
-        this.searchResults.set(members);
-        this.searchError.set(members.length === 0 ? 'No members found matching search criteria' : null);
-      },
-      error: (error) => {
-        this.isLoading.set(false);
-        this.searchError.set('An error occurred while searching for members.');
-        this.searchResults.set([]);
-        console.error('Search error:', error);
-      }
-    });
+    try {
+      const members = await this.memberService.searchMembers(searchCriteria);
+      this.searchResults.set(members);
+      this.searchError.set(members.length === 0 ? 'No members found matching search criteria' : null);
+    } catch (error) {
+      this.searchError.set('An error occurred while searching for members.');
+      this.searchResults.set([]);
+      console.error('Search error:', error);
+    }
   }
 
   onClearSearch(): void {
@@ -165,7 +163,6 @@ export class MemberLookupComponent {
     this.searchResults.set([]);
     this.selectedMember.set(null);
     this.searchError.set(null);
-    this.isLoading.set(false);
     
     // Clear member state service
     this.memberStateService.clearCurrentMember();

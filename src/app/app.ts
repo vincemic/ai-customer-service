@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { AgentDashboardComponent } from './components/agent-dashboard.component';
 import { AgentLoginComponent } from './components/agent-login.component';
 import { CallManagementComponent } from './components/call-management.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner.component';
 import { MemberDetailsComponent } from './components/member-details.component';
 import { MemberLookupComponent } from './components/member-lookup.component';
 import { AgentSessionService } from './services/agent-session.service';
@@ -19,7 +20,8 @@ import { MemberService } from './services/member.service';
     MemberDetailsComponent, 
     AgentLoginComponent,
     AgentDashboardComponent,
-    CallManagementComponent
+    CallManagementComponent,
+    LoadingSpinnerComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
