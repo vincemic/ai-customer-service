@@ -36,7 +36,33 @@ A modern AI-powered customer service application built with Angular 18+ featurin
 
 - **Keyboard & Mouse Navigation** - Full accessibility support
 
-## 🛠️ Technology Stack- **Responsive Design** - Works on desktop and mobile devices
+## � Screenshots
+
+### Agent Login
+![Agent Login Screen](docs/screenshots/login-screen.png)
+*Clean, professional login interface with security reminders and system status indicators.*
+
+### Agent Dashboard
+![Agent Dashboard](docs/screenshots/agent-dashboard.png)
+*Comprehensive agent dashboard showing session statistics, quick actions, and call controls.*
+
+### Call Interface
+![Active Call Interface](docs/screenshots/call-interface.png)
+*Professional call management interface with member lookup and call controls.*
+
+### Call Notes (Expanded)
+![Call Notes Expanded](docs/screenshots/call-notes-expanded.png)
+*Expandable call notes footer with quick action buttons and real-time character count.*
+
+### Member Search
+![Member Search](docs/screenshots/member-search.png)
+*Intuitive member lookup with multiple search options and validation.*
+
+### Call Notes with Content
+![Call Notes with Content](docs/screenshots/call-notes-filled.png)
+*Active call session with notes being taken and persistent footer interface.*
+
+## �🛠️ Technology Stack- **Responsive Design** - Works on desktop and mobile devices
 
 - **Mock Data Service** - Ready for integration with real APIs with realistic network simulation
 
