@@ -26,16 +26,6 @@
       >
         Claims, Benefits & History
       </button>
-      <button 
-        class="tab-button"
-        [class.active]="activeTab() === 'legacy'"
-        (click)="setActiveTab('legacy')"
-        role="tab"
-        [attr.aria-selected]="activeTab() === 'legacy'"
-        type="button"
-      >
-        Legacy View
-      </button>
     </nav>
 
     <div class="tab-content">
@@ -49,80 +39,6 @@
         @case ('data') {
           <div class="data-panel" role="tabpanel">
             <app-member-data-view [member]="member()"></app-member-data-view>
-          </div>
-        }
-
-        @case ('legacy') {
-          <div class="legacy-panel" role="tabpanel">
-            <h3>Legacy Member Information View</h3>
-            <div class="info-grid">
-              <div class="info-item">
-                <label>Full Name:</label>
-                <span>{{ member().firstName }} {{ member().lastName }}</span>
-              </div>
-              <div class="info-item">
-                <label>Date of Birth:</label>
-                <span>{{ formatDate(member().dateOfBirth) }}</span>
-              </div>
-              <div class="info-item">
-                <label>Email:</label>
-                <span>{{ member().email }}</span>
-              </div>
-              <div class="info-item">
-                <label>Phone:</label>
-                <span>{{ member().phone }}</span>
-              </div>
-            </div>
-
-            <h3>Address</h3>
-            <div class="address-info">
-              <p>{{ member().address.street }}</p>
-              <p>{{ member().address.city }}, {{ member().address.state }} {{ member().address.zipCode }}</p>
-            </div>
-
-            @if (member().familyMembers.length > 0) {
-              <h3>Family Members</h3>
-              <div class="family-members">
-                @for (familyMember of member().familyMembers; track familyMember.id) {
-                  <div class="family-member-card">
-                    <div class="family-member-info">
-                      <strong>{{ familyMember.firstName }} {{ familyMember.lastName }}</strong>
-                      <span class="relationship">{{ familyMember.relationship }}</span>
-                      <span class="dob">DOB: {{ formatDate(familyMember.dateOfBirth) }}</span>
-                    </div>
-                  </div>
-                }
-              </div>
-            }
-
-            <!-- Legacy Claims Section -->
-            <h3>Claims History (Legacy View)</h3>
-            @if (claims().length === 0) {
-              <p class="no-data">No claims found for this member.</p>
-            } @else {
-              <div class="claims-table">
-                <div class="table-header">
-                  <div class="col">Claim Number</div>
-                  <div class="col">Date of Service</div>
-                  <div class="col">Provider</div>
-                  <div class="col">Diagnosis</div>
-                  <div class="col">Amount</div>
-                  <div class="col">Status</div>
-                </div>
-                @for (claim of claims(); track claim.id) {
-                  <div class="table-row">
-                    <div class="col">{{ claim.claimNumber }}</div>
-                    <div class="col">{{ formatDate(claim.dateOfService) }}</div>
-                    <div class="col">{{ claim.provider }}</div>
-                    <div class="col">{{ claim.diagnosis }}</div>
-                    <div class="col">{{ formatCurrency(claim.amount) }}</div>
-                    <div class="col">
-                      <span [class]="getStatusClass(claim.status)">{{ claim.status | titlecase }}</span>
-                    </div>
-                  </div>
-                }
-              </div>
-            }
           </div>
         }
       }

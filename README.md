@@ -1,21 +1,24 @@
 # Health Insurance Call Center Application
 
-An Angular 18+ application designed for health insurance call center operations, enabling service representatives to efficiently lookup member information, track calls, and manage customer interactions.
+An Angular 18+ application designed for health insurance call center operations, enabling service representatives to efficiently lookup member information, track calls, and manage customer interactions with a modern VS Code-inspired dark theme interface.
 
 ## Features
 
-- **Modern Angular 18+** with standalone components
-- **Call Session Management** - Track calls from start to finish
-- **Member Lookup** - Search by Member ID, name, and date of birth
+- **Modern Angular 18+** with standalone components and signal-based state management
+- **VS Code Dark Theme UI** - Consistent dark theme styling throughout the application
+- **Central Loading Service** - Unified loading states with contextual messages and realistic delays
+- **Call Session Management** - Track calls from start to finish with professional interface
+- **Member Lookup** - Search by Member ID, name, and date of birth with instant feedback
 - **Comprehensive Member Information**:
   - Demographics and contact information
   - Claims history with status tracking
-  - Benefits information
-  - Deductible tracking
-  - Prior authorizations
+  - Benefits information and accumulators
+  - Prior authorizations and history
+  - Call history tracking
+- **Async/Await Architecture** - Modern Promise-based data operations with loading integration
 - **Keyboard & Mouse Navigation** - Full accessibility support
 - **Responsive Design** - Works on desktop and mobile devices
-- **Mock Data Service** - Ready for integration with real APIs
+- **Mock Data Service** - Ready for integration with real APIs with realistic network simulation
 
 ## Technology Stack
 
@@ -80,12 +83,20 @@ src/
 │   ├── components/           # Angular standalone components
 │   │   ├── member-lookup.component.*
 │   │   ├── member-details.component.*
-│   │   └── call-session.component.*
+│   │   ├── member-data-view/
+│   │   │   └── member-data-view.component.*
+│   │   ├── member-demographics/
+│   │   │   └── member-demographics.component.*
+│   │   ├── call-session.component.*
+│   │   └── loading-spinner.component.*
 │   ├── services/            # Service layer for data access
 │   │   ├── member.service.ts
-│   │   └── call-session.service.ts
+│   │   ├── call-session.service.ts
+│   │   └── loading.service.ts
 │   ├── models/              # TypeScript interfaces and types
 │   │   └── member.model.ts
+│   ├── styles/              # Global theme styles
+│   │   └── pointc-theme.css
 │   └── environments/        # Environment configurations
 ├── e2e/                     # Playwright tests
 └── .github/
@@ -95,19 +106,35 @@ src/
 ## Component Architecture
 
 ### Call Session Management
-- **CallSessionComponent**: Manages active call sessions
+
+- **CallSessionComponent**: Manages active call sessions with VS Code-styled interface
 - Tracks call duration, agent information, and call notes
 - Provides modal for ending calls with final notes
 
 ### Member Lookup
-- **MemberLookupComponent**: Search interface for member identification
+
+- **MemberLookupComponent**: Search interface for member identification with loading integration
 - Supports search by Member ID, name, and date of birth
-- Form validation and error handling
+- Form validation, error handling, and real-time loading feedback
 
 ### Member Details
-- **MemberDetailsComponent**: Tabbed interface for member information
-- Demographics, claims, benefits, deductibles, and prior authorizations
-- Responsive design with keyboard navigation
+
+- **MemberDetailsComponent**: Clean two-tab interface for member information
+- Demographics & Family tab for personal information
+- Claims, Benefits & History tab for comprehensive data view
+- Responsive design with keyboard navigation (legacy view removed)
+
+### Member Data View
+
+- **MemberDataViewComponent**: Comprehensive tabbed interface for member data
+- Claims, benefits, accumulators, prior authorizations, and history
+- Async data loading with contextual loading messages
+
+### Loading System
+
+- **LoadingSpinnerComponent**: VS Code-themed loading overlay with spinner animation
+- **LoadingService**: Signal-based centralized loading state management
+- Contextual loading messages and realistic network delay simulation
 
 ## Service Layer
 
