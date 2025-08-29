@@ -50,6 +50,294 @@
       </div>
     </div>
 
+    <!-- Member Details Section -->
+    @if (currentSession()!.member) {
+      <div class="member-details-section">
+        <div class="member-details-header">
+          <h3>Member Information</h3>
+          <span class="member-id">{{ currentSession()!.member!.memberId }}</span>
+        </div>
+        
+        <div class="member-details-grid">
+          <!-- Personal Information -->
+          <div class="detail-card">
+            <div class="card-header">
+              <h4>Personal Information</h4>
+            </div>
+            <div class="card-content">
+              <div class="info-row">
+                <span class="label">Full Name:</span>
+                <span class="value">{{ currentSession()!.member!.firstName }} {{ currentSession()!.member!.lastName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="label">Date of Birth:</span>
+                <span class="value">{{ currentSession()!.member!.dateOfBirth | date:'MMMM d, yyyy' }}</span>
+              </div>
+              @if (currentSession()!.member!.planName) {
+                <div class="info-row">
+                  <span class="label">Plan:</span>
+                  <span class="value">{{ currentSession()!.member!.planName }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Phone Numbers -->
+          <div class="detail-card">
+            <div class="card-header">
+              <h4>Phone Numbers</h4>
+            </div>
+            <div class="card-content">
+              @if (currentSession()!.member!.phoneNumbers && currentSession()!.member!.phoneNumbers.length > 0) {
+                @for (phone of currentSession()!.member!.phoneNumbers; track phone.id) {
+                  <div class="contact-row" [class.primary]="phone.isPrimary">
+                    <div class="contact-info">
+                      <span class="contact-value">
+                        {{ phone.number }}
+                        @if (phone.extension) {
+                          <span class="extension">ext. {{ phone.extension }}</span>
+                        }
+                      </span>
+                      <div class="contact-badges">
+                        <span class="type-badge">{{ phone.type | titlecase }}</span>
+                        @if (phone.isPrimary) {
+                          <span class="badge primary">Primary</span>
+                        }
+                        @if (phone.canReceiveText) {
+                          <span class="badge text">SMS</span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              } @else {
+                <div class="contact-row">
+                  <span class="contact-value">{{ currentSession()!.member!.phone || 'No phone on file' }}</span>
+                  <span class="type-badge">Primary</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Email Addresses -->
+          <div class="detail-card">
+            <div class="card-header">
+              <h4>Email Addresses</h4>
+            </div>
+            <div class="card-content">
+              @if (currentSession()!.member!.emailAddresses && currentSession()!.member!.emailAddresses.length > 0) {
+                @for (email of currentSession()!.member!.emailAddresses; track email.id) {
+                  <div class="contact-row" [class.primary]="email.isPrimary">
+                    <div class="contact-info">
+                      <span class="contact-value email">{{ email.email }}</span>
+                      <div class="contact-badges">
+                        <span class="type-badge">{{ email.type | titlecase }}</span>
+                        @if (email.isPrimary) {
+                          <span class="badge primary">Primary</span>
+                        }
+                        @if (email.isVerified) {
+                          <span class="badge verified">Verified</span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              } @else {
+                <div class="contact-row">
+                  <span class="contact-value email">{{ currentSession()!.member!.email || 'No email on file' }}</span>
+                  <span class="type-badge">Primary</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Addresses -->
+          <div class="detail-card">
+            <div class="card-header">
+              <h4>Addresses</h4>
+            </div>
+            <div class="card-content">
+              @if (currentSession()!.member!.addresses && currentSession()!.member!.addresses.length > 0) {
+                @for (address of currentSession()!.member!.addresses; track address.id) {
+                  <div class="contact-row" [class.primary]="address.isPrimary">
+                    <div class="contact-info">
+                      <span class="contact-value address">
+                        {{ address.street }}
+                        @if (address.street2) {
+                          <br>{{ address.street2 }}
+                        }
+                        <br>{{ address.city }}, {{ address.state }} {{ address.zipCode }}
+                      </span>
+                      <div class="contact-badges">
+                        <span class="type-badge">{{ address.type | titlecase }}</span>
+                        @if (address.isPrimary) {
+                          <span class="badge primary">Primary</span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              } @else {
+                <div class="contact-row">
+                  <span class="contact-value address">
+                    {{ currentSession()!.member!.address.street }}<br>
+                    {{ currentSession()!.member!.address.city }}, {{ currentSession()!.member!.address.state }} {{ currentSession()!.member!.address.zipCode }}
+                  </span>
+                  <span class="type-badge">Primary</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Family Members/Dependents Section -->
+    @if (currentSession()!.member && currentSession()!.member!.familyMembers && currentSession()!.member!.familyMembers.length > 0) {
+      <div class="family-members-section">
+        <div class="family-members-header">
+          <h3>Family Members / Dependents</h3>
+          <span class="count-badge">{{ currentSession()!.member!.familyMembers.length }} dependent{{ currentSession()!.member!.familyMembers.length !== 1 ? 's' : '' }}</span>
+        </div>
+        
+        @for (familyMember of currentSession()!.member!.familyMembers; track familyMember.id) {
+          <div class="family-member-card">
+            <div class="family-member-header">
+              <h4>{{ familyMember.firstName }} {{ familyMember.lastName }}</h4>
+              <div class="family-member-meta">
+                <span class="relationship-badge">{{ familyMember.relationship }}</span>
+                <span class="member-id">{{ familyMember.memberId }}</span>
+              </div>
+            </div>
+            
+            <div class="family-member-details">
+              <!-- Basic Info -->
+              <div class="detail-card">
+                <div class="card-header">
+                  <h5>Personal Information</h5>
+                </div>
+                <div class="card-content">
+                  <div class="info-row">
+                    <span class="label">Date of Birth:</span>
+                    <span class="value">{{ familyMember.dateOfBirth | date:'MMMM d, yyyy' }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Phone Numbers -->
+              <div class="detail-card">
+                <div class="card-header">
+                  <h5>Phone Numbers</h5>
+                </div>
+                <div class="card-content">
+                  @if (familyMember.phoneNumbers && familyMember.phoneNumbers.length > 0) {
+                    @for (phone of familyMember.phoneNumbers; track phone.id) {
+                      <div class="contact-row" [class.primary]="phone.isPrimary">
+                        <div class="contact-info">
+                          <span class="contact-value phone">
+                            {{ phone.number }}
+                            @if (phone.extension) {
+                              ext. {{ phone.extension }}
+                            }
+                          </span>
+                          <div class="contact-badges">
+                            <span class="type-badge">{{ phone.type | titlecase }}</span>
+                            @if (phone.isPrimary) {
+                              <span class="badge primary">Primary</span>
+                            }
+                            @if (phone.canReceiveText) {
+                              <span class="badge sms">SMS</span>
+                            }
+                            @if (phone.isVerified) {
+                              <span class="badge verified">Verified</span>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  } @else if (familyMember.phone) {
+                    <div class="contact-row">
+                      <span class="contact-value phone">{{ familyMember.phone }}</span>
+                      <span class="type-badge">Primary</span>
+                    </div>
+                  } @else {
+                    <div class="contact-row">
+                      <span class="contact-value no-data">No phone on file</span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Email Addresses -->
+              <div class="detail-card">
+                <div class="card-header">
+                  <h5>Email Addresses</h5>
+                </div>
+                <div class="card-content">
+                  @if (familyMember.emailAddresses && familyMember.emailAddresses.length > 0) {
+                    @for (email of familyMember.emailAddresses; track email.id) {
+                      <div class="contact-row" [class.primary]="email.isPrimary">
+                        <div class="contact-info">
+                          <span class="contact-value email">{{ email.email }}</span>
+                          <div class="contact-badges">
+                            <span class="type-badge">{{ email.type | titlecase }}</span>
+                            @if (email.isPrimary) {
+                              <span class="badge primary">Primary</span>
+                            }
+                            @if (email.isVerified) {
+                              <span class="badge verified">Verified</span>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  } @else {
+                    <div class="contact-row">
+                      <span class="contact-value no-data">No email on file</span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Addresses -->
+              <div class="detail-card">
+                <div class="card-header">
+                  <h5>Addresses</h5>
+                </div>
+                <div class="card-content">
+                  @if (familyMember.addresses && familyMember.addresses.length > 0) {
+                    @for (address of familyMember.addresses; track address.id) {
+                      <div class="contact-row" [class.primary]="address.isPrimary">
+                        <div class="contact-info">
+                          <span class="contact-value address">
+                            {{ address.street }}
+                            @if (address.street2) {
+                              <br>{{ address.street2 }}
+                            }
+                            <br>{{ address.city }}, {{ address.state }} {{ address.zipCode }}
+                          </span>
+                          <div class="contact-badges">
+                            <span class="type-badge">{{ address.type | titlecase }}</span>
+                            @if (address.isPrimary) {
+                              <span class="badge primary">Primary</span>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  } @else {
+                    <div class="contact-row">
+                      <span class="contact-value no-data">No address on file</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
     @if (currentSession()!.status === 'active') {
       <div class="call-notes-section">
         <label for="callNotes">Call Notes:</label>

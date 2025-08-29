@@ -36,22 +36,96 @@
                 <span>{{ formatDate(member().dateOfBirth) }} (Age {{ age() }})</span>
               </div>
               
-              <div class="detail-item">
-                <label>Phone:</label>
-                <span>{{ formatPhone(member().phone) }}</span>
+              <!-- Phone Numbers -->
+              <div class="detail-item contact-section">
+                <label>Phone Numbers:</label>
+                <div class="contact-list">
+                  @if (member().phoneNumbers && member().phoneNumbers.length > 0) {
+                    @for (phone of member().phoneNumbers; track phone.id) {
+                      <div class="contact-item" [class.primary]="phone.isPrimary">
+                        <span class="contact-value">
+                          {{ formatPhone(phone.number) }}
+                          @if (phone.extension) {
+                            ext. {{ phone.extension }}
+                          }
+                        </span>
+                        <div class="contact-badges">
+                          <span class="badge type">{{ phone.type | titlecase }}</span>
+                          @if (phone.isPrimary) {
+                            <span class="badge primary">Primary</span>
+                          }
+                          @if (phone.canReceiveText) {
+                            <span class="badge sms">SMS</span>
+                          }
+                          @if (phone.isVerified) {
+                            <span class="badge verified">Verified</span>
+                          }
+                        </div>
+                      </div>
+                    }
+                  } @else {
+                    <span class="fallback">{{ formatPhone(member().phone) }}</span>
+                  }
+                </div>
               </div>
               
-              <div class="detail-item">
-                <label>Email:</label>
-                <span>{{ member().email }}</span>
+              <!-- Email Addresses -->
+              <div class="detail-item contact-section">
+                <label>Email Addresses:</label>
+                <div class="contact-list">
+                  @if (member().emailAddresses && member().emailAddresses.length > 0) {
+                    @for (email of member().emailAddresses; track email.id) {
+                      <div class="contact-item" [class.primary]="email.isPrimary">
+                        <span class="contact-value">{{ email.email }}</span>
+                        <div class="contact-badges">
+                          <span class="badge type">{{ email.type | titlecase }}</span>
+                          @if (email.isPrimary) {
+                            <span class="badge primary">Primary</span>
+                          }
+                          @if (email.isVerified) {
+                            <span class="badge verified">Verified</span>
+                          }
+                        </div>
+                      </div>
+                    }
+                  } @else {
+                    <span class="fallback">{{ member().email }}</span>
+                  }
+                </div>
               </div>
               
-              <div class="detail-item">
-                <label>Address:</label>
-                <span>
-                  {{ member().address.street }}<br>
-                  {{ member().address.city }}, {{ member().address.state }} {{ member().address.zipCode }}
-                </span>
+              <!-- Addresses -->
+              <div class="detail-item contact-section">
+                <label>Addresses:</label>
+                <div class="contact-list">
+                  @if (member().addresses && member().addresses.length > 0) {
+                    @for (address of member().addresses; track address.id) {
+                      <div class="contact-item" [class.primary]="address.isPrimary">
+                        <span class="contact-value address">
+                          {{ address.street }}
+                          @if (address.street2) {
+                            <br>{{ address.street2 }}
+                          }
+                          <br>{{ address.city }}, {{ address.state }} {{ address.zipCode }}
+                          @if (address.country && address.country !== 'USA') {
+                            <br>{{ address.country }}
+                          }
+                        </span>
+                        <div class="contact-badges">
+                          <span class="badge type">{{ address.type | titlecase }}</span>
+                          @if (address.isPrimary) {
+                            <span class="badge primary">Primary</span>
+                          }
+                        </div>
+                      </div>
+                    }
+                  } @else {
+                    <span class="fallback address">
+                      {{ member().address.street }}<br>
+                      {{ member().address.city }}, {{ member().address.state }} {{ member().address.zipCode }}
+                    </span>
+                  }
+                </div>
               </div>
               
               @if (member().enrollmentDate) {
@@ -117,6 +191,88 @@
                     <span>{{ formatDate(dependent.dateOfBirth) }} (Age {{ calculateAge(dependent.dateOfBirth) }})</span>
                   </div>
                   
+                  <!-- Phone Numbers -->
+                  <div class="detail-item contact-section">
+                    <label>Phone Numbers:</label>
+                    <div class="contact-list compact">
+                      @if (dependent.phoneNumbers && dependent.phoneNumbers.length > 0) {
+                        @for (phone of dependent.phoneNumbers; track phone.id) {
+                          <div class="contact-item" [class.primary]="phone.isPrimary">
+                            <span class="contact-value">
+                              {{ formatPhone(phone.number) }}
+                              @if (phone.extension) {
+                                ext. {{ phone.extension }}
+                              }
+                            </span>
+                            <div class="contact-badges">
+                              <span class="badge type">{{ phone.type | titlecase }}</span>
+                              @if (phone.isPrimary) {
+                                <span class="badge primary">Primary</span>
+                              }
+                              @if (phone.canReceiveText) {
+                                <span class="badge sms">SMS</span>
+                              }
+                            </div>
+                          </div>
+                        }
+                      } @else if (dependent.phone) {
+                        <span class="fallback">{{ formatPhone(dependent.phone) }}</span>
+                      } @else {
+                        <span class="no-data">No phone on file</span>
+                      }
+                    </div>
+                  </div>
+                  
+                  <!-- Email Addresses -->
+                  <div class="detail-item contact-section">
+                    <label>Email Addresses:</label>
+                    <div class="contact-list compact">
+                      @if (dependent.emailAddresses && dependent.emailAddresses.length > 0) {
+                        @for (email of dependent.emailAddresses; track email.id) {
+                          <div class="contact-item" [class.primary]="email.isPrimary">
+                            <span class="contact-value">{{ email.email }}</span>
+                            <div class="contact-badges">
+                              <span class="badge type">{{ email.type | titlecase }}</span>
+                              @if (email.isPrimary) {
+                                <span class="badge primary">Primary</span>
+                              }
+                            </div>
+                          </div>
+                        }
+                      } @else {
+                        <span class="no-data">No email on file</span>
+                      }
+                    </div>
+                  </div>
+                  
+                  <!-- Addresses -->
+                  <div class="detail-item contact-section">
+                    <label>Addresses:</label>
+                    <div class="contact-list compact">
+                      @if (dependent.addresses && dependent.addresses.length > 0) {
+                        @for (address of dependent.addresses; track address.id) {
+                          <div class="contact-item" [class.primary]="address.isPrimary">
+                            <span class="contact-value address">
+                              {{ address.street }}
+                              @if (address.street2) {
+                                <br>{{ address.street2 }}
+                              }
+                              <br>{{ address.city }}, {{ address.state }} {{ address.zipCode }}
+                            </span>
+                            <div class="contact-badges">
+                              <span class="badge type">{{ address.type | titlecase }}</span>
+                              @if (address.isPrimary) {
+                                <span class="badge primary">Primary</span>
+                              }
+                            </div>
+                          </div>
+                        }
+                      } @else {
+                        <span class="no-data">No address on file</span>
+                      }
+                    </div>
+                  </div>
+                  
                   @if (dependent.enrollmentDate) {
                     <div class="detail-item">
                       <label>Enrollment Date:</label>
@@ -154,6 +310,88 @@
                     <div class="detail-item">
                       <label>Date of Birth:</label>
                       <span>{{ formatDate(dependent.dateOfBirth) }} (Age {{ calculateAge(dependent.dateOfBirth) }})</span>
+                    </div>
+                    
+                    <!-- Phone Numbers -->
+                    <div class="detail-item contact-section">
+                      <label>Phone Numbers:</label>
+                      <div class="contact-list compact">
+                        @if (dependent.phoneNumbers && dependent.phoneNumbers.length > 0) {
+                          @for (phone of dependent.phoneNumbers; track phone.id) {
+                            <div class="contact-item" [class.primary]="phone.isPrimary">
+                              <span class="contact-value">
+                                {{ formatPhone(phone.number) }}
+                                @if (phone.extension) {
+                                  ext. {{ phone.extension }}
+                                }
+                              </span>
+                              <div class="contact-badges">
+                                <span class="badge type">{{ phone.type | titlecase }}</span>
+                                @if (phone.isPrimary) {
+                                  <span class="badge primary">Primary</span>
+                                }
+                                @if (phone.canReceiveText) {
+                                  <span class="badge sms">SMS</span>
+                                }
+                              </div>
+                            </div>
+                          }
+                        } @else if (dependent.phone) {
+                          <span class="fallback">{{ formatPhone(dependent.phone) }}</span>
+                        } @else {
+                          <span class="no-data">No phone on file</span>
+                        }
+                      </div>
+                    </div>
+                    
+                    <!-- Email Addresses -->
+                    <div class="detail-item contact-section">
+                      <label>Email Addresses:</label>
+                      <div class="contact-list compact">
+                        @if (dependent.emailAddresses && dependent.emailAddresses.length > 0) {
+                          @for (email of dependent.emailAddresses; track email.id) {
+                            <div class="contact-item" [class.primary]="email.isPrimary">
+                              <span class="contact-value">{{ email.email }}</span>
+                              <div class="contact-badges">
+                                <span class="badge type">{{ email.type | titlecase }}</span>
+                                @if (email.isPrimary) {
+                                  <span class="badge primary">Primary</span>
+                                }
+                              </div>
+                            </div>
+                          }
+                        } @else {
+                          <span class="no-data">No email on file</span>
+                        }
+                      </div>
+                    </div>
+                    
+                    <!-- Addresses -->
+                    <div class="detail-item contact-section">
+                      <label>Addresses:</label>
+                      <div class="contact-list compact">
+                        @if (dependent.addresses && dependent.addresses.length > 0) {
+                          @for (address of dependent.addresses; track address.id) {
+                            <div class="contact-item" [class.primary]="address.isPrimary">
+                              <span class="contact-value address">
+                                {{ address.street }}
+                                @if (address.street2) {
+                                  <br>{{ address.street2 }}
+                                }
+                                <br>{{ address.city }}, {{ address.state }} {{ address.zipCode }}
+                              </span>
+                              <div class="contact-badges">
+                                <span class="badge type">{{ address.type | titlecase }}</span>
+                                @if (address.isPrimary) {
+                                  <span class="badge primary">Primary</span>
+                                }
+                              </div>
+                            </div>
+                          }
+                        } @else {
+                          <span class="no-data">No address on file</span>
+                        }
+                      </div>
                     </div>
                     
                     @if (dependent.enrollmentDate) {

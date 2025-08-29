@@ -273,6 +273,122 @@
   font-style: italic;
 }
 
+/* Enhanced Contact Information Styles */
+.contact-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-list.compact {
+  gap: 8px;
+}
+
+.contact-item {
+  background: var(--background-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  transition: all var(--transition-fast);
+}
+
+.contact-item:hover {
+  background: var(--background-hover);
+  border-color: var(--accent-blue);
+}
+
+.contact-item.primary {
+  border-color: var(--vscode-blue);
+  background: rgba(0, 122, 204, 0.1);
+}
+
+.contact-value {
+  flex: 1;
+  color: var(--text-bright);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.contact-value.address {
+  line-height: 1.3;
+}
+
+.contact-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.badge.type {
+  background: var(--secondary-blue);
+  color: var(--text-primary);
+}
+
+.badge.primary {
+  background: var(--vscode-blue);
+  color: var(--text-bright);
+}
+
+.badge.verified {
+  background: var(--success);
+  color: var(--text-bright);
+}
+
+.badge.sms {
+  background: var(--vscode-charts-green);
+  color: var(--text-bright);
+}
+
+.fallback {
+  color: var(--text-bright);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.no-data {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Compact Layout for Dependents */
+.dependent-card .contact-list.compact .contact-item {
+  padding: 8px 10px;
+  font-size: 0.9rem;
+}
+
+.dependent-card .contact-badges {
+  gap: 4px;
+}
+
+.dependent-card .badge {
+  font-size: 0.65rem;
+  padding: 1px 6px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .demographics-container {
@@ -307,5 +423,16 @@
   .dependent-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+  
+  .contact-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .contact-badges {
+    width: 100%;
+    justify-content: flex-start;
   }
 }
