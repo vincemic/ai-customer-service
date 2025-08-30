@@ -24,15 +24,19 @@ A modern AI-powered customer service application built with Angular 18+ featurin
 
 - **Call Management**: Start, manage, and end customer service calls  - Demographics and contact information
 
-- **Member Lookup**: Search and retrieve member information  - Claims history with status tracking
+- **Member Lookup**: Search and retrieve member information  - Multiple contact methods (emails, phones, addresses) with primary designation
 
-- **Call Notes**: Real-time call notes with quick actions and persistence  - Benefits information and accumulators
+- **Call Notes**: Real-time call notes with quick actions and persistence  - Claims history with status tracking
 
-- **Agent Dashboard**: Comprehensive agent interface  - Prior authorizations and history
+- **Agent Dashboard**: Comprehensive agent interface  - Benefits information and accumulators
 
-- **Responsive Design**: Mobile-friendly interface with VS Code dark theme  - Call history tracking
+- **Responsive Design**: Mobile-friendly interface with VS Code dark theme  - Prior authorizations and history
 
-- **Real-time Updates**: Live call duration and session management- **Async/Await Architecture** - Modern Promise-based data operations with loading integration
+- **Real-time Updates**: Live call duration and session management- Call history tracking
+
+- **Async/Await Architecture** - Modern Promise-based data operations with loading integration
+
+- **Keyboard & Mouse Navigation** - Full accessibility support
 
 - **Keyboard & Mouse Navigation** - Full accessibility support
 
@@ -50,17 +54,21 @@ A modern AI-powered customer service application built with Angular 18+ featurin
 ![Active Call Interface](docs/screenshots/call-interface.png)
 *Professional call management interface with member lookup and call controls.*
 
-### Call Notes (Expanded)
-![Call Notes Expanded](docs/screenshots/call-notes-expanded.png)
-*Expandable call notes footer with quick action buttons and real-time character count.*
+### Member Demographics
+![Member Demographics](docs/screenshots/member-demographics-screen.png)
+*Comprehensive member demographics and family information with clean tabbed interface.*
+
+### Multiple Contact Information
+![Member Multiple Emails](docs/screenshots/member-multiple-emails.png)
+*Member contact management with multiple email addresses, phone numbers, and addresses. Primary contacts are clearly marked with badges.*
 
 ### Member Search
 ![Member Search](docs/screenshots/member-search.png)
 *Intuitive member lookup with multiple search options and validation.*
 
-### Call Notes with Content
-![Call Notes with Content](docs/screenshots/call-notes-filled.png)
-*Active call session with notes being taken and persistent footer interface.*
+### Member Claims & Benefits
+![Member Claims Screen](docs/screenshots/member-claims-screen.png)
+*Detailed claims history, benefits, and member data with comprehensive tabbed view.*
 
 ## �🛠️ Technology Stack- **Responsive Design** - Works on desktop and mobile devices
 
